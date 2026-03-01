@@ -7,6 +7,7 @@ This is a Svelte 5 project. Your primary directive is to use Svelte 5 Runes for 
 Before starting any complex task, you MUST ground your understanding in our project's documentation:
 - [Product Vision](../.github/docs/PRODUCT.md)
 - [System Architecture](../.github/docs/ARCHITECTURE.md)
+- [Testing Strategy and Rules](../.github/docs/TESTING.md)
 - [Svelte Usages and Best Practices](../.github/docs/svelte-usages.md)
 
 ## Workflow
