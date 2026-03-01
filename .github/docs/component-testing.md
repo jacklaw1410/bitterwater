@@ -13,7 +13,7 @@ Aim for **moderate to high coverage** of component states, prop variations, and 
 
 ## Guidelines
 
-- **Co-location**: Component test files (`.spec.ts`) must be co-located with the Svelte component they test (e.g., `MyComponent.svelte` and `MyComponent.spec.ts`).
+- **Co-location**: Component test files (`.svelte.spec.ts`) must be co-located with the Svelte component they test (e.g., `MyComponent.svelte` and `MyComponent.svelte.spec.ts`).
 - **Mounting Components**: Use `@testing-library/svelte`'s `render` function to mount components for testing.
 - **Props Testing**: Verify component rendering and behavior across different prop values.
 - **Event Simulation**: Simulate user interactions (e.g., clicks, input changes) using `@testing-library/svelte`'s `fireEvent`.
