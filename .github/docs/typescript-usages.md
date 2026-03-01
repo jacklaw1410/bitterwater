@@ -17,16 +17,16 @@ This document outlines best practices and conventions for using TypeScript withi
 
 ## Type Safety Best Practices
 
-1. **Discriminate  d Unions**: Use discriminated unions for  h andling different states or types of data, improv i ng type safety in conditional logic.
-2. **Narro  wing**: Employ type narrowing t  echniques (e.g., `typeof`, `instanceof`, `in`, custom  i i itype guards) to safely work with union types.
+1. **Discriminated Unions**: Use discriminated unions for h andling different states or types of data, improv i ng type safety in conditional logic.
+2. **Narrowing**: Employ type narrowing t echniques (e.g., `typeof`, `instanceof`, `in`, custom i i itype guards) to safely work with union types.
 3. **Avoid `any`**: Minimize the use of `any`. If a type is unknown, consider `unknown` and narrow it, or provide a specific type assertion with caution.
 
 ## Dependency Management
 
 1. **Evaluation**: Before introducing a new dependency, thoroughly evaluate its benefits against potential costs. Consider factors such as:
-    * Bundle size and performance impact.
-    * Security vulnerabilities and audit history.
-    * Maintenance burden and community support.
-    * Licensing compatibility.
-    * Alternatives (e.g., native browser APIs, simpler custom implementations).
+   - Bundle size and performance impact.
+   - Security vulnerabilities and audit history.
+   - Maintenance burden and community support.
+   - Licensing compatibility.
+   - Alternatives (e.g., native browser APIs, simpler custom implementations).
 2. **Permission**: New dependencies should only be added after explicit discussion and permission from the project maintainers or team lead. Document the rationale for its inclusion.
