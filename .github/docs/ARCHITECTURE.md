@@ -1,4 +1,4 @@
-# Architecture: Svelte 101
+# Architecture
 
 This project follows a component-driven architecture, emphasizing the use of Svelte 5 Runes for reactivity and state management.
 

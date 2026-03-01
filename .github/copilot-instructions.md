@@ -5,8 +5,8 @@ This is a Svelte 5 project. Your primary directive is to use Svelte 5 Runes for 
 
 ## Context
 Before starting any complex task, you MUST ground your understanding in our project's documentation:
-- [Product Vision](../PRODUCT.md)
-- [System Architecture](../ARCHITECTURE.md)
+- [Product Vision](../.github/docs/PRODUCT.md)
+- [System Architecture](../.github/docs/ARCHITECTURE.md)
 
 ## Workflow
 For any new feature or significant change, you MUST follow this sequence:

@@ -1,4 +1,4 @@
-# Product Vision: Svelte 101
+# Product Vision
 
 [TODO] Update later ~This project serves as a canonical example of a modern Svelte application, built with Svelte 5 and its core principles (Runes). It is a learning resource and a template for new projects.~
 
