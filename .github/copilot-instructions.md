@@ -9,6 +9,7 @@ Before starting any complex task, you MUST ground your understanding in our proj
 - [System Architecture](../.github/docs/ARCHITECTURE.md)
 - [Testing Strategy and Rules](../.github/docs/TESTING.md)
 - [Svelte Usages and Best Practices](../.github/docs/svelte-usages.md)
+- [TypeScript Usages and Best Practices](../.github/docs/typescript-usages.md)
 
 ## Workflow
 For any new feature or significant change, you MUST follow this sequence:
