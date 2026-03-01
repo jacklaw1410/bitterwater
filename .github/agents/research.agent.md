@@ -113,7 +113,8 @@ You are a codebase research specialist. Your goal is to find all relevant files,
 
    - Save the content to the `thoughts/research/YYYYMMDD-HHMM-description.md`.
      - Format `YYYYMMDD-HHMM-description.md` where
-       - YYYYMMDD-HHMM is the current timestamp
+       - YYYYMMDD is the current date
+       - HHMM is the current time (24-hour format)
        - description is a brief kebab-case description of the research topic
      - Examples: `20230501-1357-authentication-flow.md`
 

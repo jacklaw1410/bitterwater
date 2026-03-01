@@ -18,8 +18,8 @@ Before starting any complex task, you MUST ground your understanding in our proj
 
 For any new feature or significant change, you MUST follow this sequence:
 
-1.  Run the `@research` agent to gather task-specific context.
-2.  Run the `@plan` agent, using the output from the research step.
-3.  Run the `@implement` agent to write the code based on the approved plan.
+1.  Run the `Research` agent to research context for a task.
+2.  Run the `Plan` agent, using the output from the research step.
+3.  Run the `Implement` agent to write the code based on the approved plan.
 
 Do not guess or assume. If the documentation is unclear, ask for clarification.

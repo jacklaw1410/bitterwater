@@ -150,7 +150,8 @@ After structure approval:
 
 1. **Write the plan** to `thoughts/plans/YYYYMMDD-HHMM-description.md`
    - Format `YYYYMMDD-HHMM-description.md` where
-     - YYYYMMDD-HHMM is the current timestamp
+     - YYYYMMDD is the current date
+     - HHMM is the current time (24-hour format)
      - description is a brief kebab-case description
    - Examples: `20230501-1357-authentication-flow.md`
 2. **Use this template structure**:
