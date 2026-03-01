@@ -13,20 +13,41 @@ test('Brownian Motion page functions correctly', async ({ page }) => {
   // Test pause functionality: canvas should not change after a delay
   await page.getByRole('button', { name: 'Pause' }).click();
   await expect(page.getByRole('button', { name: 'Play' })).toBeVisible();
-  const pausedCanvas = await canvas.screenshot({ path: 'test-results/screenshots/bn-1-paused.png' });
+  const pausedCanvas = await canvas.screenshot({
+    path: 'test-results/screenshots/bn-1-paused.png',
+  });
   await page.waitForTimeout(500);
-  expect(await canvas.screenshot({ path: 'test-results/screenshots/bn-2-paused-awaited.png' })).toEqual(pausedCanvas);
+  expect(
+    await canvas.screenshot({ path: 'test-results/screenshots/bn-2-paused-awaited.png' }),
+  ).toEqual(pausedCanvas);
 
   // Test play functionality: canvas should change
   await page.getByRole('button', { name: 'Play' }).click();
   await expect(page.getByRole('button', { name: 'Pause' })).toBeVisible();
   await page.waitForTimeout(500);
-  expect(await canvas.screenshot({ path: 'test-results/screenshots/bn-3-played.png' })).not.toEqual(pausedCanvas);
+  expect(await canvas.screenshot({ path: 'test-results/screenshots/bn-3-played.png' })).not.toEqual(
+    pausedCanvas,
+  );
 
   // Test that changing particle count slider updates the UI label
   const particleSlider = page.getByLabel('Number of particles');
   await particleSlider.fill('50');
   await expect(page.getByText('Particles: 50')).toBeVisible();
+
+  // Test particle size slider
+  const sizeSlider = page.getByLabel('Particle size');
+  await sizeSlider.fill('5');
+  await expect(page.getByText('Size: 5')).toBeVisible();
+
+  // Test color picker
+  const colorPicker = page.getByLabel('Particle color');
+  await colorPicker.fill('#ff0000');
+  // Visual regression test would be ideal here, but for now we just check the control
+
+  // Test trails checkbox
+  const trailsCheckbox = page.getByLabel('Show trails');
+  await trailsCheckbox.uncheck();
+  // Visual regression test would be ideal here
 
   // Since we cannot count particles on a canvas directly, we verify the control's effect
   // by taking a screenshot before and after resetting the simulation with the new particle count.
@@ -34,5 +55,7 @@ test('Brownian Motion page functions correctly', async ({ page }) => {
   const canvasBeforeReset = await canvas.screenshot();
   await page.getByRole('button', { name: 'Reset' }).click();
   await page.waitForTimeout(500); // Wait for re-render
-  expect(await canvas.screenshot({ path: 'test-results/screenshots/bn-4-reset.png' })).not.toEqual(canvasBeforeReset);
+  expect(await canvas.screenshot({ path: 'test-results/screenshots/bn-4-reset.png' })).not.toEqual(
+    canvasBeforeReset,
+  );
 });

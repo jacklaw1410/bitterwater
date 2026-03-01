@@ -3,14 +3,24 @@ export interface Particle {
   y: number;
   vx: number;
   vy: number;
+  size: number;
+  color: string;
 }
 
-export function createParticle(width: number, height: number, speed: number): Particle {
+export function createParticle(
+  width: number,
+  height: number,
+  speed: number,
+  size: number,
+  color: string,
+): Particle {
   return {
     x: Math.random() * width,
     y: Math.random() * height,
     vx: (Math.random() - 0.5) * speed,
     vy: (Math.random() - 0.5) * speed,
+    size,
+    color,
   };
 }
 

@@ -5,12 +5,17 @@
 
   let particleCount = $state(100);
   let speed = $state(2);
+  let particleSize = $state(2);
+  let particleColor = $state('#000000');
+  let showTrails = $state(true);
   let isPlaying = $state(true);
 
   let particles = $state<Particle[]>([]);
 
   function reset() {
-    particles = Array.from({ length: particleCount }, () => createParticle(800, 600, speed));
+    particles = Array.from({ length: particleCount }, () =>
+      createParticle(800, 600, speed, particleSize, particleColor),
+    );
   }
 
   reset();
@@ -39,5 +44,14 @@
 
 <h1>Brownian Motion Visualizer</h1>
 
-<Controls bind:particleCount bind:speed bind:isPlaying onreset={reset} />
-<BrownianMotion {particles} />
+<Controls
+  bind:particleCount
+  bind:speed
+  bind:particleSize
+  bind:particleColor
+  bind:showTrails
+  bind:isPlaying
+  // Bind isPlaying directly
+  onreset={reset}
+/>
+<BrownianMotion {particles} {showTrails} {particleSize} {particleColor} />
