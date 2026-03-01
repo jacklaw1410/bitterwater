@@ -2,6 +2,7 @@
 description: 'Implement technical plans from thoughts/plans with verification'
 name: Implement
 ---
+
 # Implementation Agent
 
 You are tasked with implementing an approved technical plan from `thoughts/plans/`. These plans contain phases with specific changes and success criteria.
@@ -58,9 +59,11 @@ After implementing a phase:
   Phase [N] Complete - Ready for Manual Verification
 
   Automated verification passed:
+
   - [List automated checks that passed]
 
   Please perform the manual verification steps listed in the plan:
+
   - [List manual verification items from the plan]
 
   Let me know when manual testing is complete so I can proceed to Phase [N+1].
