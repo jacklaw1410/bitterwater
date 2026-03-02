@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createParticle, updateParticles, type Particle } from './brownian-motion';
+import { createParticle, moveParticles, updateParticle, type Particle } from './brownian-motion';
 
 describe('brownian-motion logic', () => {
   it('creates a particle within the specified bounds', () => {
@@ -10,20 +10,40 @@ describe('brownian-motion logic', () => {
     expect(particle.y).toBeLessThanOrEqual(600);
   });
 
-  it('updates particle positions based on their velocity', () => {
+  it('updates a particle\'s properties correctly', () => {
     const particle: Particle = { x: 10, y: 10, vx: 1, vy: 1, size: 2, color: '#000' };
-    updateParticles([particle], 800, 600);
+
+    updateParticle(particle, { x: 20, y: 20, vx: 2, vy: 2, size: 4, color: '#fff' });
+    expect(particle.x).toBe(20);
+    expect(particle.y).toBe(20);
+    expect(particle.vx).toBe(2);
+    expect(particle.vy).toBe(2);
+    expect(particle.size).toBe(4);
+    expect(particle.color).toBe('#fff');
+
+    updateParticle(particle, { x: 30 });
+    expect(particle.x).toBe(30);
+    expect(particle.y).toBe(20);
+    expect(particle.vx).toBe(2);
+    expect(particle.vy).toBe(2);
+    expect(particle.size).toBe(4);
+    expect(particle.color).toBe('#fff');
+  });
+
+  it('moves particle based on their velocity', () => {
+    const particle: Particle = { x: 10, y: 10, vx: 1, vy: 1, size: 2, color: '#000' };
+    moveParticles([particle], 800, 600);
     expect(particle.x).toBe(11);
     expect(particle.y).toBe(11);
   });
 
   it('bounces particles off the walls', () => {
     const p1: Particle = { x: -1, y: 10, vx: -1, vy: 1, size: 2, color: '#000' };
-    updateParticles([p1], 800, 600);
+    moveParticles([p1], 800, 600);
     expect(p1.vx).toBe(1);
 
     const p2: Particle = { x: 801, y: 10, vx: 1, vy: 1, size: 2, color: '#000' };
-    updateParticles([p2], 800, 600);
+    moveParticles([p2], 800, 600);
     expect(p2.vx).toBe(-1);
   });
 });

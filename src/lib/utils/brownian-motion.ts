@@ -7,13 +7,13 @@ export interface Particle {
   color: string;
 }
 
-export function createParticle(
+export const createParticle = (
   width: number,
   height: number,
   speed: number,
   size: number,
   color: string,
-): Particle {
+): Particle => {
   return {
     x: Math.random() * width,
     y: Math.random() * height,
@@ -24,7 +24,17 @@ export function createParticle(
   };
 }
 
-export function updateParticles(particles: Particle[], width: number, height: number) {
+export const updateParticle = (p: Particle, props: Partial<Particle>) => {
+  const { x, y, vx, vy, size, color } = props;
+  if (x !== undefined) p.x = x;
+  if (y !== undefined) p.y = y;
+  if (vx !== undefined) p.vx = vx;
+  if (vy !== undefined) p.vy = vy;
+  if (size !== undefined) p.size = size;
+  if (color !== undefined) p.color = color;
+};
+
+export const moveParticles = (particles: Particle[], width: number, height: number) => {
   for (const p of particles) {
     p.x += p.vx;
     p.y += p.vy;
