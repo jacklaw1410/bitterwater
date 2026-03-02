@@ -3,12 +3,14 @@ import { test, expect } from '@playwright/test';
 test('Brownian Motion page functions correctly', async ({ page }) => {
   await page.goto('/brownian-motion');
   await expect(page.getByRole('heading', { name: 'Brownian Motion Visualizer' })).toBeVisible();
+  await expect(page.getByText('No particles to display statistics.')).toBeVisible();
 
   const canvas = page.locator('canvas');
   await expect(canvas).toBeVisible();
 
   // Allow some time for initial rendering
   await page.waitForTimeout(500);
+  await page.screenshot({ path: 'test-results/screenshots/bn-page.png', fullPage: true });
 
   // Test pause functionality: canvas should not change after a delay
   await page.getByRole('button', { name: 'Pause' }).click();
@@ -45,7 +47,7 @@ test('Brownian Motion page functions correctly', async ({ page }) => {
   await widthInput.fill('600');
   const pausedCanvas6 = await canvas.screenshot({ path: 'test-results/screenshots/bn-6-width-updated.png' });
   expect(pausedCanvas6).not.toEqual(pausedCanvas5);
-  
+
   // Test changing height update the canvas
   const heightInput = page.getByLabel('Canvas height');
   await heightInput.fill('400');
@@ -69,6 +71,20 @@ test('Brownian Motion page functions correctly', async ({ page }) => {
   const trailsCheckbox = page.getByLabel('Show trails');
   await trailsCheckbox.uncheck();
   // Visual regression test would be ideal here
+
+  // Test statistics display
+  const positionTable = page.getByRole('table', { name: 'Position statistics' });
+  const velocityTable = page.getByRole('table', { name: 'Velocity statistics' });
+  await expect(positionTable).toBeVisible();
+  await expect(velocityTable).toBeVisible();
+
+  const positionCells = positionTable.locator('code');
+  const velocityCells = velocityTable.locator('code');
+  await expect(positionCells.nth(0)).toContainText(/^\d+\.\d{4}$/);
+  await expect(positionCells.nth(1)).toContainText(/^\d+\.\d{4}$/);
+  await expect(velocityCells.nth(0)).toContainText(/^-?\d+\.\d{4}$/); // could be negative
+  await expect(velocityCells.nth(1)).toContainText(/^-?\d+\.\d{4}$/); // could be negative
+  await expect(velocityCells.nth(2)).toContainText(/^\d+\.\d{4}$/);
 
   // Since we cannot count particles on a canvas directly, we verify the control's effect
   // by taking a screenshot before and after resetting the simulation with the new particle count.
