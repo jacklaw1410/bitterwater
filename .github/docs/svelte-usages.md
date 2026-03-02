@@ -59,8 +59,8 @@ Custom components expose two main types of props:
 
 ### Customary Event Naming and Intent
 
-- Event handlers should be named using the `on[EventName]` pattern (e.g., `onSubmit`, `onRestartSimulation`).
-- Prefer exposing "customary" (higher-level, intent-based) events rather than low-level mechanical events. For instance, a submit button should expose an `onSubmit` event (representing the user's intention) instead of a generic `onClick` event (representing the mechanism).
+- Event handlers should be named using the `on[eventname]` pattern (e.g., `onsubmit`, `onrestartsimulation`).
+- Prefer exposing "customary" (higher-level, intent-based) events rather than low-level mechanical events. For instance, a submit button should expose an `onsubmit` event (representing the user's intention) instead of a generic `onclick` event (representing the mechanism).
 
 ## Snippets
 
