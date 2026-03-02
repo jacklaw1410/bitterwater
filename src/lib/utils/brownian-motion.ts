@@ -7,6 +7,17 @@ export interface Particle {
   color: string;
 }
 
+export const generateRandomVelocity = (speed: number, a: number = 0.7) => {
+  const direction = Math.random() * Math.PI * 2;
+  // A uniform distribution with mean of 1
+  const b = 2 - a;
+  const amplitude = (a + (b - a) * Math.random()) * speed;
+  return {
+    vx: Math.cos(direction) * amplitude,
+    vy: Math.sin(direction) * amplitude,
+  };
+}
+
 export const createParticle = (
   width: number,
   height: number,
@@ -14,11 +25,12 @@ export const createParticle = (
   size: number,
   color: string,
 ): Particle => {
+  const { vx, vy } = generateRandomVelocity(speed);
   return {
     x: Math.random() * width,
     y: Math.random() * height,
-    vx: (Math.random() - 0.5) * speed,
-    vy: (Math.random() - 0.5) * speed,
+    vx,
+    vy,
     size,
     color,
   };

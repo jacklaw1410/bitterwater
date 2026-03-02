@@ -3,6 +3,7 @@
   import Controls from '$lib/components/brownian-motion/Controls.svelte';
   import {
     createParticle,
+    generateRandomVelocity,
     moveParticles,
     updateParticle,
     type Particle,
@@ -36,9 +37,10 @@
       }
     }
     for (let i = 0; i < particles.length; i++) {
+      const { vx, vy } = generateRandomVelocity(speed);
       updateParticle(particles[i], {
-        vx: (Math.random() - 0.5) * speed,
-        vy: (Math.random() - 0.5) * speed,
+        vx,
+        vy,
         size: particleSize,
         color: particleColor,
       });
@@ -90,4 +92,4 @@
   bind:height
   onreset={reset}
 />
-<BrownianMotion {particles} {showTrails} {particleSize} {particleColor} width={width} height={height} />
+<BrownianMotion {particles} {showTrails} {particleSize} {particleColor} {width} {height} />
