@@ -8,18 +8,26 @@
     type Particle,
   } from '$lib/utils/brownian-motion.js';
 
-  let particleCount = $state(100);
-  let speed = $state(2);
-  let particleSize = $state(2);
-  let particleColor = $state('#000000');
-  let showTrails = $state(true);
+  const INIITIAL_PARTICLE_COUNT = 100;
+  const INITIAL_SPEED = 3;
+  const INITIAL_PARTICLE_SIZE = 3;
+  const INITIAL_PARTICLE_COLOR = '#800000';
+  const INITIAL_SHOW_TRAILS = true;
+  const INITIAL_WIDTH = 800;
+  const INITIAL_HEIGHT = 500;
+
+  let particleCount = $state(INIITIAL_PARTICLE_COUNT);
+  let speed = $state(INITIAL_SPEED);
+  let particleSize = $state(INITIAL_PARTICLE_SIZE);
+  let particleColor = $state(INITIAL_PARTICLE_COLOR);
+  let showTrails = $state(INITIAL_SHOW_TRAILS);
   let isPlaying = $state(true);
 
   let particles = $state<Particle[]>([]);
-  let width = $state(800);
-  let height = $state(500);
+  let width = $state(INITIAL_WIDTH);
+  let height = $state(INITIAL_HEIGHT);
 
-  const reset = () => {
+  const update = () => {
     if (particleCount < particles.length) {
       particles.splice(particleCount, particles.length - particleCount);
     } else if (particleCount > particles.length) {
@@ -37,7 +45,15 @@
     }
   };
 
-  reset();
+  const reset = () => {
+    particleCount = INIITIAL_PARTICLE_COUNT;
+    speed = INITIAL_SPEED;
+    particleSize = INITIAL_PARTICLE_SIZE;
+    particleColor = INITIAL_PARTICLE_COLOR;
+    showTrails = INITIAL_SHOW_TRAILS;
+    width = INITIAL_WIDTH;
+    height = INITIAL_HEIGHT;
+  };
 
   $effect(() => {
     if (!isPlaying) return;
@@ -53,7 +69,7 @@
   });
 
   $effect(() => {
-    reset();
+    update();
   });
 </script>
 
