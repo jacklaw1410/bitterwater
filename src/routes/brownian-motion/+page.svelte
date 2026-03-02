@@ -1,6 +1,7 @@
 <script lang="ts">
   import BrownianMotion from '$lib/components/brownian-motion/BrownianMotion.svelte';
   import Controls from '$lib/components/brownian-motion/Controls.svelte';
+  import Statistics from '$lib/components/brownian-motion/Statistics.svelte';
   import {
     createParticle,
     generateRandomVelocity,
@@ -92,4 +93,5 @@
   bind:height
   onreset={reset}
 />
+<Statistics {particles} />
 <BrownianMotion {particles} {showTrails} {particleSize} {particleColor} {width} {height} />
