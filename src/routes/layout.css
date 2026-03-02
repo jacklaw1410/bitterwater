@@ -13,6 +13,10 @@ body {
   max-width: 60em;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 p,
 hr,
 nav,
