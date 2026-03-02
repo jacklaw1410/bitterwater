@@ -1,7 +1,12 @@
 <script lang="ts">
   import BrownianMotion from '$lib/components/brownian-motion/BrownianMotion.svelte';
   import Controls from '$lib/components/brownian-motion/Controls.svelte';
-  import { createParticle, moveParticles, type Particle } from '$lib/utils/brownian-motion.js';
+  import {
+    createParticle,
+    moveParticles,
+    updateParticle,
+    type Particle,
+  } from '$lib/utils/brownian-motion.js';
 
   let particleCount = $state(100);
   let speed = $state(2);
@@ -12,11 +17,23 @@
 
   let particles = $state<Particle[]>([]);
 
-  function reset() {
-    particles = Array.from({ length: particleCount }, () =>
-      createParticle(800, 600, speed, particleSize, particleColor),
-    );
-  }
+  const reset = () => {
+    if (particleCount < particles.length) {
+      particles.splice(particleCount, particles.length - particleCount);
+    } else if (particleCount > particles.length) {
+      for (let i = particles.length; i < particleCount; i++) {
+        particles.push(createParticle(800, 600, speed, particleSize, particleColor));
+      }
+    }
+    for (let i = 0; i < particles.length; i++) {
+      updateParticle(particles[i], {
+        vx: (Math.random() - 0.5) * speed,
+        vy: (Math.random() - 0.5) * speed,
+        size: particleSize,
+        color: particleColor,
+      });
+    }
+  };
 
   reset();
 
