@@ -12,7 +12,9 @@ describe('Controls.svelte', () => {
       particleSize: 2,
       particleColor: '#000000',
       showTrails: true,
-      isPlaying: true, // Provide isPlaying as a prop
+      isPlaying: true,
+      width: 800,
+      height: 600,
       onreset: () => {},
     });
     expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();
@@ -32,7 +34,9 @@ describe('Controls.svelte', () => {
       particleSize: 2,
       particleColor: '#000000',
       showTrails: true,
-      isPlaying: true, // Provide isPlaying as a prop
+      isPlaying: true,
+      width: 800,
+      height: 600,
       onreset: onResetMock,
     });
     await userEvent.click(screen.getByRole('button', { name: 'Reset' }));

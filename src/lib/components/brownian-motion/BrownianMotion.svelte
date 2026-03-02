@@ -7,13 +7,14 @@
     showTrails,
     particleSize,
     particleColor,
-  }: { particles: Particle[]; showTrails: boolean; particleSize: number; particleColor: string } =
+    width,
+    height,
+  }: { particles: Particle[]; showTrails: boolean; particleSize: number; particleColor: string; width: number; height: number } =
     $props();
 
   $effect(() => {
     const ctx = canvasElement.getContext('2d');
     if (!ctx) return;
-
     const { width, height } = canvasElement;
 
     if (showTrails) {
@@ -37,7 +38,7 @@
   });
 </script>
 
-<canvas bind:this={canvasElement} width={800} height={600}></canvas>
+<canvas bind:this={canvasElement} width={width} height={height}></canvas>
 
 <style>
   canvas {

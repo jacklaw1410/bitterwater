@@ -16,13 +16,15 @@
   let isPlaying = $state(true);
 
   let particles = $state<Particle[]>([]);
+  let width = $state(800);
+  let height = $state(500);
 
   const reset = () => {
     if (particleCount < particles.length) {
       particles.splice(particleCount, particles.length - particleCount);
     } else if (particleCount > particles.length) {
       for (let i = particles.length; i < particleCount; i++) {
-        particles.push(createParticle(800, 600, speed, particleSize, particleColor));
+        particles.push(createParticle(width, height, speed, particleSize, particleColor));
       }
     }
     for (let i = 0; i < particles.length; i++) {
@@ -41,7 +43,7 @@
     if (!isPlaying) return;
 
     let rid = requestAnimationFrame(function update() {
-      moveParticles(particles, 800, 600);
+      moveParticles(particles, width, height);
       rid = requestAnimationFrame(update);
     });
 
@@ -68,7 +70,8 @@
   bind:particleColor
   bind:showTrails
   bind:isPlaying
-  // Bind isPlaying directly
+  bind:width
+  bind:height
   onreset={reset}
 />
-<BrownianMotion {particles} {showTrails} {particleSize} {particleColor} />
+<BrownianMotion {particles} {showTrails} {particleSize} {particleColor} width={width} height={height} />
