@@ -35,15 +35,30 @@ describe('brownian-motion logic', () => {
     moveParticles([particle], 800, 600);
     expect(particle.x).toBe(11);
     expect(particle.y).toBe(11);
+    expect(particle.vx).toBe(1);
+    expect(particle.vy).toBe(1);
   });
 
   it('bounces particles off the walls', () => {
-    const p1: Particle = { x: -1, y: 10, vx: -1, vy: 1, size: 2, color: '#000' };
-    moveParticles([p1], 800, 600);
+    const p1: Particle = { x: -1, y: 8, vx: -1, vy: 1, size: 2, color: '#000' };
+    moveParticles([p1], 10, 10);
+    expect(p1.x).toBe(0);
+    expect(p1.y).toBe(9);
     expect(p1.vx).toBe(1);
+    expect(p1.vy).toBe(1);
 
-    const p2: Particle = { x: 801, y: 10, vx: 1, vy: 1, size: 2, color: '#000' };
-    moveParticles([p2], 800, 600);
+    const p2: Particle = { x: 11, y: 8, vx: 1, vy: 1, size: 2, color: '#000' };
+    moveParticles([p2], 10, 10);
+    expect(p2.x).toBe(10);
+    expect(p2.y).toBe(9);
     expect(p2.vx).toBe(-1);
+    expect(p2.vy).toBe(1);
+
+    const p3: Particle = { x: 801, y: 8, vx: 1, vy: 1, size: 2, color: '#000' };
+    moveParticles([p3], 10, 10);
+    expect(p3.x).toBe(10);
+    expect(p3.y).toBe(9);
+    expect(p3.vx).toBe(-1);
+    expect(p3.vy).toBe(1);
   });
 });

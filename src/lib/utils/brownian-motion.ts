@@ -41,5 +41,11 @@ export const moveParticles = (particles: Particle[], width: number, height: numb
 
     if (p.x < 0 || p.x > width) p.vx *= -1;
     if (p.y < 0 || p.y > height) p.vy *= -1;
+
+    if (p.x < 0) p.x = 0;
+    else if (p.x > width) p.x = width;
+
+    if (p.y < 0) p.y = 0;
+    else if (p.y > height) p.y = height;
   }
 }
