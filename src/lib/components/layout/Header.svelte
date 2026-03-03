@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from '$app/state';
   import { theme, toggleTheme } from '$lib/theme';
 </script>
 
@@ -6,8 +7,11 @@
   <div class="container">
     <a href="/" class="logo">Svelte 101</a>
     <nav>
-      <a href="/">Home</a>
-      <a href="/brownian-motion">Brownian Motion</a>
+      <a href="/" aria-current={page.route.id === '/' ? 'page' : undefined}>Home</a>
+      <a
+        href="/brownian-motion"
+        aria-current={page.route.id === '/brownian-motion' ? 'page' : undefined}>Brownian Motion</a
+      >
     </nav>
     <button class="theme-toggle" aria-label="Toggle theme" on:click={toggleTheme}>
       {#if $theme === 'dark'}🌙{/if}
@@ -42,6 +46,9 @@
     color: var(--color-on-primary);
     text-decoration: none;
     font-size: 1rem;
+  }
+  nav a[aria-current='page'] {
+    border-bottom: 2px solid var(--color-on-primary);
   }
   .theme-toggle {
     background: none;
