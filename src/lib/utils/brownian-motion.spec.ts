@@ -10,7 +10,7 @@ describe('brownian-motion logic', () => {
     expect(particle.y).toBeLessThanOrEqual(600);
   });
 
-  it('updates a particle\'s properties correctly', () => {
+  it("updates a particle's properties correctly", () => {
     const particle: Particle = { x: 10, y: 10, vx: 1, vy: 1, size: 2, color: '#000' };
 
     updateParticle(particle, { x: 20, y: 20, vx: 2, vy: 2, size: 4, color: '#fff' });

@@ -1,5 +1,5 @@
 import { render, screen, cleanup, within } from '@testing-library/svelte';
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import Statistics from './Statistics.svelte';
 import type { Particle } from '$lib/utils/brownian-motion';
 
@@ -10,7 +10,7 @@ describe('Statistics.svelte', () => {
       { x: 10, y: 10, vx: 1, vy: 1, size: 2, color: '#000' },
       { x: 20, y: 20, vx: 2, vy: 2, size: 4, color: '#fff' },
       { x: 30, y: 30, vx: 3, vy: 3, size: 6, color: '#ccc' },
-    ]
+    ];
     render(Statistics, { particles });
 
     const positionTable = screen.getByRole('table', { name: 'Position statistics' });
@@ -18,7 +18,7 @@ describe('Statistics.svelte', () => {
     expect(positionTable).toBeVisible();
     const positionCells = within(positionTable).getAllByRole('cell');
     expect(positionCells).toHaveLength(4);
-    const [xHeader, xValue, yHeader, yValue] = positionCells.map(cell => cell.textContent);
+    const [xHeader, xValue, yHeader, yValue] = positionCells.map((cell) => cell.textContent);
     expect(xHeader).toEqual('x');
     expect(xValue).toEqual('20.0000');
     expect(yHeader).toEqual('y');
@@ -29,9 +29,9 @@ describe('Statistics.svelte', () => {
     expect(velocityTable).toBeVisible();
     const velocityCells = within(velocityTable).getAllByRole('cell');
     expect(velocityCells).toHaveLength(6);
-    const [
-      vxHeader, vxValue, vyHeader, vyValue, vHeader, vValue,
-    ] = velocityCells.map(cell => cell.textContent);
+    const [vxHeader, vxValue, vyHeader, vyValue, vHeader, vValue] = velocityCells.map(
+      (cell) => cell.textContent,
+    );
     expect(vxHeader).toEqual('vx');
     expect(vxValue).toEqual('2.0000');
     expect(vyHeader).toEqual('vy');

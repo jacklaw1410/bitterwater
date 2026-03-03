@@ -19,48 +19,60 @@ test('Brownian Motion page functions correctly', async ({ page }) => {
     path: 'test-results/screenshots/bn-1-paused.png',
   });
   await page.waitForTimeout(500);
-  const pausedCanvas2 = await canvas.screenshot({ path: 'test-results/screenshots/bn-2-paused-awaited.png' });
+  const pausedCanvas2 = await canvas.screenshot({
+    path: 'test-results/screenshots/bn-2-paused-awaited.png',
+  });
   expect(pausedCanvas2).toEqual(pausedCanvas1);
 
   // Test changing particle count update the canvas
   const particleSlider = page.getByLabel('Number of particles');
   await particleSlider.fill('200');
   await expect(page.getByText('Particles: 200')).toBeVisible();
-  const pausedCanvas3 = await canvas.screenshot({ path: 'test-results/screenshots/bn-3-particles-updated.png' });
+  const pausedCanvas3 = await canvas.screenshot({
+    path: 'test-results/screenshots/bn-3-particles-updated.png',
+  });
   expect(pausedCanvas3).not.toEqual(pausedCanvas2);
 
   // Test changing particle size update the canvas
   const sizeSlider = page.getByLabel('Particle size');
   await sizeSlider.fill('5');
   await expect(page.getByText('Size: 5')).toBeVisible();
-  const pausedCanvas4 = await canvas.screenshot({ path: 'test-results/screenshots/bn-4-size-updated.png' });
+  const pausedCanvas4 = await canvas.screenshot({
+    path: 'test-results/screenshots/bn-4-size-updated.png',
+  });
   expect(pausedCanvas4).not.toEqual(pausedCanvas3);
 
   // Test changing color update the canvas
   const colorPicker = page.getByLabel('Particle color');
   await colorPicker.fill('#00ff00');
-  const pausedCanvas5 = await canvas.screenshot({ path: 'test-results/screenshots/bn-5-color-updated.png' });
+  const pausedCanvas5 = await canvas.screenshot({
+    path: 'test-results/screenshots/bn-5-color-updated.png',
+  });
   expect(pausedCanvas5).not.toEqual(pausedCanvas4);
 
   // Test changing width update the canvas
   const widthInput = page.getByLabel('Canvas width');
   await widthInput.fill('600');
-  const pausedCanvas6 = await canvas.screenshot({ path: 'test-results/screenshots/bn-6-width-updated.png' });
+  const pausedCanvas6 = await canvas.screenshot({
+    path: 'test-results/screenshots/bn-6-width-updated.png',
+  });
   expect(pausedCanvas6).not.toEqual(pausedCanvas5);
 
   // Test changing height update the canvas
   const heightInput = page.getByLabel('Canvas height');
   await heightInput.fill('400');
-  const pausedCanvas7 = await canvas.screenshot({ path: 'test-results/screenshots/bn-7-height-updated.png' });
+  const pausedCanvas7 = await canvas.screenshot({
+    path: 'test-results/screenshots/bn-7-height-updated.png',
+  });
   expect(pausedCanvas7).not.toEqual(pausedCanvas6);
 
   // Test play functionality: canvas should change
   await page.getByRole('button', { name: 'Play' }).click();
   await expect(page.getByRole('button', { name: 'Pause' })).toBeVisible();
   await page.waitForTimeout(500);
-  expect(await canvas.screenshot({ path: 'test-results/screenshots/bn-8-replayed.png' })).not.toEqual(
-    pausedCanvas7,
-  );
+  expect(
+    await canvas.screenshot({ path: 'test-results/screenshots/bn-8-replayed.png' }),
+  ).not.toEqual(pausedCanvas7);
 
   // Test speed slider
   const speedSlider = page.getByLabel('Particle speed');

@@ -16,7 +16,7 @@ export const generateRandomVelocity = (speed: number, a: number = 0.7) => {
     vx: Math.cos(direction) * amplitude,
     vy: Math.sin(direction) * amplitude,
   };
-}
+};
 
 export const createParticle = (
   width: number,
@@ -34,7 +34,7 @@ export const createParticle = (
     size,
     color,
   };
-}
+};
 
 export const updateParticle = (p: Particle, props: Partial<Particle>) => {
   const { x, y, vx, vy, size, color } = props;
@@ -60,4 +60,4 @@ export const moveParticles = (particles: Particle[], width: number, height: numb
     if (p.y < 0) p.y = 0;
     else if (p.y > height) p.y = height;
   }
-}
+};
