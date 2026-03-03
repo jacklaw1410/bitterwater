@@ -1,0 +1,164 @@
+:root {
+  /* Type and layout */
+  --font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --spacing: 1em;
+  --max-width: 60em;
+
+  /* Semantic color palette (light theme) */
+  --color-primary: #6200ee;
+  --color-on-primary: #ffffff;
+
+  --color-secondary: #03dac6;
+  --color-on-secondary: #000000;
+
+  --color-background: #ffffff;
+  --color-surface: #f5f5f5;
+  --color-on-background: #212121;
+
+  --color-text: var(--color-on-background);
+  --color-border: #e0e0e0;
+}
+
+/* dark theme overrides triggered by attribute */
+[data-theme='dark'] {
+  --color-primary: #bb86fc;
+  --color-on-primary: #000000;
+
+  --color-secondary: #03dac6;
+  --color-on-secondary: #000000;
+
+  --color-background: #121212;
+  --color-surface: #1e1e1e;
+  --color-on-background: #fafafa;
+
+  --color-text: var(--color-on-background);
+  --color-border: #424242;
+}
+
+/* native prefers-color-scheme fallback (before JS runs) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-primary: #bb86fc;
+    --color-on-primary: #000000;
+
+    --color-secondary: #03dac6;
+    --color-on-secondary: #000000;
+
+    --color-background: #121212;
+    --color-surface: #1e1e1e;
+    --color-on-background: #fafafa;
+
+    --color-text: var(--color-on-background);
+    --color-border: #424242;
+  }
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  font-family: var(--font-family);
+  line-height: 1.4;
+  font-size: 16px;
+  margin: auto;
+  padding: var(--spacing);
+  max-width: var(--max-width);
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+p,
+hr,
+nav,
+main,
+header,
+footer {
+  margin: var(--spacing) 0;
+}
+
+article h1 {
+  /* override :-webkit-any */
+  font-size: 2em;
+}
+
+a {
+  color: inherit;
+}
+
+pre code {
+  white-space: pre-wrap;
+}
+
+pre {
+  padding: 1em;
+  border-radius: 3px;
+  background: var(--color-surface);
+  color: var(--color-on-background);
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+input {
+  vertical-align: middle;
+}
+
+blockquote {
+  margin: 0;
+  border-left: 4px solid var(--color-border);
+  padding-left: 1em;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style-position: inside;
+}
+
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+  padding-inline: 1em;
+}
+
+input:disabled,
+button:disabled {
+  opacity: 0.9;
+}
+
+td,
+th,
+table {
+  border: 1px solid var(--color-border);
+  padding: 8px;
+  border-collapse: collapse;
+}
+
+input,
+button,
+select,
+textarea {
+  outline: none;
+  background: none;
+  padding: 3px 7px;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+}
+
+button,
+input[type='reset'],
+input[type='button'],
+input[type='submit'] {
+  color: var(--color-on-primary);
+  background: var(--color-primary);
+}
