@@ -1,3 +1,7 @@
+---
+description: Provides a high-level overview of the project's Test-Driven Development (TDD) philosophy and gives guidance on when to use unit, component, or end-to-end (E2E) tests.
+---
+
 # Project Testing Strategy
 
 This document provides an overview of our project's testing philosophy, tools, and links to more detailed guidelines for specific testing types.

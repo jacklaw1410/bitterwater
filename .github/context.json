@@ -1,0 +1,14 @@
+{
+  "keywords": {
+    "component": [".github/docs/svelte-usages.md", ".github/docs/TESTING.md"],
+    "route": [".github/docs/ARCHITECTURE.md"],
+    "test": [".github/docs/TESTING.md"],
+    "typescript": [".github/docs/typescript-usages.md"],
+    "state": [".github/docs/svelte-usages.md"]
+  },
+  "paths": {
+    "src/lib/components/**/*.svelte": [".github/docs/svelte-usages.md", ".github/docs/TESTING.md"],
+    "e2e/**/*.ts": [".github/docs/TESTING.md"],
+    "src/routes/**/+page.svelte": [".github/docs/ARCHITECTURE.md"]
+  }
+}

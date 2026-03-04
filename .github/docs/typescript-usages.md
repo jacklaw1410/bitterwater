@@ -1,3 +1,7 @@
+---
+description: Outlines the best practices and conventions for using TypeScript, focusing on strictness, type safety, immutability, and code documentation using JSDoc.
+---
+
 # TypeScript Project Practices
 
 This document outlines best practices and conventions for using TypeScript within this project to ensure type safety, maintainability, and code quality.
@@ -20,6 +24,10 @@ This document outlines best practices and conventions for using TypeScript withi
 1. **Discriminated Unions**: Use discriminated unions for h andling different states or types of data, improv i ng type safety in conditional logic.
 2. **Narrowing**: Employ type narrowing t echniques (e.g., `typeof`, `instanceof`, `in`, custom i i itype guards) to safely work with union types.
 3. **Avoid `any`**: Minimize the use of `any`. If a type is unknown, consider `unknown` and narrow it, or provide a specific type assertion with caution.
+
+## Code Documentation
+
+- **JSDoc for Exports**: All exported functions, types, interfaces, and variables should be documented with JSDoc. This provides essential inline context for both human developers and AI agents, explaining the purpose and usage of the code.
 
 ## Dependency Management
 

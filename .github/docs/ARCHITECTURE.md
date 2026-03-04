@@ -1,3 +1,7 @@
+---
+description: Outlines the project's component-driven architecture, core technologies (Svelte 5, Storybook, Vite, Playwright, Vitest), and standard directory structure.
+---
+
 # Architecture
 
 This project follows a component-driven architecture, emphasizing the use of Svelte 5 Runes for reactivity and state management.

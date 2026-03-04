@@ -1,3 +1,7 @@
+---
+description: Specifies the strategy for testing Svelte components using Vitest and Svelte Testing Library, including guidelines on co-location, props testing, and event simulation.
+---
+
 # Component Testing Strategy (Vitest)
 
 This document outlines the best practices for writing unit and component tests using Vitest.

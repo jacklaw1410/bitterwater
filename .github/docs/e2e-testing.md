@@ -1,3 +1,7 @@
+---
+description: Specifies the strategy for writing end-to-end (E2E) tests for critical user journeys using Playwright, including conventions for locators, assertions, and snapshot testing.
+---
+
 # End-to-End (E2E) Testing Strategy (Playwright)
 
 This document outlines the best practices for writing end-to-end tests using Playwright.

@@ -1,3 +1,7 @@
+---
+description: This document is the primary guide for writing Svelte 5 code in this project. It mandates the use of Runes for all reactivity. It also provides conventions for component structure, styling, event handling, and props design, while explicitly forbidding legacy Svelte features.
+---
+
 # Svelte Usages and Best Practices
 
 This document outlines best practices for writing fast, robust Svelte 5 applications, with a focus on Runes.
@@ -61,6 +65,10 @@ Custom components expose two main types of props:
 
 - Event handlers should be named using the `on[eventname]` pattern (e.g., `onsubmit`, `onrestartsimulation`).
 - Prefer exposing "customary" (higher-level, intent-based) events rather than low-level mechanical events. For instance, a submit button should expose an `onsubmit` event (representing the user's intention) instead of a generic `onclick` event (representing the mechanism).
+
+## Code Documentation
+
+- **JSDoc for Props**: All components should use JSDoc comments to document their props. This provides essential context for both human developers and AI agents, explaining the purpose, type, and default value of each prop.
 
 ## Snippets
 

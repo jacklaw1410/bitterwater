@@ -1,3 +1,7 @@
+---
+description: Specifies the strategy for writing isolated unit tests for non-component logic (pure functions, utilities) using Vitest, with a focus on high coverage and mocking dependencies.
+---
+
 # Unit Testing Strategy (Vitest) for Non-Component Logic
 
 This document outlines the best practices for writing isolated unit tests for pure JavaScript/TypeScript logic, utility functions, and business logic, explicitly excluding Svelte components.
