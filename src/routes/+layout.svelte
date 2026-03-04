@@ -9,6 +9,6 @@
 </svelte:head>
 
 <Header />
-<main>
+<main class="container">
   {@render children()}
 </main>

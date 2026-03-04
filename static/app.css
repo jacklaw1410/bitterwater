@@ -1,57 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap');
+
 :root {
   /* Type and layout */
-  --font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --font-family: 'Inter', sans-serif;
+  --font-family-mono: 'Roboto Mono', monospace;
   --spacing: 1em;
   --max-width: 60em;
 
   /* Semantic color palette (light theme) */
-  --color-primary: #6200ee;
+  --color-primary: #1d4ed8; /* Darker blue for improved contrast */
   --color-on-primary: #ffffff;
 
-  --color-secondary: #03dac6;
-  --color-on-secondary: #000000;
+  --color-secondary: #10b981; /* A vibrant green */
+  --color-on-secondary: #ffffff;
 
-  --color-background: #ffffff;
-  --color-surface: #f5f5f5;
-  --color-on-background: #212121;
+  --color-background: #f9fafb; /* Light gray background */
+  --color-surface: #ffffff; /* White surfaces */
+  --color-on-background: #1f2937; /* Dark gray text */
 
   --color-text: var(--color-on-background);
-  --color-border: #e0e0e0;
+  --color-border: #e5e7eb; /* Light gray border */
 }
 
 /* dark theme overrides triggered by attribute */
 [data-theme='dark'] {
-  --color-primary: #bb86fc;
-  --color-on-primary: #000000;
+  --color-primary: #2563eb; /* Slightly lighter blue for dark mode */
+  --color-on-primary: #ffffff;
 
-  --color-secondary: #03dac6;
-  --color-on-secondary: #000000;
+  --color-secondary: #34d399; /* Lighter green for dark mode */
+  --color-on-secondary: #ffffff;
 
-  --color-background: #121212;
-  --color-surface: #1e1e1e;
-  --color-on-background: #fafafa;
+  --color-background: #1a202c; /* Dark background */
+  --color-surface: #2d3748; /* Darker surface */
+  --color-on-background: #e2e8f0; /* Light text */
 
   --color-text: var(--color-on-background);
-  --color-border: #424242;
+  --color-border: #4a5568; /* Darker border */
 }
 
 /* native prefers-color-scheme fallback (before JS runs) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --color-primary: #bb86fc;
-    --color-on-primary: #000000;
+    --color-primary: #2563eb;
+    --color-on-primary: #ffffff;
 
-    --color-secondary: #03dac6;
-    --color-on-secondary: #000000;
+    --color-secondary: #34d399;
+    --color-on-secondary: #ffffff;
 
-    --color-background: #121212;
-    --color-surface: #1e1e1e;
-    --color-on-background: #fafafa;
+    --color-background: #1a202c;
+    --color-surface: #2d3748;
+    --color-on-background: #e2e8f0;
 
     --color-text: var(--color-on-background);
-    --color-border: #424242;
+    --color-border: #4a5568;
   }
 }
 
@@ -61,10 +62,10 @@ html {
 
 body {
   font-family: var(--font-family);
-  line-height: 1.4;
+  line-height: 1.6;
   font-size: 16px;
   margin: auto;
-  padding: var(--spacing);
+  padding: 0 var(--spacing);
   max-width: var(--max-width);
   background: var(--color-background);
   color: var(--color-text);
@@ -89,7 +90,14 @@ article h1 {
 }
 
 a {
-  color: inherit;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+  opacity: 0.9;
 }
 
 pre code {
@@ -101,6 +109,7 @@ pre {
   border-radius: 3px;
   background: var(--color-surface);
   color: var(--color-on-background);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 img {
@@ -161,4 +170,50 @@ input[type='button'],
 input[type='submit'] {
   color: var(--color-on-primary);
   background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+button:hover,
+button:focus,
+input[type='reset']:hover,
+input[type='reset']:focus,
+input[type='button']:hover,
+input[type='button']:focus,
+input[type='submit']:hover,
+input[type='submit']:focus {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 calc(var(--spacing) / 2);
+  }
+}
+
+@media (max-width: 480px) {
+  .header .container {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    grid-gap: 0.5rem;
+  }
+  .header .logo {
+    grid-column: 1 / 2;
+  }
+  .header nav {
+    grid-column: 1 / -1;
+    justify-content: space-around;
+  }
+  .header .theme-toggle {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
 }
