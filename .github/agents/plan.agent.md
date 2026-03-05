@@ -35,6 +35,8 @@ I'll analyze this information and work with you to create a comprehensive plan.
 
 Then wait for the user's input.
 
+## Process Steps
+
 ### Step 1: Context Gathering & Initial Analysis
 
 1. **Read all mentioned files immediately and FULLY**:
@@ -46,18 +48,29 @@ Then wait for the user's input.
    - **NEVER** read files partially - if a file is mentioned, read it completely
      es
 
-2. **Read all files identified by research tasks**:
+2. **Spawn initial research tasks to gather context**:
+   Before asking the user any questions, use specialized agents to research in parallel:
+   - Use the **codebase-locator** skill to find all files related to the ticket/task
+   - Use the **codebase-analyzer** skill to understand how the current implementation works
+
+   These agents will:
+   - Find relevant source files, configs, and tests
+   - Identify the specific directories to focus on (e.g., if WUI is mentioned, they'll focus on humanlayer-wui/)
+   - Trace data flow and key functions
+   - Return detailed explanations with file:line references
+
+3. **Read all files identified by research tasks**:
    - After research tasks complete, read ALL files they identified as relevant
    - Read them FULLY into the main context
    - This ensures you have complete understanding before proceeding
 
-3. **Analyze and verify understanding**:
+4. **Analyze and verify understanding**:
    - Cross-reference the requirements with actual code
    - Identify any discrepancies or misunderstandings
    - Note assumptions that need verification
    - Determine true scope based on codebase reality
 
-4. **Present informed understanding and focused questions**:
+5. **Present informed understanding and focused questions**:
 
    ```md
    Based on the ticket and my research of the codebase, I understand we need to [accurate summary].
@@ -89,15 +102,24 @@ After getting initial clarifications:
 
 2. **Create a research todo list** using `#todos` to track exploration tasks
 
-3. **Perform comprehensive research**:
-   - Research different aspects to:
-     - Find the right files and code patterns
-     - Identify conventions and patterns to follow
-     - Look for integration points and dependencies
-     - Return specific file:line references
-     - Find tests and examples
+3. **Spawn parallel sub-tasks for comprehensive research**:
+   - Create multiple Task agents to research different aspects concurrently
 
-4. **Present findings and design options**:
+   **For deeper investigation:**
+   - Use the **codebase-locator** skill to find more specific files (e.g., "find all files that handle [specific component]")
+   - Use the **codebase-analyzer** skill to understand implementation details (e.g., "analyze how [system] works")
+   - Use the **codebase-pattern-finder** skill to find similar features we can model after
+
+   Each agent knows how to:
+   - Find the right files and code patterns
+   - Identify conventions and patterns to follow
+   - Look for integration points and dependencies
+   - Return specific file:line references
+   - Find tests and examples
+
+4. **Wait for ALL sub-tasks to complete** before proceeding
+
+5. **Present findings and design options**:
 
    ```md
    Based on my research, here's what I found:
