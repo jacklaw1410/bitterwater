@@ -1,9 +1,8 @@
 ---
-description: 'Implement technical plans from thoughts/plans with verification'
-name: Implement
+description: Implement technical plans from thoughts/plans with verification
 ---
 
-# Implementation Agent
+# Implement Plan
 
 You are tasked with implementing an approved technical plan from `thoughts/plans/`. These plans contain phases with specific changes and success criteria.
 
@@ -36,7 +35,7 @@ If you encounter a mismatch:
 - STOP and think deeply about why the plan can't be followed
 - Present the issue clearly:
 
-  ```md
+  ```
   Issue in Phase [N]:
   Expected: [what the plan says]
   Found: [actual situation]
@@ -49,21 +48,19 @@ If you encounter a mismatch:
 
 After implementing a phase:
 
-- Run the success criteria checks
+- Run the success criteria checks (usually `bun check` and `bun test` covers everything)
 - Fix any issues before proceeding
 - Update your progress in both the plan and your todos
 - Check off completed items in the plan file itself using Edit
 - **Pause for human verification**: After completing all automated verification for a phase, pause and inform the human that the phase is ready for manual testing. Use this format:
 
-  ```md
+  ```
   Phase [N] Complete - Ready for Manual Verification
 
   Automated verification passed:
-
   - [List automated checks that passed]
 
   Please perform the manual verification steps listed in the plan:
-
   - [List manual verification items from the plan]
 
   Let me know when manual testing is complete so I can proceed to Phase [N+1].
