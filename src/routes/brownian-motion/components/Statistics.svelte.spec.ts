@@ -1,7 +1,7 @@
 import { render, screen, cleanup, within } from '@testing-library/svelte';
 import { describe, it, expect, afterEach } from 'vitest';
 import Statistics from './Statistics.svelte';
-import type { Particle } from '$lib/utils/brownian-motion';
+import type { Particle } from '../utils';
 
 afterEach(() => cleanup());
 describe('Statistics.svelte', () => {

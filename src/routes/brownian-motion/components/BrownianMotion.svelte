@@ -1,22 +1,15 @@
 <script lang="ts">
-  import type { Particle } from '$lib/utils/brownian-motion';
+  import type { Particle } from '../utils';
 
   let canvasElement: HTMLCanvasElement;
-  let {
-    particles,
-    showTrails,
-    particleSize,
-    particleColor,
-    width,
-    height,
-  }: {
+  let { particles, width, height, showTrails, particleSize, particleColor } = $props<{
     particles: Particle[];
+    width: number;
+    height: number;
     showTrails: boolean;
     particleSize: number;
     particleColor: string;
-    width: number;
-    height: number;
-  } = $props();
+  }>();
 
   $effect(() => {
     const ctx = canvasElement.getContext('2d');

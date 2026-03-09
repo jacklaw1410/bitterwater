@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createParticle, moveParticles, updateParticle, type Particle } from './brownian-motion';
+import { createParticle, moveParticles, updateParticle, type Particle } from './utils.js'; // Updated import path
 
 describe('brownian-motion logic', () => {
   it('creates a particle within the specified bounds', () => {

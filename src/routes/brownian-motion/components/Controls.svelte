@@ -11,8 +11,6 @@
     onreset: () => void;
   };
 
-  // Using `let` for bindable props allows them to be updated by the parent
-  // and allows internal modification when handled by a function.
   let {
     particleCount = $bindable(100),
     speed = $bindable(2),
@@ -23,12 +21,11 @@
     width = $bindable(800),
     height = $bindable(600),
     onreset,
-  }: Props = $props(); // Correct type annotation for $props()
+  }: Props = $props();
 
-  // Encapsulate the toggle logic to ensure correct mutation of the bindable prop
-  function togglePlayPause() {
-    isPlaying = !isPlaying; // This directly updates the bindable prop
-  }
+  const togglePlayPause = () => {
+    isPlaying = !isPlaying;
+  };
 </script>
 
 <div class="controls">
