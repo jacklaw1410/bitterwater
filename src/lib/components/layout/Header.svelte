@@ -2,21 +2,24 @@
   import { resolve } from '$app/paths';
   import { page } from '$app/state';
   import { theme, toggleTheme } from '$lib/theme';
+
+  const ROUTES = [
+    { id: '/', name: 'Home' },
+    { id: '/brownian-motion', name: 'Brownian Motion' },
+    { id: '/pi-estimation', name: 'Pi Estimation' },
+    { id: '/cover-flow', name: 'Cover Flow' },
+  ] as const;
 </script>
 
 <header class="header">
   <div class="container">
     <a href={resolve('/')} class="logo">Svelte 101</a>
     <nav>
-      <a href={resolve('/')} aria-current={page.route.id === '/' ? 'page' : undefined}>Home</a>
-      <a
-        href={resolve('/brownian-motion')}
-        aria-current={page.route.id === '/brownian-motion' ? 'page' : undefined}>Brownian Motion</a
-      >
-      <a
-        href={resolve('/pi-estimation')}
-        aria-current={page.route.id === '/pi-estimation' ? 'page' : undefined}>Pi Estimation</a
-      >
+      {#each ROUTES as route (route.id)}
+        <a href={resolve(route.id)} aria-current={page.route.id === route.id ? 'page' : undefined}
+          >{route.name}</a
+        >
+      {/each}
     </nav>
     <button class="theme-toggle" aria-label="Toggle theme" on:click={toggleTheme}>
       {#if $theme === 'dark'}🌙{/if}
