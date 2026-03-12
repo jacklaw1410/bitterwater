@@ -18,7 +18,15 @@ Aim for **low to moderate coverage** in terms of number of tests, but **high tho
 
 - **Naming Convention**: All Playwright test files must be named `[feature-name].test.ts` and reside in the `e2e/` directory.
 - **Page Navigation**: Use `await page.goto('/your-route')` to navigate to the starting point of your test scenario.
-- **Locator Strategy**: Prefer robust locators based on roles, text, or test IDs (e.g., `page.getByRole('button', { name: 'Submit' })`, `page.getByText('Welcome')`, `page.locator('[data-testid="my-element"]')`). Avoid brittle CSS selectors that rely on implementation details.
+- **Locator Strategy**: Prioritize user-facing locators that reflect how users and assistive technologies perceive the page. This makes tests more resilient to implementation changes. Follow this priority order:
+  1. **`page.getByRole()`**: The preferred method. Locate by explicit and implicit accessibility roles (e.g., `'button'`, `'heading'`, `'checkbox'`). Always try to include an accessible name (e.g., `{ name: 'Submit' }`).
+  2. **`page.getByLabel()`**: For form controls associated with a label.
+  3. **`page.getByPlaceholder()`**: For inputs with placeholder text.
+  4. **`page.getByText()`**: For non-interactive elements like `div`, `span`, or `p`.
+  5. **`page.getByAltText()`**: For images.
+  6. **`page.getByTitle()`**: For elements with a `title` attribute.
+- **Test IDs (`page.getByTestId()`)**: Use `data-testid` attributes as a last resort when an element cannot be reliably identified by user-facing attributes. This provides a stable testing contract but is not visible to the user.
+- **Avoid Brittle Selectors**: Do not use CSS or XPath locators directly (`page.locator('...')`). They are tied to the DOM structure and can easily break.
 - **User Interactions**: Simulate user actions like `click()`, `fill()`, `press()`, etc.
 - **Assertions**: Use Playwright's `expect` API for assertions (e.g., `await expect(locator).toBeVisible()`, `await expect(page).toHaveURL(/.*dashboard/)`).
 - **Snapshot Testing**: Use `expect(locator).toMatchSnapshot()` for visual regression testing of critical UI elements or full pages. Ensure snapshots are updated when UI changes are intentional.
