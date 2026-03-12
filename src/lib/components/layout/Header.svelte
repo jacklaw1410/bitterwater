@@ -1,16 +1,21 @@
 <script lang="ts">
+  import { resolve } from '$app/paths';
   import { page } from '$app/state';
   import { theme, toggleTheme } from '$lib/theme';
 </script>
 
 <header class="header">
   <div class="container">
-    <a href="/" class="logo">Svelte 101</a>
+    <a href={resolve('/')} class="logo">Svelte 101</a>
     <nav>
-      <a href="/" aria-current={page.route.id === '/' ? 'page' : undefined}>Home</a>
+      <a href={resolve('/')} aria-current={page.route.id === '/' ? 'page' : undefined}>Home</a>
       <a
-        href="/brownian-motion"
+        href={resolve('/brownian-motion')}
         aria-current={page.route.id === '/brownian-motion' ? 'page' : undefined}>Brownian Motion</a
+      >
+      <a
+        href={resolve('/pi-estimation')}
+        aria-current={page.route.id === '/pi-estimation' ? 'page' : undefined}>Pi Estimation</a
       >
     </nav>
     <button class="theme-toggle" aria-label="Toggle theme" on:click={toggleTheme}>
