@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('Brownian Motion page functions correctly', async ({ page }) => {
+test('Brownian Motion page', async ({ page }) => {
   await page.goto('/brownian-motion');
   await expect(page.getByRole('heading', { name: 'Brownian Motion Visualizer' })).toBeVisible();
 

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { fail } from 'assert';
 
-test('pi estimation page functions correctly', async ({ page }) => {
+test('Pi Estimation page', async ({ page }) => {
   await page.goto('/pi-estimation');
 
   await expect(page.getByRole('heading', { name: 'Pi Estimation' })).toBeVisible();

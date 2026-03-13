@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('Cover Flow page functions correctly', async ({ page }) => {
+test('Cover Flow page', async ({ page }) => {
   await page.goto('/cover-flow');
 
   await expect(page).toHaveTitle('Cover Flow');
