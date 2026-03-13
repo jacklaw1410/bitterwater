@@ -2,7 +2,7 @@
 
 :root {
   /* Type and layout */
-  --font-family: 'Inter', sans-serif;
+  font-family: "Itim", cursive;
   --font-family-mono: 'Roboto Mono', monospace;
   --spacing: 1em;
   --max-width: 60em;
