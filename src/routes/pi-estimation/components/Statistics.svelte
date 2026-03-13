@@ -15,11 +15,5 @@
       4,
     )}%
   </p>
-  <p>Pi Estimation: {piEstimation.toFixed(6)}</p>
+  <p>Estimated &pi;: {piEstimation.toFixed(6)}</p>
 </div>
-
-<style>
-  .statistics {
-    font-family: monospace;
-  }
-</style>

@@ -4,11 +4,11 @@ import { fail } from 'assert';
 test('Pi Estimation page', async ({ page }) => {
   await page.goto('/pi-estimation');
 
-  await expect(page.getByRole('heading', { name: 'Pi Estimation' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'π Estimation' })).toBeVisible();
 
   // Initial state
   await expect(page.getByText('Darts Inside Circle: 0 / 0 = 0.0000%')).toBeVisible();
-  await expect(page.getByText('Pi Estimation: 0.000000')).toBeVisible();
+  await expect(page.getByText('Estimated π: 0.000000')).toBeVisible();
 
   // Start the simulation
   await page.getByRole('button', { name: 'Start' }).click();
@@ -34,7 +34,7 @@ test('Pi Estimation page', async ({ page }) => {
     fail('Darts Inside Circle text not found');
   }
 
-  const piEstimation = await page.getByText(/Pi Estimation:/).textContent();
+  const piEstimation = await page.getByText(/Estimated π:/).textContent();
   if (piEstimation) {
     expect(parseFloat(piEstimation.split(': ')[1])).toBeGreaterThan(0);
   } else {
@@ -45,5 +45,5 @@ test('Pi Estimation page', async ({ page }) => {
 
   // Check that the statistics have been reset
   await expect(page.getByText('Darts Inside Circle: 0 / 0 = 0.0000%')).toBeVisible();
-  await expect(page.getByText('Pi Estimation: 0.000000')).toBeVisible();
+  await expect(page.getByText('Estimated π: 0.000000')).toBeVisible();
 });

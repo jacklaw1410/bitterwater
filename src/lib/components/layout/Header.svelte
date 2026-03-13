@@ -6,7 +6,7 @@
   const ROUTES = [
     { id: '/', name: 'Home' },
     { id: '/brownian-motion', name: 'Brownian Motion' },
-    { id: '/pi-estimation', name: 'Pi Estimation' },
+    { id: '/pi-estimation', name: 'π Estimation' },
     { id: '/cover-flow', name: 'Cover Flow' },
     { id: '/blob-morphing', name: 'Blob Morphing' },
   ] as const;

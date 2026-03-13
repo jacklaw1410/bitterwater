@@ -8,10 +8,15 @@
 </script>
 
 <svelte:head>
-  <title>Pi Estimation</title>
+  <title>π Estimation</title>
 </svelte:head>
 
-<h1>Pi Estimation</h1>
+<h1>π Estimation</h1>
+<p>
+  This is an interactive visualization for estimating the value of <i>π</i>. The estimation is
+  performed by throwing darts at a target and counting the proportion of darts that land inside a
+  circle. The more darts thrown, the better the estimation of <i>π</i>.
+</p>
 
 <Controls />
 <Statistics totalDarts={state.totalDarts} dartsInsideCircle={state.dartsInsideCircle} />
