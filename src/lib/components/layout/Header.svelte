@@ -8,6 +8,7 @@
     { id: '/brownian-motion', name: 'Brownian Motion' },
     { id: '/pi-estimation', name: 'Pi Estimation' },
     { id: '/cover-flow', name: 'Cover Flow' },
+    { id: '/blob-morphing', name: 'Blob Morphing' },
   ] as const;
 </script>
 
