@@ -18,10 +18,10 @@ describe('Header.svelte', () => {
     expect(home).toBeVisible();
     expect(home).toHaveAttribute('href', '/');
 
-    const brownianMotion = screen.getByRole('link', { name: 'Brownian Motion' });
-    expect(brownianMotion).toBeInTheDocument();
-    expect(brownianMotion).toBeVisible();
-    expect(brownianMotion).toHaveAttribute('href', '/brownian-motion');
+    const gallery = screen.getByRole('link', { name: 'Gallery' });
+    expect(gallery).toBeInTheDocument();
+    expect(gallery).toBeVisible();
+    expect(gallery).toHaveAttribute('href', '/gallery');
 
     const toggle = screen.getByRole('button', { name: /toggle theme/i });
     expect(toggle).toBeInTheDocument();

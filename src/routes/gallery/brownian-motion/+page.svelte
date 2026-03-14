@@ -1,3 +1,11 @@
+<script module lang="ts">
+  export const metadata = {
+    title: 'Brownian Motion',
+    description:
+      'Interactive particle simulation demonstrating Brownian motion with customizable parameters.',
+  } as const;
+</script>
+
 <script lang="ts">
   import BrownianMotion from './components/BrownianMotion.svelte';
   import Controls from './components/Controls.svelte';

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { fail } from 'assert';
 
 test('Pi Estimation page', async ({ page }) => {
-  await page.goto('/pi-estimation');
+  await page.goto('/gallery/pi-estimation');
 
   await expect(page.getByRole('heading', { name: 'π Estimation' })).toBeVisible();
 

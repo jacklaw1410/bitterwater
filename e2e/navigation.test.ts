@@ -5,24 +5,18 @@ test('navigation header', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('link', { name: 'Svelte 101' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Brownian Motion' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'π Estimation' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Cover Flow' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Blob Morphing' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Gallery' })).toBeVisible();
 
   // Visual regression test for the header
   const header = page.locator('header');
   await expect(header).toHaveScreenshot('navigation-header-initial.png');
 
-  // Check the Brownian motion page
-  await page.goto('/brownian-motion');
+  // Check the gallery page
+  await page.goto('/gallery');
   await expect(page.getByRole('link', { name: 'Svelte 101' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Brownian Motion' })).toBeVisible();
-  await expect(page.getByRole('link', { name: '\u03C0 Estimation' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Cover Flow' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Blob Morphing' })).toBeVisible();
-  await expect(header).toHaveScreenshot('navigation-header-brownian-motion.png');
+  await expect(page.getByRole('link', { name: 'Gallery' })).toBeVisible();
+  await expect(header).toHaveScreenshot('navigation-header-gallery.png');
 
   // Test navigate back to home page
   await page.getByRole('link', { name: 'Home' }).click();

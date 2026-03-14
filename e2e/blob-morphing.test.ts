@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test('Blob Morphing page', async ({ page }) => {
-  await page.goto('/blob-morphing');
+  await page.goto('/gallery/blob-morphing');
 
   await expect(page.getByRole('heading', { name: 'Blob Morphing' })).toBeVisible();
 

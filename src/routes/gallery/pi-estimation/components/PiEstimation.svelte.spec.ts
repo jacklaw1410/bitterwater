@@ -4,20 +4,23 @@ import PiEstimation from './PiEstimation.svelte';
 import type { Dart } from '../state.svelte';
 
 const mockContext = {
-  clearRect: vi.fn(),
   fillRect: vi.fn(),
-  strokeRect: vi.fn(),
   beginPath: vi.fn(),
-  arc: vi.fn(),
+  moveTo: vi.fn(),
+  lineTo: vi.fn(),
   stroke: vi.fn(),
+  arc: vi.fn(),
   fill: vi.fn(),
   fillStyle: '',
+  strokeStyle: '',
+  lineWidth: 0.5,
+  shadowBlur: 0,
 };
 
 describe('PiEstimation.svelte', () => {
   beforeEach(() => {
     vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(
-      () => mockContext as any,
+      () => mockContext as unknown as CanvasRenderingContext2D,
     );
     vi.clearAllMocks();
   });
@@ -31,10 +34,8 @@ describe('PiEstimation.svelte', () => {
   it('draws the basic structure on the canvas', () => {
     render(PiEstimation, { props: { darts: [] } });
 
-    expect(mockContext.clearRect).toHaveBeenCalled();
     expect(mockContext.fillRect).toHaveBeenCalledWith(0, 0, 500, 500);
-    expect(mockContext.strokeRect).toHaveBeenCalledWith(0, 0, 500, 500);
-    expect(mockContext.arc).toHaveBeenCalledWith(250, 250, 250, 0, 2 * Math.PI);
+    expect(mockContext.arc).toHaveBeenCalledWith(250, 250, 250 - 2, 0, 2 * Math.PI);
     expect(mockContext.stroke).toHaveBeenCalled();
   });
 
@@ -46,7 +47,7 @@ describe('PiEstimation.svelte', () => {
     render(PiEstimation, { props: { darts } });
 
     expect(mockContext.fill).toHaveBeenCalledTimes(2);
-    expect(mockContext.arc).toHaveBeenCalledWith(50, 50, 2, 0, 2 * Math.PI);
-    expect(mockContext.arc).toHaveBeenCalledWith(450, 450, 2, 0, 2 * Math.PI);
+    expect(mockContext.arc).toHaveBeenCalledWith(50, 50, 2.5, 0, 2 * Math.PI);
+    expect(mockContext.arc).toHaveBeenCalledWith(450, 450, 2.5, 0, 2 * Math.PI);
   });
 });

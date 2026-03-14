@@ -12,7 +12,7 @@ describe('Statistics.svelte', () => {
     });
 
     expect(screen.getByText(/Darts Inside Circle: 0 \/ 0 = 0.0000%/)).toBeInTheDocument();
-    expect(screen.getByText(/Pi Estimation: 0.000000/)).toBeInTheDocument();
+    expect(screen.getByText(/Estimated π: 0.000000/)).toBeInTheDocument();
   });
 
   it('calculates and displays pi estimation', () => {
@@ -24,6 +24,6 @@ describe('Statistics.svelte', () => {
     });
 
     expect(screen.getByText(/Darts Inside Circle: 785 \/ 1000 = 78.5000%/)).toBeInTheDocument();
-    expect(screen.getByText(/Pi Estimation: 3.140000/)).toBeInTheDocument();
+    expect(screen.getByText(/Estimated π: 3.140000/)).toBeInTheDocument();
   });
 });

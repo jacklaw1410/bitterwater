@@ -20,6 +20,7 @@
 
   --color-text: var(--color-on-background);
   --color-border: #e5e7eb; /* Light gray border */
+  --color-shadow: rgba(0, 0, 0, 0.1);
 }
 
 /* dark theme overrides triggered by attribute */
@@ -36,6 +37,7 @@
 
   --color-text: var(--color-on-background);
   --color-border: #4a5568; /* Darker border */
+  --color-shadow: rgba(255, 255, 255, 0.1);
 }
 
 /* native prefers-color-scheme fallback (before JS runs) */
@@ -53,6 +55,7 @@
 
     --color-text: var(--color-on-background);
     --color-border: #4a5568;
+    --color-shadow: rgba(255, 255, 255, 0.1);
   }
 }
 

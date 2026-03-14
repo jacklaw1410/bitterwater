@@ -1,3 +1,10 @@
+<script module lang="ts">
+  export const metadata = {
+    title: 'π Estimation',
+    description: 'Monte Carlo simulation for estimating the value of π using random points.',
+  } as const;
+</script>
+
 <script lang="ts">
   import PiEstimation from './components/PiEstimation.svelte';
   import Controls from './components/Controls.svelte';

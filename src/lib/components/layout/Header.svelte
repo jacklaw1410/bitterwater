@@ -5,10 +5,7 @@
 
   const ROUTES = [
     { id: '/', name: 'Home' },
-    { id: '/brownian-motion', name: 'Brownian Motion' },
-    { id: '/pi-estimation', name: 'π Estimation' },
-    { id: '/cover-flow', name: 'Cover Flow' },
-    { id: '/blob-morphing', name: 'Blob Morphing' },
+    { id: '/gallery', name: 'Gallery' },
   ] as const;
 </script>
 
@@ -41,8 +38,12 @@
     <a href={resolve('/')} class="logo">Svelte 101</a>
     <nav>
       {#each ROUTES as route (route.id)}
-        <a href={resolve(route.id)} aria-current={page.route.id === route.id ? 'page' : undefined}
-          >{route.name}</a
+        <a
+          href={resolve(route.id)}
+          aria-current={page.route.id === route.id ||
+          (route.id === '/gallery' && page.route.id?.startsWith('/gallery'))
+            ? 'page'
+            : undefined}>{route.name}</a
         >
       {/each}
     </nav>

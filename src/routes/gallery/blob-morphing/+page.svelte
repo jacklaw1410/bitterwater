@@ -1,3 +1,10 @@
+<script module lang="ts">
+  export const metadata = {
+    title: 'Blob Morphing',
+    description: 'Animated SVG blob that morphs through different shapes using CSS animations.',
+  } as const;
+</script>
+
 <script lang="ts">
   const PATHS = [
     'M660.1 163.6C710.9 177.9 740.9 242.8 764.2 307.0C787.5 371.1 804.0 434.5 783.2 483.6C762.4 532.8 704.2 567.8 655.8 595.4C607.3 623.1 568.6 643.4 521.6 675.3C474.7 707.2 419.4 750.7 365.4 752.3C311.3 753.8 258.4 713.3 227.9 662.2C197.4 611.2 189.2 549.5 164.5 480.7C139.7 411.9 98.3 335.9 108.9 271.6C119.4 207.3 182.0 154.6 250.2 148.3C318.4 142.0 392.3 181.9 465.0 183.7C537.7 185.6 609.3 149.2 660.1 163.6',
