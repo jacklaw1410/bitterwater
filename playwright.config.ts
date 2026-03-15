@@ -7,7 +7,7 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
   },
   use: {
-    baseURL: process.env.CI ? 'http://localhost:4173/bitterwater/' : 'http://localhost:4173/',
+    baseURL: process.env.CI ? 'http://127.0.0.1:4173/bitterwater/' : 'http://127.0.0.1:4173/',
   },
   testDir: 'e2e',
 });
