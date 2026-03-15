@@ -1,42 +1,9 @@
-# Bitter Water
+# Welcome to my Digital Garden
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This project is my personal space to explore, create, and share interactive web experiences. It's a gallery of visualizations and a playground where I experiment with Svelte, creative coding, and the joy of building for the web.
 
-## Creating a project
+I believe in learning by doing, and this site is a living document of my journey. Here, you'll find a collection of my latest experiments, from mesmerizing animations to data-driven art.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Behind the Curtain
 
-```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
-
-```sh
-# recreate this project
-bun x sv create --template minimal --types ts --add prettier eslint vitest="usages:unit,component" playwright devtools-json mdsvex storybook --install bun ./svelte101
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+For those interested in the technical details, this project is built with Svelte 5 and SvelteKit, and it's a testament to the power and elegance of these tools. If you're a developer, you can find more information about the project's setup and how to run it locally in the repository.
