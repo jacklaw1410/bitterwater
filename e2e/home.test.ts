@@ -5,7 +5,7 @@ test('Home page', async ({ page }) => {
 
   await expect(page).toHaveTitle('Bitter Water - Home');
 
-  await expect(page.getByRole('heading', { name: 'Welcome to Bitter Water!' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Welcome to my digital garden' })).toBeVisible();
 
   await expect(page).toHaveScreenshot('home-page.png', { fullPage: true });
 });

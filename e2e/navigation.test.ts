@@ -14,7 +14,7 @@ test('navigation header', async ({ page }) => {
 
   // Check the gallery page
   await page.goto('/gallery');
-  await expect(page).toHaveTitle('Bitter Water - Feature Gallery');
+  await expect(page).toHaveTitle('Bitter Water - Gallery');
   await expect(page.getByRole('link', { name: 'Bitter Water' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Gallery' })).toBeVisible();

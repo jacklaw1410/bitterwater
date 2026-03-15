@@ -6,10 +6,10 @@
 </script>
 
 <svelte:head>
-  <title>Bitter Water - Feature Gallery</title>
+  <title>Bitter Water - Gallery</title>
 </svelte:head>
 
-<h1>Feature Gallery</h1>
+<h1>Gallery</h1>
 
 {#if data.features.length > 0}
   <div class="gallery-grid">

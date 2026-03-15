@@ -8,7 +8,7 @@ describe('Header.svelte', () => {
   it('renders Header with navigation links and theme toggle', async () => {
     render(Header);
 
-    const logo = screen.getByRole('link', { name: 'Bitter Water' });
+    const logo = screen.getByRole('link', { name: 'Bitter Water Logo' });
     expect(logo).toBeInTheDocument();
     expect(logo).toBeVisible();
     expect(logo).toHaveAttribute('href', '/');

@@ -36,10 +36,10 @@
     {@render curve()}
   </div>
   <div class="container">
-    <a href={resolve('/')} class="logo">
+    <a href={resolve('/')} class="logo" aria-label="Bitter Water Logo">
       <img src={favicon} alt="Bitter Water" width="32" height="32" />
-      <span>Bitter Water</span></a
-    >
+      <span>Bitter Water</span>
+    </a>
     <nav>
       {#each ROUTES as route (route.id)}
         <a

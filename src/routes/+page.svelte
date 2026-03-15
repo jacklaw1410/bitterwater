@@ -2,7 +2,7 @@
   <title>Bitter Water - Home</title>
 </svelte:head>
 
-<h1>Welcome to my Digital Garden</h1>
+<h1>Welcome to my digital garden</h1>
 <p>
   This project is my personal space to explore, create, and share interactive web experiences. It's
   a gallery of visualizations and a playground where I experiment with Svelte, creative coding, and
