@@ -1,13 +1,13 @@
 <script module lang="ts">
+  import { asset } from '$app/paths';
   export const metadata = {
     title: 'Cover Flow',
     description: 'Interactive cover flow carousel displaying a collection of images.',
-    thumbnail: '/cover-flow/image_1.jpeg',
+    thumbnail: asset('/cover-flow/image_1.jpeg'),
   } as const;
 </script>
 
 <script lang="ts">
-  import { asset } from '$app/paths';
   let carousell: HTMLUListElement;
   const srcs = Array.from(
     { length: 16 },
