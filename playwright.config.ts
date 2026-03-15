@@ -12,4 +12,5 @@ export default defineConfig({
     baseURL: `${url}/`,
   },
   testDir: './e2e',
+  snapshotPathTemplate: '{testDir}/{testFilePath}-snapshots/{arg}{ext}',
 });
