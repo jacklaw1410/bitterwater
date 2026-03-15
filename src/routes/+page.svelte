@@ -2,8 +2,14 @@
   <title>Bitter Water - Home</title>
 </svelte:head>
 
-<h1>Welcome to Bitter Water!</h1>
+<h1>Welcome to my Digital Garden</h1>
 <p>
-  This project is a starting point for learning Svelte 5 and SvelteKit. Explore the examples and
-  documentation to get started.
+  This project is my personal space to explore, create, and share interactive web experiences. It's
+  a gallery of visualizations and a playground where I experiment with Svelte, creative coding, and
+  the joy of building for the web.
+</p>
+
+<p>
+  I believe in learning by doing, and this site is a living document of my journey. Here, you'll
+  find a collection of my latest experiments, from mesmerizing animations to data-driven art.
 </p>

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
   import { page } from '$app/state';
+  import favicon from '$lib/assets/favicon.svg';
   import { theme, toggleTheme } from '$lib/theme';
 
   const ROUTES = [
@@ -35,7 +36,10 @@
     {@render curve()}
   </div>
   <div class="container">
-    <a href={resolve('/')} class="logo">Bitter Water</a>
+    <a href={resolve('/')} class="logo">
+      <img src={favicon} alt="Bitter Water" width="32" height="32" />
+      <span>Bitter Water</span></a
+    >
     <nav>
       {#each ROUTES as route (route.id)}
         <a
@@ -76,10 +80,16 @@
     font-weight: 600;
     color: var(--color-on-primary);
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-bottom: 0.25rem;
   }
   nav {
     display: flex;
     gap: 1rem;
+    margin-top: 1rem;
   }
   nav a {
     color: var(--color-on-primary);
