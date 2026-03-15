@@ -2,6 +2,9 @@ import { test, expect } from '@playwright/test';
 
 test('Brownian Motion page', async ({ page }) => {
   await page.goto('/gallery/brownian-motion');
+
+  await expect(page).toHaveTitle('Bitter Water - Brownian Motion');
+
   await expect(page.getByRole('heading', { name: 'Brownian Motion Visualizer' })).toBeVisible();
 
   const canvas = page.locator('canvas');

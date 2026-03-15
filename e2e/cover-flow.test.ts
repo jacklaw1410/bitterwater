@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('Cover Flow page', async ({ page }) => {
   await page.goto('/gallery/cover-flow');
 
-  await expect(page).toHaveTitle('Cover Flow');
+  await expect(page).toHaveTitle('Bitter Water - Cover Flow');
 
   const heading = page.getByRole('heading', { name: 'Cover Flow' });
   await expect(heading).toBeVisible();

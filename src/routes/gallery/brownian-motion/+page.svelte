@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-  <title>Brownian Motion</title>
+  <title>Bitter Water - Brownian Motion</title>
 </svelte:head>
 
 <h1>Brownian Motion Visualizer</h1>

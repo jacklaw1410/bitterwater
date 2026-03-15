@@ -43,7 +43,7 @@
 {/snippet}
 
 <svelte:head>
-  <title>Blob Morphing</title>
+  <title>Bitter Water - Blob Morphing</title>
 </svelte:head>
 
 <h1>Blob Morphing</h1>

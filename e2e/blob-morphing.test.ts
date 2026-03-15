@@ -3,6 +3,8 @@ import { expect, test } from '@playwright/test';
 test('Blob Morphing page', async ({ page }) => {
   await page.goto('/gallery/blob-morphing');
 
+  await expect(page).toHaveTitle('Bitter Water - Blob Morphing');
+
   await expect(page.getByRole('heading', { name: 'Blob Morphing' })).toBeVisible();
 
   await expect(page.getByRole('img', { name: 'Animated blob morphing' })).toBeVisible();

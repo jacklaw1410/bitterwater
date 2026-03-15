@@ -15,7 +15,7 @@
 </script>
 
 <svelte:head>
-  <title>π Estimation</title>
+  <title>Bitter Water - π Estimation</title>
 </svelte:head>
 
 <h1>π Estimation</h1>

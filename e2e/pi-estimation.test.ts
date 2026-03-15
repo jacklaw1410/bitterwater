@@ -4,6 +4,8 @@ import { fail } from 'assert';
 test('Pi Estimation page', async ({ page }) => {
   await page.goto('/gallery/pi-estimation');
 
+  await expect(page).toHaveTitle('Bitter Water - π Estimation');
+
   await expect(page.getByRole('heading', { name: 'π Estimation' })).toBeVisible();
 
   // Initial state

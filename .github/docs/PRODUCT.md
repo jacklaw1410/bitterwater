@@ -4,7 +4,7 @@ description: Outlines the product vision for this project as a canonical example
 
 # Product Vision
 
-[TODO] Update later ~This project serves as a canonical example of a modern Svelte application, built with Svelte 5 and its core principles (Runes). It is a learning resource and a template for new projects.~
+This project is an interactive portfolio showcasing a variety of creative coding projects and experiments. It's built with Svelte 5 and its core principles (Runes) to demonstrate modern web development techniques.
 
 ## Key Features
 

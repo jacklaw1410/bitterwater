@@ -35,7 +35,7 @@
     {@render curve()}
   </div>
   <div class="container">
-    <a href={resolve('/')} class="logo">Svelte 101</a>
+    <a href={resolve('/')} class="logo">Bitter Water</a>
     <nav>
       {#each ROUTES as route (route.id)}
         <a

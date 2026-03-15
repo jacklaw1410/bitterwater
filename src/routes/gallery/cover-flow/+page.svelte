@@ -25,7 +25,7 @@
 </script>
 
 <svelte:head>
-  <title>Cover Flow</title>
+  <title>Bitter Water - Cover Flow</title>
 </svelte:head>
 
 <h1>Cover Flow</h1>

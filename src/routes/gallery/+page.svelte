@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-  <title>Feature Gallery</title>
+  <title>Bitter Water - Feature Gallery</title>
 </svelte:head>
 
 <h1>Feature Gallery</h1>

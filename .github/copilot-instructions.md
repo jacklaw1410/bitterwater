@@ -1,4 +1,4 @@
-# Svelte 101 Project Guidelines
+# Bitter Water Project Guidelines
 
 ## Core Principle
 
