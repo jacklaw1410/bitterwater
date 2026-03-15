@@ -11,5 +11,5 @@ export default defineConfig({
   use: {
     baseURL: `${url}/`,
   },
-  testDir: 'e2e',
+  testDir: './e2e',
 });
