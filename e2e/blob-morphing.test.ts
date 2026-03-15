@@ -1,6 +1,11 @@
 import { expect, test } from '@playwright/test';
 
-test('Blob Morphing page', async ({ page }) => {
+test('Blob Morphing page', async ({ page, browserName }) => {
+  // Speed up test by tuning playback rate, which is controllable in Chromium only
+  const playbackRate = browserName === 'chromium' ? 5 : 1;
+  const client = await page.context().newCDPSession(page);
+  await client.send('Animation.setPlaybackRate', { playbackRate });
+
   await page.goto('/gallery/blob-morphing');
 
   await expect(page).toHaveTitle('Bitter Water - Blob Morphing');
@@ -35,7 +40,7 @@ test('Blob Morphing page', async ({ page }) => {
   await expect(startButton).toBeEnabled();
   await expect(pauseButton).toBeDisabled();
 
-  await page.waitForTimeout(1000);
+  await page.waitForTimeout(1000 / playbackRate);
   expect(
     await page.screenshot({ path: 'test-results/screenshots/blob-morphing-after.png' }),
   ).toEqual(before);
@@ -46,13 +51,13 @@ test('Blob Morphing page', async ({ page }) => {
     await expect(startButton).toBeDisabled();
     await expect(pauseButton).toBeEnabled();
 
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(1000 / playbackRate);
 
     await pauseButton.click();
 
     await expect(page).toHaveScreenshot(`blob-morphing-page-${ix}.png`, {
       fullPage: true,
-      maxDiffPixelRatio: 0.03,
+      maxDiffPixelRatio: 0.015,
     });
 
     await expect(startButton).toBeEnabled();

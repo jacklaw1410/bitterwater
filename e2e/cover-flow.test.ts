@@ -8,11 +8,11 @@ test('Cover Flow page', async ({ page }) => {
   const heading = page.getByRole('heading', { name: 'Cover Flow' });
   await expect(heading).toBeVisible();
 
-  await expect(page).toHaveScreenshot('cover-flow-initial.png');
+  await expect(page).toHaveScreenshot('cover-flow-initial.png', { animations: 'allow' });
 
   const carousel = page.getByRole('region', { name: 'Cover flow of images' });
   await carousel.hover();
   await page.mouse.wheel(500, 0);
 
-  await expect(page).toHaveScreenshot('cover-flow-scrolled.png');
+  await expect(page).toHaveScreenshot('cover-flow-scrolled.png', { animations: 'allow' });
 });
