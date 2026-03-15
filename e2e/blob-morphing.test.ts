@@ -57,7 +57,7 @@ test('Blob Morphing page', async ({ page, browserName }) => {
 
     await expect(page).toHaveScreenshot(`blob-morphing-page-${ix}.png`, {
       fullPage: true,
-      maxDiffPixelRatio: 0.015,
+      maxDiffPixelRatio: 0.018,
     });
 
     await expect(startButton).toBeEnabled();

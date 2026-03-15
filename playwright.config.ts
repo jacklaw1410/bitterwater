@@ -1,13 +1,15 @@
 import { defineConfig } from '@playwright/test';
 
+const url = process.env.CI ? 'http://localhost:4173/bitterwater' : 'http://localhost:4173';
+
 export default defineConfig({
   webServer: {
     command: process.env.CI ? 'bun run build && bun preview' : 'bun dev --port 4173',
-    timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
+    url,
   },
   use: {
-    baseURL: process.env.CI ? 'http://127.0.0.1:4173/bitterwater/' : 'http://127.0.0.1:4173/',
+    baseURL: `${url}/`,
   },
   testDir: 'e2e',
 });

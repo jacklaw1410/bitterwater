@@ -11,9 +11,6 @@ const dirname =
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   plugins: [sveltekit(), devtoolsJson()],
-  server: {
-    host: '127.0.0.1',
-  },
   test: {
     expect: {
       requireAssertions: true,
