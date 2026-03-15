@@ -13,7 +13,7 @@ test('navigation header', async ({ page }) => {
   await expect(header).toHaveScreenshot('navigation-header-initial.png');
 
   // Check the gallery page
-  await page.goto('/gallery');
+  await page.goto('gallery');
   await expect(page).toHaveTitle('Bitter Water - Gallery');
   await expect(page.getByRole('link', { name: 'Bitter Water' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
@@ -22,7 +22,7 @@ test('navigation header', async ({ page }) => {
 
   // Test navigate back to home page
   await page.getByRole('link', { name: 'Home' }).click();
-  await expect(page).toHaveURL('/');
+  await expect(page).toHaveURL(/(\/bitterwater|)\//);
   await expect(page).toHaveTitle('Bitter Water - Home');
   await expect(header).toHaveScreenshot('navigation-header-home.png');
 });

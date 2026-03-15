@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 test('Gallery home page', async ({ page }) => {
-  await page.goto('/gallery');
+  await page.goto('gallery');
 
   await expect(page).toHaveTitle('Bitter Water - Gallery');
 

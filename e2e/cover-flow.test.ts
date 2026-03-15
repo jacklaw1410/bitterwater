@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('Cover Flow page', async ({ page }) => {
-  await page.goto('/gallery/cover-flow');
+  await page.goto('gallery/cover-flow');
 
   await expect(page).toHaveTitle('Bitter Water - Cover Flow');
 

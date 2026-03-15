@@ -6,7 +6,7 @@ test('Blob Morphing page', async ({ page, browserName }) => {
   const client = await page.context().newCDPSession(page);
   await client.send('Animation.setPlaybackRate', { playbackRate });
 
-  await page.goto('/gallery/blob-morphing');
+  await page.goto('gallery/blob-morphing');
 
   await expect(page).toHaveTitle('Bitter Water - Blob Morphing');
 

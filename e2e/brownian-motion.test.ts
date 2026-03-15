@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('Brownian Motion page', async ({ page }) => {
-  await page.goto('/gallery/brownian-motion');
+  await page.goto('gallery/brownian-motion');
 
   await expect(page).toHaveTitle('Bitter Water - Brownian Motion');
 
