@@ -64,8 +64,7 @@
     overflow-x: clip;
   }
   .container {
-    position: relative;
-    margin: 0 auto;
+    margin: 0 auto 2rem;
     padding: 0 1rem;
     display: grid;
     grid-template-columns: auto 1fr auto;
