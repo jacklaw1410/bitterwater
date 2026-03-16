@@ -53,4 +53,4 @@
   });
 </script>
 
-<canvas bind:this={canvas} width={size} height={size}></canvas>
+<canvas bind:this={canvas} width={size} height={size} data-thumbnail-target></canvas>

@@ -1,3 +1,4 @@
+import { asset } from '$app/paths';
 import type { RouteId } from '$app/types';
 import type { PageLoad } from './$types';
 
@@ -33,6 +34,8 @@ export const load: PageLoad = async () => {
     if ('metadata' in mod && typeof mod.metadata === 'object' && mod.metadata !== null) {
       const metadata = mod.metadata as FeatureMetadata;
       if (metadata.title && metadata.description) {
+        // TODO: Check the existence of files
+        metadata.thumbnail = asset(`/thumbnails/${slug}.jpeg`);
         features.push({
           slug,
           href: `/gallery/${slug}` as RouteId,

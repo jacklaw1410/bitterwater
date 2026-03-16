@@ -17,7 +17,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ci-snapshot": "docker build -t bitterwater-e2e . && docker run --rm -v $(pwd)/e2e:/app/e2e -v $(pwd)/test-results:/app/test-results bitterwater-e2e",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "generate:thumbnails": "bun ts-node scripts/generate-thumbnails.ts"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.0.1",
@@ -52,6 +53,7 @@
     "storybook": "^10.2.19",
     "svelte": "^5.53.12",
     "svelte-check": "^4.4.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.0",
     "vite": "^7.3.1",

@@ -40,6 +40,7 @@
   aria-roledescription="carousell"
   aria-label="Cover flow of images"
   bind:this={carousell}
+  data-thumbnail-target
 >
   <li class="placeholder"></li>
   {#each srcs as [src, alt] (src)}
