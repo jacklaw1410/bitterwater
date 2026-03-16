@@ -18,7 +18,8 @@
   style:--bg-image={thumbnail ? `url(${thumbnail})` : 'none'}
   aria-label={`View ${title} demo`}
 >
-  <div class="content">
+  <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+  <div class="content" tabindex="0">
     <h3>{title}</h3>
     <p>{description}</p>
   </div>
@@ -58,13 +59,12 @@
     right: 0;
     bottom: 0;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 75%);
-    z-index: 1;
     pointer-events: none;
   }
 
   .content {
     position: relative;
-    z-index: 2;
+    overflow-y: scroll;
   }
 
   .content h3 {
