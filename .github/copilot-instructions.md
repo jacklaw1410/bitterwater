@@ -12,5 +12,8 @@ Before starting any complex task, you MUST ground your understanding in our proj
 - [Product Vision](../.github/docs/PRODUCT.md)
 - [System Architecture](../.github/docs/ARCHITECTURE.md)
 - [Testing Strategy and Rules](../.github/docs/TESTING.md)
+  - [Unit Testing Guidelines](../.github/docs/unit-testing.md)
+  - [Component Testing Guidelines](../.github/docs/component-testing.md)
+  - [E2E Testing Guidelines](../.github/docs/e2e-testing.md)
 - [Svelte Usages and Best Practices](../.github/docs/svelte-usages.md)
 - [TypeScript Usages and Best Practices](../.github/docs/typescript-usages.md)

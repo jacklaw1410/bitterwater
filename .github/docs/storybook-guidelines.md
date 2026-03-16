@@ -86,3 +86,5 @@ If your stories require a wrapper or a more complex rendering structure, you can
 - **Keep it Updated**: When you change a component's API, update its stories accordingly.
 
 By following these guidelines, we can maintain a clean, useful, and up-to-date component library.
+
+For details on writing interaction tests for components, please refer to the [Component Testing Strategy](./component-testing.md).
