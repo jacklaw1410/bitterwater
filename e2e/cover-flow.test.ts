@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test('Cover Flow page', async ({ page }) => {
   await page.goto('gallery/cover-flow');

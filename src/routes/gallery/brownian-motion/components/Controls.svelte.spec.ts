@@ -1,7 +1,7 @@
-import { render, screen, cleanup } from '@testing-library/svelte';
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import Controls from './Controls.svelte';
+import { cleanup, render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import Controls from './Controls.svelte';
 
 afterEach(() => cleanup());
 describe('Controls.svelte', () => {

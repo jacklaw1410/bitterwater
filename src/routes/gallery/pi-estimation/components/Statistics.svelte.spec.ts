@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/svelte';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import Statistics from './Statistics.svelte';
 
 describe('Statistics.svelte', () => {

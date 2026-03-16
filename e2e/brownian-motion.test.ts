@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test('Brownian Motion page', async ({ page }) => {
   await page.goto('gallery/brownian-motion');

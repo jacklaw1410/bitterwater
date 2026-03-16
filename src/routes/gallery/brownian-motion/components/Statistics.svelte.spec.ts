@@ -1,7 +1,7 @@
-import { render, screen, cleanup, within } from '@testing-library/svelte';
-import { describe, it, expect, afterEach } from 'vitest';
-import Statistics from './Statistics.svelte';
+import { cleanup, render, screen, within } from '@testing-library/svelte';
+import { afterEach, describe, expect, it } from 'vitest';
 import type { Particle } from '../utils';
+import Statistics from './Statistics.svelte';
 
 afterEach(() => cleanup());
 describe('Statistics.svelte', () => {

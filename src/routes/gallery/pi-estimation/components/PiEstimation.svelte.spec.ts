@@ -1,7 +1,7 @@
 import { render } from '@testing-library/svelte';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import PiEstimation from './PiEstimation.svelte';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Dart } from '../state.svelte';
+import PiEstimation from './PiEstimation.svelte';
 
 const mockContext = {
   fillRect: vi.fn(),

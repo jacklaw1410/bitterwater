@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { RouteId } from '$app/types';
   import { resolve } from '$app/paths';
+  import type { RouteId } from '$app/types';
 
   interface Props {
     title: string;

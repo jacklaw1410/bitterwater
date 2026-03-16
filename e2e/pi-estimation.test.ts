@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { fail } from 'assert';
 
 test('Pi Estimation page', async ({ page }) => {
