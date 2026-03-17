@@ -65,6 +65,7 @@
   .content {
     position: relative;
     overflow-y: scroll;
+    scrollbar-width: none;
   }
 
   .content h3 {
