@@ -27,7 +27,7 @@
   bind:particleSize={state.particleSize}
   bind:particleColor={state.particleColor}
   bind:showTrails={state.showTrails}
-  bind:isPlaying={state.isPlaying}
+  bind:playing={state.playing}
   bind:width={state.width}
   bind:height={state.height}
   onreset={reset}

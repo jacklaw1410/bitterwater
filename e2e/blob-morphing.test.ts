@@ -18,13 +18,9 @@ test('Blob Morphing page', async ({ page, browserName }) => {
   await expect(blobList).toBeVisible();
   await expect(blobList.getByRole('listitem')).toHaveCount(5);
 
-  const startButton = page.getByRole('button', { name: 'Start' });
   const pauseButton = page.getByRole('button', { name: 'Pause' });
-  await expect(startButton).toBeVisible();
-  await expect(pauseButton).toBeVisible();
-
-  await expect(startButton).toBeDisabled();
   await expect(pauseButton).toBeEnabled();
+  await expect(pauseButton).toBeVisible();
 
   await pauseButton.click();
 
@@ -37,8 +33,9 @@ test('Blob Morphing page', async ({ page, browserName }) => {
     path: 'test-results/screenshots/blob-morphing-before.png',
   });
 
-  await expect(startButton).toBeEnabled();
-  await expect(pauseButton).toBeDisabled();
+  const playButton = page.getByRole('button', { name: 'Play' });
+  await expect(playButton).toBeVisible();
+  await expect(playButton).toBeEnabled();
 
   await page.waitForTimeout(1000 / playbackRate);
   expect(
@@ -46,10 +43,10 @@ test('Blob Morphing page', async ({ page, browserName }) => {
   ).toEqual(before);
 
   for (let ix = 2; ix <= 6; ix++) {
-    await startButton.click();
+    await playButton.click();
 
-    await expect(startButton).toBeDisabled();
-    await expect(pauseButton).toBeEnabled();
+    await expect(playButton).not.toBeVisible();
+    await expect(pauseButton).toBeVisible();
 
     await page.waitForTimeout(1000 / playbackRate);
 
@@ -60,7 +57,7 @@ test('Blob Morphing page', async ({ page, browserName }) => {
       maxDiffPixelRatio: 0.018,
     });
 
-    await expect(startButton).toBeEnabled();
-    await expect(pauseButton).toBeDisabled();
+    await expect(playButton).toBeVisible();
+    await expect(pauseButton).not.toBeVisible();
   }
 });

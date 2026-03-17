@@ -10,19 +10,19 @@ export const state = $state({
   darts: [] as Dart[],
   totalDarts: 0,
   dartsInsideCircle: 0,
-  isRunning: false,
+  playing: false,
 });
 
 export const reset = () => {
   state.darts = [];
   state.totalDarts = 0;
   state.dartsInsideCircle = 0;
-  state.isRunning = false;
+  state.playing = false;
 };
 
 export const initialize = () => {
   $effect(() => {
-    if (!state.isRunning) return;
+    if (!state.playing) return;
 
     let frame = requestAnimationFrame(function gameLoop() {
       const x = Math.random();

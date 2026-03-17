@@ -1,11 +1,13 @@
 <script lang="ts">
+  import PlayPauseToggle from '$lib/components/PlayPauseToggle.svelte';
+
   type Props = {
     particleCount: number;
     speed: number;
     particleSize: number;
     particleColor: string;
     showTrails: boolean;
-    isPlaying: boolean;
+    playing: boolean;
     width: number;
     height: number;
     onreset: () => void;
@@ -17,20 +19,16 @@
     particleSize = $bindable(2),
     particleColor = $bindable('#000000'),
     showTrails = $bindable(true),
-    isPlaying = $bindable(true),
+    playing = $bindable(true),
     width = $bindable(800),
     height = $bindable(600),
     onreset,
   }: Props = $props();
-
-  const togglePlayPause = () => {
-    isPlaying = !isPlaying;
-  };
 </script>
 
 <div class="controls">
   <div class="layer">
-    <button onclick={togglePlayPause}>{isPlaying ? 'Pause' : 'Play'}</button>
+    <PlayPauseToggle bind:playing />
     <button style="margin-right: 1em;" onclick={onreset}>Reset</button>
     <label>
       Width:
@@ -84,6 +82,14 @@
 </div>
 
 <style>
+  .layer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
   .controls {
     margin-bottom: 1rem;
     display: flex;

@@ -20,7 +20,7 @@ export const state = $state({
   particleSize: INITIAL_PARTICLE_SIZE,
   particleColor: INITIAL_PARTICLE_COLOR,
   showTrails: INITIAL_SHOW_TRAILS,
-  isPlaying: true,
+  playing: true,
   particles: [] as Particle[],
   width: INITIAL_WIDTH,
   height: INITIAL_HEIGHT,
@@ -65,7 +65,7 @@ const update = () => {
 
 export const initializeEffects = () => {
   $effect(() => {
-    if (!state.isPlaying) return;
+    if (!state.playing) return;
 
     let rid = requestAnimationFrame(function loop() {
       moveParticles(state.particles, state.width, state.height);

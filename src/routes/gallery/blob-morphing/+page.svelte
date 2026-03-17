@@ -6,6 +6,8 @@
 </script>
 
 <script lang="ts">
+  import PlayPauseToggle from '$lib/components/PlayPauseToggle.svelte';
+
   const PATHS = [
     'M660.1 163.6C710.9 177.9 740.9 242.8 764.2 307.0C787.5 371.1 804.0 434.5 783.2 483.6C762.4 532.8 704.2 567.8 655.8 595.4C607.3 623.1 568.6 643.4 521.6 675.3C474.7 707.2 419.4 750.7 365.4 752.3C311.3 753.8 258.4 713.3 227.9 662.2C197.4 611.2 189.2 549.5 164.5 480.7C139.7 411.9 98.3 335.9 108.9 271.6C119.4 207.3 182.0 154.6 250.2 148.3C318.4 142.0 392.3 181.9 465.0 183.7C537.7 185.6 609.3 149.2 660.1 163.6',
     'M635.8 240.0C690.1 276.2 757.7 290.3 779.0 328.1C800.3 366.0 775.2 427.5 773.7 498.0C772.2 568.6 794.3 648.0 768.7 697.2C743.2 746.4 670.1 765.2 606.7 755.5C543.4 745.7 489.8 707.4 430.7 689.4C371.5 671.5 306.8 673.9 243.1 648.6C179.4 623.3 116.9 570.2 112.7 511.5C108.5 452.7 162.6 388.3 214.2 342.5C265.9 296.6 314.9 269.3 362.1 229.8C409.2 190.3 454.5 138.7 497.5 142.1C540.6 145.4 581.5 203.8 635.8 240.0',
@@ -19,13 +21,14 @@
   let svgElement: SVGSVGElement;
 
   let paused = $state(false);
-  const unpause = () => {
-    paused = false;
-    svgElement.unpauseAnimations();
-  };
-  const pause = () => {
-    paused = true;
-    svgElement.pauseAnimations();
+  const ontoggle = () => {
+    if (paused) {
+      paused = false;
+      svgElement.unpauseAnimations();
+    } else {
+      paused = true;
+      svgElement.pauseAnimations();
+    }
   };
 </script>
 
@@ -54,10 +57,7 @@
   to the path of the SVG.
 </p>
 
-<div>
-  <button onclick={unpause} disabled={!paused}>Start</button>
-  <button onclick={pause} disabled={paused}>Pause</button>
-</div>
+<PlayPauseToggle playing={!paused} onclick={ontoggle} />
 <svg
   id="blob-svg"
   bind:this={svgElement}
