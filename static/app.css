@@ -9,6 +9,7 @@
 
   /* Semantic color palette (light theme) */
   --color-primary: #1d4ed8; /* Darker blue for improved contrast */
+  --color-primary-accent: #3b82f6;
   --color-on-primary: #ffffff;
 
   --color-secondary: #10b981; /* A vibrant green */
@@ -26,6 +27,7 @@
 /* dark theme overrides triggered by attribute */
 [data-theme='dark'] {
   --color-primary: #2563eb; /* Slightly lighter blue for dark mode */
+  --color-primary-accent: #3b82f6;
   --color-on-primary: #ffffff;
 
   --color-secondary: #34d399; /* Lighter green for dark mode */
@@ -44,6 +46,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     --color-primary: #2563eb;
+    --color-primary-accent: #3b82f6;
     --color-on-primary: #ffffff;
 
     --color-secondary: #34d399;
