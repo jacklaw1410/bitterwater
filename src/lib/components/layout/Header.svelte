@@ -35,7 +35,7 @@
   <div class="curve top">
     {@render curve()}
   </div>
-  <div class="container">
+  <div class="nav-container">
     <a href={resolve('/')} class="logo" aria-label="Bitter Water">
       <img src={favicon} alt="Logo" width="32" height="32" />
       <span>Bitter Water</span>
@@ -67,13 +67,14 @@
     background-color: var(--color-primary);
     overflow-x: clip;
   }
-  .container {
+  .nav-container {
     margin: 0 auto 2rem;
     padding: 0 1rem;
     display: grid;
     grid-template-columns: auto 1fr auto;
     grid-gap: 1rem;
     align-items: center;
+    height: 48px;
   }
   .logo {
     font-size: 1.5rem;
@@ -82,21 +83,19 @@
     text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 0.25rem;
     margin-bottom: 0.25rem;
   }
-  nav {
+  .nav-container > nav {
     display: flex;
     gap: 1rem;
-    margin-top: 1rem;
   }
-  nav a {
+  .nav-container > nav a {
     color: var(--color-on-primary);
     text-decoration: none;
     font-size: 1rem;
   }
-  nav a[aria-current='page'] {
+  .nav-container > nav a[aria-current='page'] {
     border-bottom: 2px solid var(--color-on-primary);
   }
   .theme-toggle {
@@ -105,6 +104,7 @@
     color: var(--color-on-primary);
     font-size: 1em;
     cursor: pointer;
+    justify-self: flex-end;
   }
   .curve {
     width: 100%;
@@ -118,9 +118,19 @@
   }
   .curve.bottom {
     transform: scaleY(0.8);
-    top: 40px;
+    top: 28px;
   }
   .shape-fill {
     fill: var(--color-primary);
+  }
+
+  @media (max-width: 480px) {
+    .nav-container {
+      grid-template-columns: auto auto;
+      grid-gap: 0.5rem;
+    }
+    .nav-container > nav {
+      display: none;
+    }
   }
 </style>

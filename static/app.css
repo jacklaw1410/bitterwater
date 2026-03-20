@@ -83,7 +83,6 @@ body::-webkit-scrollbar {
 
 p,
 hr,
-nav,
 main,
 header,
 footer {
@@ -202,24 +201,5 @@ input[type='submit']:focus {
 @media (max-width: 768px) {
   .container {
     padding: 0 calc(var(--spacing) / 2);
-  }
-}
-
-@media (max-width: 480px) {
-  .header .container {
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
-    grid-gap: 0.5rem;
-  }
-  .header .logo {
-    grid-column: 1 / 2;
-  }
-  .header nav {
-    grid-column: 1 / -1;
-    justify-content: space-around;
-  }
-  .header .theme-toggle {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
   }
 }
