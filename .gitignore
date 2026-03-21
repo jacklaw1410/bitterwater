@@ -26,3 +26,8 @@ test-results
 
 *storybook.log
 storybook-static
+
+# Serena Agent
+.serena/cache/
+.serena/logs/
+.serena/project.local.yml
