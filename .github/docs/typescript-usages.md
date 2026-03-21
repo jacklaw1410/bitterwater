@@ -21,9 +21,12 @@ This document outlines best practices and conventions for using TypeScript withi
 
 ## Type Safety Best Practices
 
-1. **Discriminated Unions**: Use discriminated unions for h andling different states or types of data, improv i ng type safety in conditional logic.
-2. **Narrowing**: Employ type narrowing t echniques (e.g., `typeof`, `instanceof`, `in`, custom i i itype guards) to safely work with union types.
+1. **Discriminated Unions**: Use discriminated unions for handling different states or types of data, improving type safety in conditional logic.
+2. **Narrowing**: Employ type narrowing techniques (e.g., `typeof`, `instanceof`, `in`, custom type guards) to safely work with union types.
 3. **Avoid `any`**: Minimize the use of `any`. If a type is unknown, consider `unknown` and narrow it, or provide a specific type assertion with caution.
+4. **Component Prop Inheritance**:
+   - For components wrapping headless UI primitives, extend the library's root props: `type Props = { custom: string } & ButtonRootProps`.
+   - For native HTML wrappers, extend Svelte's attribute types: `type Props = HTMLAttributes<HTMLDivElement>`.
 
 ## Code Documentation
 
@@ -38,3 +41,7 @@ This document outlines best practices and conventions for using TypeScript withi
    - Licensing compatibility.
    - Alternatives (e.g., native browser APIs, simpler custom implementations).
 2. **Permission**: New dependencies should only be added after explicit discussion and permission from the project maintainers or team lead. Document the rationale for its inclusion.
+
+## Convention
+
+- Prefer concise arrow functions for function declarations.

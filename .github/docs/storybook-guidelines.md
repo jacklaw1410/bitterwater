@@ -81,9 +81,11 @@ If your stories require a wrapper or a more complex rendering structure, you can
 
 ## Best Practices
 
-- **Be Comprehensive**: Create stories for all the important states of your component. Think about edge cases, long text, missing props, etc.
-- **Use Controls**: Use `argTypes` to make your component props editable in the Storybook UI. This makes it easier to test different variations. To disable a control for a prop that's set internally, use `control: false`.
-- **Keep it Updated**: When you change a component's API, update its stories accordingly.
+- **Be Comprehensive**: Create stories for all the important states of your component (e.g., variants, sizes, disabled, error).
+- **Use Controls**: Use `argTypes` to make your component props editable in the Storybook UI.
+- **Interaction Testing**: Use the `play` function from `storybook/test` to verify interactivity (clicks, focus, keyboard nav). Standardize on `userEvent`, `within`, and `expect`.
+- **Autodocs**: Always include `tags: ['autodocs']` in the `defineMeta` call for UI primitives to generate documentation automatically.
+- **Design System Docs**: Use `src/stories/DesignSystem/` for documenting global tokens like Colors, Spacing, and Typography.
 
 By following these guidelines, we can maintain a clean, useful, and up-to-date component library.
 

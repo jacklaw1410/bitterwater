@@ -91,7 +91,13 @@ Custom components expose two main types of props:
 ### Styling child components
 
 - Preferred: Use CSS custom properties passed as props (e.g., `<Child --color="red" />`).
-- If custom properties are not possible (e.g., third-party library), use `:global` to override styles.
+- **External Native Stylesheets**: For UI primitives wrapping headless libraries (like Bits UI), use a sibling `.css` file imported in the `<script>` block. This prevents Svelte from pruning "unused" selectors that are actually applied via props.
+- Avoid `:global(...)` for internal component styling whenever possible.
+
+### Class Attribute
+
+- Use Svelte 5's native support for **class arrays** instead of manual string joining or external libraries like `clsx`.
+- Example: `class={['ui-button', variantClass, className]}`.
 
 ## Context
 
