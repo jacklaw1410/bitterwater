@@ -1,0 +1,14 @@
+.ui-label {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  line-height: var(--line-height-none);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.ui-label[data-disabled] {
+  cursor: not-allowed;
+  opacity: var(--opacity-disabled);
+}

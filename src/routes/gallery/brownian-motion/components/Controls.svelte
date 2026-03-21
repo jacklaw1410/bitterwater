@@ -1,5 +1,5 @@
 <script lang="ts">
-  import PlayPauseToggle from '$lib/components/PlayPauseToggle.svelte';
+  import PlayPauseToggle from '$lib/components/app/PlayPauseToggle.svelte';
 
   type Props = {
     particleCount: number;

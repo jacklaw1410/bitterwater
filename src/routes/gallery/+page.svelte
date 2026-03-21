@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageProps } from './$types';
-  import FeatureCard from '$lib/components/FeatureCard.svelte';
+  import FeatureCard from '$lib/components/app/FeatureCard.svelte';
 
   let { data }: PageProps = $props();
 </script>

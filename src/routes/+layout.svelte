@@ -1,6 +1,6 @@
 <script lang="ts">
   import favicon from '$lib/assets/favicon.svg';
-  import Header from '$lib/components/layout/Header.svelte';
+  import Header from '$lib/components/app/layout/Header.svelte';
   let { children } = $props();
 </script>
 

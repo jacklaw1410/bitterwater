@@ -64,44 +64,44 @@
 <style>
   .header {
     position: relative;
-    background-color: var(--color-primary);
+    background-color: var(--action-primary-bg);
     overflow-x: clip;
   }
   .nav-container {
-    margin: 0 auto 2rem;
-    padding: 0 1rem;
+    margin: 0 auto var(--space-8);
+    padding: 0 var(--space-4);
     display: grid;
     grid-template-columns: auto 1fr auto;
-    grid-gap: 1rem;
+    grid-gap: var(--space-4);
     align-items: center;
     height: 48px;
   }
   .logo {
-    font-size: 1.5rem;
+    font-size: var(--text-2xl);
     font-weight: 600;
-    color: var(--color-on-primary);
+    color: var(--text-inverse);
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 0.25rem;
-    margin-bottom: 0.25rem;
+    gap: var(--space-1);
+    margin-bottom: var(--space-1);
   }
   .nav-container > nav {
     display: flex;
-    gap: 1rem;
+    gap: var(--space-4);
   }
   .nav-container > nav a {
-    color: var(--color-on-primary);
+    color: var(--text-inverse);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
   .nav-container > nav a[aria-current='page'] {
-    border-bottom: 2px solid var(--color-on-primary);
+    border-bottom: 2px solid var(--text-inverse);
   }
   .theme-toggle {
     background: none;
     border: none;
-    color: var(--color-on-primary);
+    color: var(--text-inverse);
     font-size: 1em;
     cursor: pointer;
     justify-self: flex-end;
@@ -121,7 +121,7 @@
     top: 28px;
   }
   .shape-fill {
-    fill: var(--color-primary);
+    fill: var(--action-primary-bg);
   }
 
   @media (max-width: 480px) {

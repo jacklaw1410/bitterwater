@@ -1,0 +1,32 @@
+.ui-form-control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  font-family: var(--font-sans);
+}
+
+.ui-form-control__label {
+  margin-bottom: var(--space-1);
+  display: block;
+  color: var(--text-primary);
+}
+
+.ui-form-control__description {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.ui-form-control__control {
+  position: relative;
+  width: 100%;
+}
+
+.ui-form-control__error {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--status-error);
+  margin: 0;
+  margin-top: var(--space-1);
+}

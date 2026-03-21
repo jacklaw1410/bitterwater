@@ -36,13 +36,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-primary);
-    transition: color 0.2s ease;
+    color: var(--action-primary-bg);
+    transition: color var(--duration-fast) var(--ease-in-out);
   }
 
   button:hover:not(:disabled),
   button:focus:not(:disabled) {
-    color: var(--color-primary-accent);
+    color: var(--action-primary-hover);
 
     outline: none;
   }

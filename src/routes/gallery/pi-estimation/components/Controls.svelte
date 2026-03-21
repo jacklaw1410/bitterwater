@@ -1,5 +1,5 @@
 <script lang="ts">
-  import PlayPauseToggle from '$lib/components/PlayPauseToggle.svelte';
+  import PlayPauseToggle from '$lib/components/app/PlayPauseToggle.svelte';
   import { state, reset } from '../state.svelte';
 </script>
 

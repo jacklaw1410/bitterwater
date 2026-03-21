@@ -31,14 +31,14 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    border-radius: 12px;
-    padding: 1.25rem;
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
     text-decoration: none;
-    border: 1px solid var(--color-border);
+    border: var(--border-width-thin) solid var(--border-default);
     transition: transform 0.2s ease;
     overflow: hidden;
-    background-color: var(--color-bg-surface);
-    color: var(--color-text-primary);
+    background-color: var(--surface-default);
+    color: var(--text-primary);
     aspect-ratio: 4 / 3;
   }
 
@@ -82,7 +82,7 @@
 
   .content p {
     margin: 0;
-    color: var(--color-text-secondary);
+    color: var(--text-secondary);
     line-height: 1.4;
     font-size: 0.9em;
   }
