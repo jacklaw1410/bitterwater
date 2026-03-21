@@ -1,53 +1,143 @@
-# Using Bun, Vite, and SvelteKit for Web Development
+# Bitter Water - Agent Guidelines
 
-This project uses Bun as the package manager and runtime, with Vite for tooling and SvelteKit for the framework. Bun wraps runtime management, package management, and frontend tooling in a single global CLI called `bun`. Bun is distinct from Vite, but it invokes Vite through `bun dev` and `bun run build`.
+This is a Svelte 5 web application using Bun, Vite, and SvelteKit. Review the [project docs](./.github/docs/) for detailed guidelines.
 
-## Bun Workflow
+## Build Commands
 
-`bun` is a global binary that handles the full development lifecycle. Run `bun --help` to print a list of commands and `bun <command> --help` for information about a specific command.
+```bash
+# Development
+bun dev                    # Start dev server
+bun dev --port 3000        # Dev server on specific port
 
-### Develop
+# Build & Preview
+bun run build                  # Production build
+bun preview                # Preview production build
 
-- dev - Run the development server (using `bun dev`)
-- check - Run format, lint, and TypeScript type checks (using `bun check`)
-- lint - Lint code (using `bun lint`)
-- format - Format code (using `bun format`)
-- test - Run tests (using `bun test:unit` and `bun test:e2e`)
+# Type checking
+bun check                  # Run svelte-check + TypeScript checks
+bun check:watch           # Watch mode for type checking
 
-### Execute
+# Linting & Formatting
+bun lint                   # Run ESLint + Prettier checks
+bun format                 # Auto-format code with Prettier
 
-- run - Run `package.json` scripts (e.g., `bun run <script-name>`)
-- exec - Execute a command from local `node_modules/.bin` (using `bun x`)
-- dlx - Execute a package binary without installing it as a dependency (using `bun x`)
+# Testing
+bun test:unit              # Run unit tests (Vitest)
+bun test:e2e               # Run E2E tests (Playwright)
+bun test                   # Run all tests (unit + e2e)
 
-### Build
+# Storybook
+bun storybook             # Start Storybook on port 6006
+bun build-storybook        # Build Storybook static site
+```
 
-- build - Build for production (using `bun build`)
-- preview - Preview production build (using `bun preview`)
+### Running a Single Test
 
-### Manage Dependencies
+```bash
+# Single unit test file
+bun test:unit src/routes/gallery/brownian-motion/utils.spec.ts
 
-- add - Add packages to dependencies (using `bun add`)
-- remove (`rm`, `uninstall`) - Remove packages from dependencies (using `bun remove`)
-- update - Update packages to latest versions (using `bun update`)
-- outdated - Check for outdated packages
-- list (`ls`) - List installed packages
-- why - Show why a package is installed
-- info - View package information from the registry
-- link / unlink - Manage local package links
-- pm - Forward a command to the package manager
+# Single E2E test
+bun test:e2e e2e/home.test.ts
 
-### Maintain
+# Single storybook test
+bun test:unit --project storybook src/stories/Button.stories.svelte
+```
 
-- upgrade - Update `bun` itself to the latest version
+## Code Style
 
-These commands map to their corresponding tools. For example, `bun dev --port 3000` runs Vite's dev server and works the same as Vite. `bun test:unit` runs JavaScript tests through the bundled Vitest. `bun test:e2e` runs integration tests through PlayWright. The version of all tools can be checked using `bun --version`. This is useful when researching documentation, features, and bugs.
+### Formatting (Prettier)
 
-## Common Pitfalls
+- 2 spaces, no tabs
+- Single quotes
+- Trailing commas: all
+- Print width: 100
+- Plugins: `prettier-plugin-organize-imports`, `prettier-plugin-svelte`
 
-- **Use Bun wrappers for one-off binaries:** Use `bun x` instead of package-manager-specific `dlx`/`npx` commands.
+### TypeScript
 
-## Review Checklist for Agents
+- **Strict mode enabled** - no implicit any
+- Prefer `interface` for object shapes, `type` for unions/aliases
+- Avoid `any` - use `unknown` and narrow
+- Export types separately from values
+- Document exports with JSDoc
 
-- [ ] Run `bun install` after pulling remote changes and before getting started.
-- [ ] Run `bun check`, `bun lint`, `bun test:unit` and `bun test:e2e` to validate changes.
+### Svelte 5 Runes (MANDATORY)
+
+- Use `$state`, `$derived`, `$props`, `$effect` for all reactivity
+- Use `$state.raw` for large objects only reassigned (not mutated)
+- Prefer inline mutations for deeply reactive `$state` objects (`array.push()`)
+- Use `$derived.by` for complex expressions
+- Use `$effect` sparingly - prefer event handlers
+- Prefer `$inspect.trace()` for debugging reactivity
+
+### Legacy Svelte Features to AVOID
+
+| Old              | Use Instead                |
+| ---------------- | -------------------------- |
+| `on:click={...}` | `onclick={...}`            |
+| `<slot>`         | `{#snippet}` + `{@render}` |
+| `export let`     | `$props()`                 |
+| `$:`             | `$derived` / `$effect`     |
+| `let count = 0`  | `$state(0)`                |
+| `class:name`     | `class={clsx}`             |
+
+### Naming Conventions
+
+- Components: PascalCase (`PlayPauseToggle.svelte`)
+- Stories: PascalCase (`PlayPauseToggle.stories.svelte`)
+- Utils/tests: kebab-case (`utils.spec.ts`, `brownian-motion/`)
+- Props/functions: camelCase
+- Types/interfaces: PascalCase
+
+### Imports
+
+- Use `$app/state` for page state (SvelteKit 2.1+)
+- Use `$lib/` path alias for lib imports
+- Organize imports with Prettier plugin
+
+## Testing Strategy
+
+### Unit Tests (Vitest)
+
+- Test pure functions and utilities in `*.spec.ts` files
+- Aim for near 100% coverage
+- Mock external dependencies
+- Location: alongside code being tested
+
+### Component Tests (Storybook)
+
+- Use Storybook interaction tests via `play` function
+- Import from `storybook/test` not `@testing-library`
+- Query priority: `getByRole` > `getByLabelText` > `getByText` > `getByTestId`
+- Location: `*.stories.svelte` files (not `.spec.ts`)
+
+### E2E Tests (Playwright)
+
+- Files in `e2e/` directory, named `*.test.ts`
+- Use page-level locators: `page.getByRole()`, `page.getByLabel()`
+- Avoid CSS/XPath selectors - prefer accessibility queries
+- Include screenshot snapshots with `toMatchSnapshot()`
+
+## Project Documentation
+
+See `.github/docs/` for:
+
+- [ARCHITECTURE.md](./.github/docs/ARCHITECTURE.md) - Tech stack & structure
+- [svelte-usages.md](./.github/docs/svelte-usages.md) - Svelte 5 best practices
+- [typescript-usages.md](./.github/docs/typescript-usages.md) - TypeScript guidelines
+- [TESTING.md](./.github/docs/TESTING.md) - Testing overview
+- [unit-testing.md](./.github/docs/unit-testing.md) - Vitest guidelines
+- [component-testing.md](./.github/docs/component-testing.md) - Storybook testing
+- [e2e-testing.md](./.github/docs/e2e-testing.md) - Playwright guidelines
+- [storybook-guidelines.md](./.github/docs/storybook-guidelines.md) - Story structure
+
+## Review Checklist
+
+Before submitting changes:
+
+- [ ] Run `bun check` for type errors
+- [ ] Run `bun lint` for linting issues
+- [ ] Run `bun test:unit` for unit tests
+- [ ] Run `bun test:e2e` for E2E tests
+- [ ] Run `bun run build` to verify production build
