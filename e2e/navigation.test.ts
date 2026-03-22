@@ -4,9 +4,9 @@ test('navigation header', async ({ page }) => {
   // Check the home page
   await page.goto('/');
   await expect(page).toHaveTitle('Bitter Water - Home');
-  await expect(page.getByRole('link', { name: 'Bitter Water' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Gallery' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Bitter Water', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Home', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Gallery', exact: true })).toBeVisible();
 
   // Visual regression test for the header
   const header = page.locator('header');
@@ -15,9 +15,9 @@ test('navigation header', async ({ page }) => {
   // Check the gallery page
   await page.goto('gallery');
   await expect(page).toHaveTitle('Bitter Water - Gallery');
-  await expect(page.getByRole('link', { name: 'Bitter Water' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Home' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Gallery' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Bitter Water', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Home', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Gallery', exact: true })).toBeVisible();
   await expect(header).toHaveScreenshot('navigation-header-gallery.png');
 
   // Test navigate back to home page

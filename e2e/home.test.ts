@@ -7,5 +7,9 @@ test('Home page', async ({ page }) => {
 
   await expect(page.getByRole('heading', { name: 'Welcome to my digital garden' })).toBeVisible();
 
+  const exploreGalleryButton = page.getByRole('link', { name: 'Explore the Gallery' });
+  await expect(exploreGalleryButton).toBeVisible();
+  expect(exploreGalleryButton).toHaveAttribute('href', /(|\/bitterwater)\/gallery$/);
+
   await expect(page).toHaveScreenshot('home-page.png', { fullPage: true });
 });
