@@ -52,11 +52,11 @@
     opacity: 0.7;
   }
 
-  :global(.font-body) {
+  /* .home-content :global(.font-body) {
     font-size: var(--text-lg);
     color: var(--text-secondary);
     max-width: 40rem;
-  }
+  } */
 
   .font-technical {
     font-family: var(--font-mono);
@@ -65,15 +65,15 @@
     letter-spacing: -0.05em;
   }
 
-  :global(.cta-button) {
+  /* .home-content :global(.cta-button) {
     margin-top: var(--space-6);
     text-decoration: none;
     transition: all var(--duration-fast) var(--ease-in-out);
   }
 
-  :global(.cta-button:hover),
-  :global(.cta-button:focus) {
+  .home-content :global(.cta-button:hover),
+  .home-content :global(.cta-button:focus) {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
-  }
+  } */
 </style>
