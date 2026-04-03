@@ -5,6 +5,8 @@ import * as path from 'path';
 test('Gallery home page', async ({ page }) => {
   await page.goto('gallery');
 
+  await page.evaluate(() => document.fonts.ready);
+
   await expect(page).toHaveTitle('Bitter Water - Gallery');
 
   await expect(page.getByRole('heading', { name: 'Gallery' })).toBeVisible();

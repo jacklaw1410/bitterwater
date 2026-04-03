@@ -3,6 +3,8 @@ import { expect, test } from '@playwright/test';
 test('Home page', async ({ page }) => {
   await page.goto('/');
 
+  await page.evaluate(() => document.fonts.ready);
+
   await expect(page).toHaveTitle('Bitter Water - Home');
 
   await expect(page.getByRole('heading', { name: 'Welcome to my digital garden' })).toBeVisible();

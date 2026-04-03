@@ -3,6 +3,7 @@ import { expect, test } from '@playwright/test';
 test('navigation header', async ({ page }) => {
   // Check the home page
   await page.goto('/');
+  await page.evaluate(() => document.fonts.ready);
   await expect(page).toHaveTitle('Bitter Water - Home');
   await expect(page.getByRole('link', { name: 'Bitter Water', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Home', exact: true })).toBeVisible();
@@ -14,6 +15,7 @@ test('navigation header', async ({ page }) => {
 
   // Check the gallery page
   await page.goto('gallery');
+  await page.evaluate(() => document.fonts.ready);
   await expect(page).toHaveTitle('Bitter Water - Gallery');
   await expect(page.getByRole('link', { name: 'Bitter Water', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Home', exact: true })).toBeVisible();
@@ -22,6 +24,7 @@ test('navigation header', async ({ page }) => {
 
   // Test navigate back to home page
   await page.getByRole('link', { name: 'Home' }).click();
+  await page.evaluate(() => document.fonts.ready);
   await expect(page).toHaveURL(/(\/bitterwater|)\//);
   await expect(page).toHaveTitle('Bitter Water - Home');
   await expect(header).toHaveScreenshot('navigation-header-home.png');
