@@ -1,0 +1,40 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["svelte", "bits-ui"],
+      "groupName": "svelte-core"
+    },
+    {
+      "matchPackageNames": ["/^@storybook/"],
+      "groupName": "storybook"
+    },
+    {
+      "matchPackageNames": ["/^@sveltejs/"],
+      "groupName": "sveltekit"
+    },
+    {
+      "matchPackageNames": [
+        "/vitest/",
+        "/playwright/",
+        "/@vitest/",
+        "/@playwright/",
+        "/@testing-library/"
+      ],
+      "groupName": "testing"
+    },
+    {
+      "matchPackageNames": ["/eslint/", "/prettier/"],
+      "groupName": "lint-format"
+    },
+    {
+      "matchPackageNames": ["/^@types/"],
+      "groupName": "types"
+    },
+    {
+      "matchPackageNames": ["typescript"],
+      "groupName": "typescript"
+    }
+  ]
+}
