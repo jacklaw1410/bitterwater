@@ -18,6 +18,8 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
+      - name: Install vite-plus
+        run: bun add -g vite-plus
       - name: Install dependencies
         run: bun install
       - name: Build
@@ -36,6 +38,8 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
+      - name: Install vite-plus
+        run: bun add -g vite-plus
       - name: Install dependencies
         run: bun install
       - name: Cache Playwright browsers
@@ -59,6 +63,8 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
+      - name: Install vite-plus
+        run: bun add -g vite-plus
       - name: Install dependencies
         run: bun install
       - name: Cache Playwright browsers
