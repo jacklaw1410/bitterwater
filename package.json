@@ -1,6 +1,27 @@
 {
   "name": "bitterwater",
   "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build",
+    "preview": "vp preview",
+    "prepare": "(svelte-kit sync || echo '') && vp config",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "vp fmt --check . && vp lint .",
+    "format": "vp fmt .",
+    "test:all": "vp test --run && vp run test:e2e",
+    "test:e2e": "playwright test",
+    "test:e2e:ci-snapshot": "docker build -t bitterwater-e2e . && docker run --rm -v $(pwd)/e2e:/app/e2e -v $(pwd)/test-results:/app/test-results bitterwater-e2e",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "generate:thumbnails": "ts-node scripts/generate-thumbnails.ts"
+  },
+  "dependencies": {
+    "bits-ui": "^2.16.3"
+  },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.0.2",
     "@eslint/compat": "^2.0.3",
@@ -19,54 +40,31 @@
     "@testing-library/svelte": "^5.3.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^25.5.0",
-    "@vitest/browser-playwright": "^4.1.2",
     "@vitest/coverage-v8": "^4.1.2",
-    "eslint": "^10.1.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-storybook": "^10.3.1",
     "eslint-plugin-svelte": "^3.16.0",
     "globals": "^17.4.0",
-    "husky": "^9.1.7",
     "mdsvex": "^0.12.7",
     "playwright": "^1.58.2",
-    "prettier": "^3.8.1",
-    "prettier-plugin-organize-imports": "^4.3.0",
-    "prettier-plugin-svelte": "^3.5.1",
     "storybook": "^10.3.1",
     "svelte": "^5.54.1",
     "svelte-check": "^4.4.5",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.0",
     "typescript-eslint": "^8.57.1",
-    "vite": "^8.0.0",
+    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
     "vite-plugin-devtools-json": "^1.0.0",
-    "vitest": "^4.1.2",
+    "vite-plus": "latest",
+    "vitest": "npm:@voidzero-dev/vite-plus-test@latest",
     "vitest-browser-svelte": "^2.1.0"
   },
-  "private": true,
-  "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "preview": "vite preview",
-    "prepare": "(svelte-kit sync || echo '') && husky",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --check . && eslint .",
-    "format": "prettier --write .",
-    "test:unit": "vitest",
-    "test": "bun test:unit -- --run && bun test:e2e",
-    "test:e2e": "playwright test",
-    "test:e2e:ci-snapshot": "docker build -t bitterwater-e2e . && docker run --rm -v $(pwd)/e2e:/app/e2e -v $(pwd)/test-results:/app/test-results bitterwater-e2e",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "generate:thumbnails": "bun ts-node scripts/generate-thumbnails.ts"
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
   },
-  "type": "module",
-  "dependencies": {
-    "bits-ui": "^2.16.3"
-  },
-  "packageManager": "bun@1.3.11",
   "engines": {
     "node": "^24.14.1"
-  }
+  },
+  "packageManager": "bun@1.3.11"
 }

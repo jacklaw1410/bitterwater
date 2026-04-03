@@ -6,6 +6,7 @@
   };
   let { darts }: Props = $props();
 
+  // oxlint-disable-next-line no-unassigned-vars
   let canvas: HTMLCanvasElement;
   const size = 500;
   const radius = size / 2;

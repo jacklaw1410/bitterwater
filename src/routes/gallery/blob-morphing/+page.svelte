@@ -18,6 +18,7 @@
   const from = PATHS[0];
   const values = [...PATHS, from].join(';');
 
+  // oxlint-disable-next-line no-unassigned-vars
   let svgElement: SVGSVGElement;
 
   let paused = $state(false);

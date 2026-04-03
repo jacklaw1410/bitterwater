@@ -48,7 +48,7 @@ If you encounter a mismatch:
 
 After implementing a phase:
 
-- Run the success criteria checks (usually `bun check` and `bun test` covers everything)
+- Run the success criteria checks (usually `vp check` and `vp test` covers everything)
 - Fix any issues before proceeding
 - Update your progress in both the plan and your todos
 - Check off completed items in the plan file itself using Edit

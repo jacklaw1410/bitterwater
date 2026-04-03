@@ -1,6 +1,6 @@
 # Bitter Water - Agent Guidelines
 
-This is a Svelte 5 web application using Bun, Vite, and SvelteKit. Review the [project docs](./.github/docs/) for detailed guidelines.
+This is a Svelte 5 web application using Vite+, SvelteKit, and Bun as the package manager. Review the [project docs](./.github/docs/) for detailed guidelines.
 
 ## Design Context
 
@@ -28,53 +28,50 @@ The primary audience is potential collaborators. The goal is to showcase technic
 
 ```bash
 # Development
-bun dev                    # Start dev server
-bun dev --port 3000        # Dev server on specific port
+vp dev                    # Start dev server
+vp dev --port 3000        # Dev server on specific port
 
 # Build & Preview
-bun run build                  # Production build
-bun preview                # Preview production build
+vp build                  # Production build
+vp preview                # Preview production build
 
 # Type checking
-bun check                  # Run svelte-check + TypeScript checks
-bun check:watch           # Watch mode for type checking
+vp check                  # Run format, lint, and type checks
 
 # Linting & Formatting
-bun lint                   # Run ESLint + Prettier checks
-bun format                 # Auto-format code with Prettier
+vp lint                   # Run linter
+vp fmt                    # Auto-format code
 
 # Testing
-bun test:unit              # Run unit tests (Vitest)
-bun test:e2e               # Run E2E tests (Playwright)
-bun test                   # Run all tests (unit + e2e)
+vp test                   # Run unit tests (Vitest)
+vp test --run             # Run unit tests once
+vp run test:e2e           # Run E2E tests (Playwright)
 
 # Storybook
-bun storybook             # Start Storybook on port 6006
-bun build-storybook        # Build Storybook static site
+vp run storybook          # Start Storybook on port 6006
+vp run build-storybook    # Build Storybook static site
 ```
 
 ### Running a Single Test
 
 ```bash
 # Single unit test file
-bun test:unit src/routes/gallery/brownian-motion/utils.spec.ts
-
-# Single E2E test
-bun test:e2e e2e/home.test.ts
+vp test src/routes/gallery/brownian-motion/utils.spec.ts
 
 # Single storybook test
-bun test:unit --project storybook src/stories/Button.stories.svelte
+vp test --project storybook src/stories/Button.stories.svelte
 ```
 
 ## Code Style
 
-### Formatting (Prettier)
+### Formatting (Vite+ Oxfmt)
 
 - 2 spaces, no tabs
 - Single quotes
 - Trailing commas: all
 - Print width: 100
-- Plugins: `prettier-plugin-organize-imports`, `prettier-plugin-svelte`
+
+> Note: Formatting is now handled by Vite+ (Oxfmt). Configuration is in `vite.config.ts`.
 
 ### TypeScript
 
@@ -116,7 +113,7 @@ bun test:unit --project storybook src/stories/Button.stories.svelte
 
 - Use `$app/state` for page state (SvelteKit 2.1+)
 - Use `$lib/` path alias for lib imports
-- Organize imports with Prettier plugin
+- Imports are auto-organized by Oxfmt
 
 ## Testing Strategy
 
@@ -158,8 +155,8 @@ See `.github/docs/` for:
 
 Before submitting changes:
 
-- [ ] Run `bun check` for type errors
-- [ ] Run `bun lint` for linting issues
-- [ ] Run `bun test:unit` for unit tests
-- [ ] Run `bun test:e2e` for E2E tests
-- [ ] Run `bun run build` to verify production build
+- [ ] Run `vp check` for type errors
+- [ ] Run `vp lint` for linting issues
+- [ ] Run `vp test` for unit tests
+- [ ] Run `vp run test:e2e` for E2E tests
+- [ ] Run `vp build` to verify production build

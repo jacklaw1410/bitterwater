@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vite-plus/test';
 import { createParticle, moveParticles, updateParticle, type Particle } from './utils.js';
 
 describe('brownian-motion logic', () => {
@@ -11,9 +11,23 @@ describe('brownian-motion logic', () => {
   });
 
   it("updates a particle's properties correctly", () => {
-    const particle: Particle = { x: 10, y: 10, vx: 1, vy: 1, size: 2, color: '#000' };
+    const particle: Particle = {
+      x: 10,
+      y: 10,
+      vx: 1,
+      vy: 1,
+      size: 2,
+      color: '#000',
+    };
 
-    updateParticle(particle, { x: 20, y: 20, vx: 2, vy: 2, size: 4, color: '#fff' });
+    updateParticle(particle, {
+      x: 20,
+      y: 20,
+      vx: 2,
+      vy: 2,
+      size: 4,
+      color: '#fff',
+    });
     expect(particle.x).toBe(20);
     expect(particle.y).toBe(20);
     expect(particle.vx).toBe(2);
@@ -31,7 +45,14 @@ describe('brownian-motion logic', () => {
   });
 
   it('moves particle based on their velocity', () => {
-    const particle: Particle = { x: 10, y: 10, vx: 1, vy: 1, size: 2, color: '#000' };
+    const particle: Particle = {
+      x: 10,
+      y: 10,
+      vx: 1,
+      vy: 1,
+      size: 2,
+      color: '#000',
+    };
     moveParticles([particle], 800, 600);
     expect(particle.x).toBe(11);
     expect(particle.y).toBe(11);

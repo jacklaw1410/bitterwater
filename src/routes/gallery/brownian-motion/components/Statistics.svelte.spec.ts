@@ -1,5 +1,5 @@
 import { cleanup, render, screen, within } from '@testing-library/svelte';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vite-plus/test';
 import type { Particle } from '../utils';
 import Statistics from './Statistics.svelte';
 
@@ -13,7 +13,9 @@ describe('Statistics.svelte', () => {
     ];
     render(Statistics, { particles });
 
-    const positionTable = screen.getByRole('table', { name: 'Position statistics' });
+    const positionTable = screen.getByRole('table', {
+      name: 'Position statistics',
+    });
     expect(positionTable).toBeInTheDocument();
     expect(positionTable).toBeVisible();
     const positionCells = within(positionTable).getAllByRole('cell');
@@ -24,7 +26,9 @@ describe('Statistics.svelte', () => {
     expect(yHeader).toEqual('y');
     expect(yValue).toEqual('20.0000');
 
-    const velocityTable = screen.getByRole('table', { name: 'Velocity statistics' });
+    const velocityTable = screen.getByRole('table', {
+      name: 'Velocity statistics',
+    });
     expect(velocityTable).toBeInTheDocument();
     expect(velocityTable).toBeVisible();
     const velocityCells = within(velocityTable).getAllByRole('cell');

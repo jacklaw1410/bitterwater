@@ -217,10 +217,10 @@ After structure approval:
 #### Automated Verification:
 
 - [ ] Migration applies cleanly: `make migrate`
-- [ ] Unit tests pass: `bun test:unit --run ./path/to/test-component`
-- [ ] Type checking passes: `bun check`
-- [ ] Linting passes: `bun lint`
-- [ ] Integration tests pass: `bun test:e2e ./path/to/integration-tests`
+- [ ] Unit tests pass: `vp test --run ./path/to/test-component`
+- [ ] Type checking passes: `vp check`
+- [ ] Linting passes: `vp lint`
+- [ ] Integration tests pass: `vp run test:e2e ./path/to/integration-tests`
 
 #### Manual Verification:
 
@@ -336,7 +336,7 @@ After structure approval:
 **Always separate success criteria into two categories:**
 
 1. **Automated Verification** (can be run by execution agents):
-   - Commands that can be run: `bun test`, `bun lint`, `bun check`, etc.
+   - Commands that can be run: `vp test`, `vp lint`, `vp check`, etc.
    - Specific files that should exist
    - Code compilation/type checking
    - Automated test suites
@@ -354,8 +354,8 @@ After structure approval:
 
 #### Automated Verification:
 - [ ] Database migration runs successfully: `make migrate`
-- [ ] All unit tests pass: `bun test:unit --run ./...`
-- [ ] No linting errors: `bun check`, `bun lint` & `bun format`
+- [ ] All unit tests pass: `vp test --run ./...`
+- [ ] No linting errors: `vp check`, `vp lint` & `vp fmt`
 - [ ] API endpoint returns 200: `curl localhost:8080/api/new-endpoint`
 
 #### Manual Verification:

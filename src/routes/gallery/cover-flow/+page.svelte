@@ -8,6 +8,7 @@
 </script>
 
 <script lang="ts">
+  // oxlint-disable-next-line no-unassigned-vars
   let carousell: HTMLUListElement;
   const srcs = Array.from(
     { length: 16 },

@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Particle } from '../utils';
 
+  // oxlint-disable-next-line no-unassigned-vars
   let canvasElement: HTMLCanvasElement;
   let { particles, width, height, showTrails, particleSize, particleColor } = $props<{
     particles: Particle[];
