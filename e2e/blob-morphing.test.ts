@@ -1,10 +1,7 @@
 import { expect, test } from '@playwright/test';
 
-test('Blob Morphing page', async ({ page, browserName }) => {
-  // Speed up test by tuning playback rate, which is controllable in Chromium only
-  const playbackRate = browserName === 'chromium' ? 5 : 1;
-  const client = await page.context().newCDPSession(page);
-  await client.send('Animation.setPlaybackRate', { playbackRate });
+test('Blob Morphing page', async ({ page }) => {
+  await page.clock.install();
 
   await page.goto('gallery/blob-morphing');
 
@@ -37,9 +34,11 @@ test('Blob Morphing page', async ({ page, browserName }) => {
   await expect(playButton).toBeVisible();
   await expect(playButton).toBeEnabled();
 
-  await page.waitForTimeout(1000 / playbackRate);
+  await page.clock.fastForward(1000);
   expect(
-    await page.screenshot({ path: 'test-results/screenshots/blob-morphing-after.png' }),
+    await page.screenshot({
+      path: 'test-results/screenshots/blob-morphing-after.png',
+    }),
   ).toEqual(before);
 
   for (let ix = 2; ix <= 6; ix++) {
@@ -48,7 +47,7 @@ test('Blob Morphing page', async ({ page, browserName }) => {
     await expect(playButton).not.toBeVisible();
     await expect(pauseButton).toBeVisible();
 
-    await page.waitForTimeout(1000 / playbackRate);
+    await page.clock.fastForward(1000);
 
     await pauseButton.click();
 
