@@ -55,6 +55,19 @@
   :root {
     --cover-size: 250px;
   }
+
+  @media (max-width: 640px) {
+    :root {
+      --cover-size: 150px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    :root {
+      --cover-size: 120px;
+    }
+  }
+
   @keyframes adjust-z-index {
     0% {
       z-index: 1;
@@ -119,8 +132,19 @@
   }
   .placeholder {
     display: inline-block;
-    /* Calibrated to match the cover size */
     width: 331.52px;
+  }
+
+  @media (max-width: 640px) {
+    .placeholder {
+      width: 199px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .placeholder {
+      width: 159px;
+    }
   }
   .card {
     display: inline-block;
