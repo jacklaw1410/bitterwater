@@ -20,7 +20,7 @@ test('Cover Flow page', async ({ page }) => {
   await page.clock.fastForward(10_000);
 
   await expect(page).toHaveScreenshot('cover-flow-initial.png', {
-    animations: 'allow',
+    animations: 'disabled',
   });
 
   await carousel.hover();
@@ -29,6 +29,6 @@ test('Cover Flow page', async ({ page }) => {
   await page.clock.fastForward(10_000);
 
   await expect(page).toHaveScreenshot('cover-flow-scrolled.png', {
-    animations: 'allow',
+    animations: 'disabled',
   });
 });
