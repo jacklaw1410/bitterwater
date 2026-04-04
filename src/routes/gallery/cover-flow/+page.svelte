@@ -42,13 +42,13 @@
   bind:this={carousell}
   data-thumbnail-target
 >
-  <li class="placeholder"></li>
+  <!-- <li class="placeholder"></li> -->
   {#each srcs as [src, alt] (src)}
     <li class="card" aria-label={alt}>
       <img {src} {alt} draggable="false" />
     </li>
   {/each}
-  <li class="placeholder"></li>
+  <!-- <li class="placeholder"></li> -->
 </ul>
 
 <style>
