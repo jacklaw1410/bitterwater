@@ -10,6 +10,7 @@ export default defineConfig({
   },
   use: {
     baseURL: `${url}/`,
+    video: 'on',
   },
   testDir: './e2e',
 });
