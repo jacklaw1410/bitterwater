@@ -11,4 +11,6 @@ RUN bun install --frozen-lockfile
 
 COPY . .
 
+ENV CI=true
+
 CMD ["bun", "vp", "run", "test:e2e", "-u"]
