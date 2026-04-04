@@ -79,8 +79,7 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: bunx playwright install --with-deps
       - name: Run e2e tests
-        # Skip cover-flow test until resolving the issue with Playwright screenshoting on GitHub Actions
-        run: vp run test:e2e --grep-invert cover-flow
+        run: vp run test:e2e
       - name: Upload e2e artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v7

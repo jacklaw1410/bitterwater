@@ -68,19 +68,19 @@
   }
   @keyframes rotate-cover {
     0% {
-      transform: translateX(-100%) rotateY(-45deg);
+      transform: translate(-100%) rotateY(-45deg);
     }
     35% {
-      transform: translateX(0) rotateY(-45deg);
+      transform: translate(0) rotateY(-45deg);
     }
     50% {
       transform: rotateY(0deg) scale(1.5);
     }
     65% {
-      transform: translateX(0) rotateY(45deg);
+      transform: translate(0) rotateY(45deg);
     }
     100% {
-      transform: translateX(100%) rotateY(45deg);
+      transform: translate(100%) rotateY(45deg);
     }
   }
   @keyframes fade-in {
@@ -128,9 +128,10 @@
     aspect-ratio: 1;
     scroll-snap-align: center;
 
-    animation:
-      rotate-cover linear both,
-      adjust-z-index linear both;
+    animation-name: rotate-cover, adjust-z-index;
+    animation-duration: auto;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
     animation-timeline: view(inline);
 
     transform-style: preserve-3d;
