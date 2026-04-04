@@ -52,11 +52,11 @@
     opacity: 0.7;
   }
 
-  /* .home-content :global(.font-body) {
+  :global(.home-content .font-body) {
     font-size: var(--text-lg);
     color: var(--text-secondary);
     max-width: 40rem;
-  } */
+  }
 
   .font-technical {
     font-family: var(--font-mono);
@@ -65,15 +65,21 @@
     letter-spacing: -0.05em;
   }
 
-  /* .home-content :global(.cta-button) {
+  :global(.home-content .font-body) {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    max-width: 40rem;
+  }
+
+  :global(.home-content .cta-button) {
     margin-top: var(--space-6);
     text-decoration: none;
     transition: all var(--duration-fast) var(--ease-in-out);
   }
 
-  .home-content :global(.cta-button:hover),
-  .home-content :global(.cta-button:focus) {
+  :global(.home-content .cta-button:hover),
+  :global(.home-content .cta-button:focus) {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
-  } */
+  }
 </style>

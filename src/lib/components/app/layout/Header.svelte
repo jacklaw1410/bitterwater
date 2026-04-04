@@ -51,7 +51,7 @@
         >
       {/each}
     </nav>
-    <button class="theme-toggle" aria-label="Toggle theme" on:click={toggleTheme}>
+    <button class="theme-toggle" aria-label="Toggle theme" onclick={toggleTheme}>
       {#if $theme === 'dark'}🌙{/if}
       {#if $theme === 'light'}☀️{/if}
     </button>

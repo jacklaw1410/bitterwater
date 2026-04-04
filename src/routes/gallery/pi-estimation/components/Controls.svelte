@@ -5,7 +5,7 @@
 
 <div class="controls">
   <PlayPauseToggle bind:playing={state.playing} />
-  <button on:click={reset}>Reset</button>
+  <button onclick={reset}>Reset</button>
 </div>
 
 <style>
