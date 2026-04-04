@@ -37,7 +37,6 @@
 
 <ul
   class="carousell"
-  role="region"
   aria-roledescription="carousell"
   aria-label="Cover flow of images"
   bind:this={carousell}
@@ -45,7 +44,7 @@
 >
   <li class="placeholder"></li>
   {#each srcs as [src, alt] (src)}
-    <li class="card">
+    <li class="card" aria-label={alt}>
       <img {src} {alt} draggable="false" />
     </li>
   {/each}
