@@ -15,14 +15,14 @@
     (_, ix) => [asset(`/cover-flow/image_${ix + 1}.jpeg`), `Image ${ix + 1}`] as const,
   );
 
-  $effect(() => {
-    const child = carousell.children[Math.floor(carousell.children.length / 2) - 1];
-    if (child) {
-      child.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' });
-    } else {
-      carousell.scrollBy({ left: (carousell.scrollWidth - carousell.clientWidth) / 2 });
-    }
-  });
+  // $effect(() => {
+  //   const child = carousell.children[Math.floor(carousell.children.length / 2) - 1];
+  //   if (child) {
+  //     child.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'center' });
+  //   } else {
+  //     carousell.scrollBy({ left: (carousell.scrollWidth - carousell.clientWidth) / 2 });
+  //   }
+  // });
 </script>
 
 <svelte:head>
