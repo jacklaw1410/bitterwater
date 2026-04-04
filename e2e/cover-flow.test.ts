@@ -2,8 +2,6 @@ import { expect, test } from '@playwright/test';
 import { waitForAnimationEnd } from './utils';
 
 test('Cover Flow page', async ({ page }) => {
-  await page.clock.install();
-
   await page.goto('gallery/cover-flow');
 
   await page.evaluate(() => document.fonts.ready);
@@ -17,18 +15,14 @@ test('Cover Flow page', async ({ page }) => {
   await waitForAnimationEnd(carousel);
   await expect(carousel).toBeVisible();
 
-  await page.clock.fastForward(10_000);
-
   await expect(page).toHaveScreenshot('cover-flow-initial.png', {
-    animations: 'disabled',
+    animations: 'allow',
   });
 
   await carousel.hover();
   await page.mouse.wheel(500, 0);
 
-  await page.clock.fastForward(10_000);
-
   await expect(page).toHaveScreenshot('cover-flow-scrolled.png', {
-    animations: 'disabled',
+    animations: 'allow',
   });
 });
