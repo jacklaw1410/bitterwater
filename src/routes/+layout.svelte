@@ -35,4 +35,16 @@
       }
     }
   }
+
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 calc(var(--space-4) / 2);
+    }
+  }
 </style>

@@ -10,6 +10,8 @@ const VIEWPORTS = {
 test.describe('Cover Flow page', () => {
   for (const [name, size] of Object.entries(VIEWPORTS)) {
     test(`${name} viewport`, async ({ page }) => {
+      await page.clock.install();
+
       await page.setViewportSize(size);
       await page.goto('gallery/cover-flow');
 
@@ -31,6 +33,8 @@ test.describe('Cover Flow page', () => {
 
       await carousel.hover();
       await page.mouse.wheel(500, 0);
+
+      await page.clock.fastForward(1000);
 
       await expect(page).toHaveScreenshot(`cover-flow-${name}-scrolled.png`, {
         animations: 'allow',

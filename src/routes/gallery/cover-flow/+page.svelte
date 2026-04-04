@@ -87,7 +87,7 @@
       transform: translate(0) rotateY(-45deg);
     }
     50% {
-      transform: rotateY(0deg) scale(1.5);
+      transform: rotateY(0deg) scale(1.4);
     }
     65% {
       transform: translate(0) rotateY(45deg);
