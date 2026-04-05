@@ -1,28 +1,49 @@
 # Bitter Water - Agent Guidelines
 
-This is a Svelte 5 web application using Vite+, SvelteKit, and Bun as the package manager. Review the [project docs](./.github/docs/) for detailed guidelines.
+This is a Svelte 5 web application using Vite+, SvelteKit, and Bun as the package manager. Review
+the [project docs](./.github/docs/) for detailed guidelines.
+
+## First-time Setup
+
+```bash
+# Install dependencies
+bun install
+
+# Install Playwright browsers (required for E2E tests)
+bunx playwright install --with-deps
+```
 
 ## Design Context
 
 ### Users
 
-The primary audience is potential collaborators. The goal is to showcase technical expertise through a portfolio of interactive experiments, creative coding, and a modern web stack (Svelte 5).
+The primary audience is potential collaborators. The goal is to showcase technical expertise through
+a portfolio of interactive experiments, creative coding, and a modern web stack (Svelte 5).
 
 ### Brand Personality
 
-**Playful, Technical, Precise.** The project aims to evoke "Delight in the playfulness" while maintaining the high-quality execution and precision of a technical portfolio.
+**Playful, Technical, Precise.** The project aims to evoke "Delight in the playfulness" while
+maintaining the high-quality execution and precision of a technical portfolio.
 
 ### Aesthetic Direction
 
-**Stripe, but more relaxed and playful.** The UI should feel organic and less rigid than traditional "Swiss-style" or corporate designs. It avoids being overly serious or dry, using the playful `Itim` typeface to contrast with the technical `Roboto Mono` and a vibrant blue brand palette.
+**Stripe, but more relaxed and playful.** The UI should feel organic and less rigid than traditional
+"Swiss-style" or corporate designs. It avoids being overly serious or dry, using the playful `Itim`
+typeface to contrast with the technical `Roboto Mono` and a vibrant blue brand palette.
 
 ### Design Principles
 
-1. **Playful Precision**: Harmonize handwritten charm with technical accuracy. Use `Itim` for personality and `Roboto Mono` for technical clarity, backed by a rigorous 3-tier CSS token system.
-2. **Organic Quality**: Favor relaxed, organic layouts over rigid grids. Aim for a "looser" version of high-end design systems (like Stripe) that feels approachable yet professional.
-3. **Delightful Interaction**: Prioritize animations and micro-interactions that spark joy and curiosity, going beyond simple functional feedback.
-4. **Functional Transparency**: The codebase itself is part of the portfolio. Maintain high standards for Svelte 5 Runes, TypeScript strictness, and modular architecture.
-5. **Accessible Inclusion**: Ensure general accessibility standards (WCAG AA) and provide a first-class experience in both light and dark modes.
+1. **Playful Precision**: Harmonize handwritten charm with technical accuracy. Use `Itim` for
+   personality and `Roboto Mono` for technical clarity, backed by a rigorous 3-tier CSS token
+   system.
+2. **Organic Quality**: Favor relaxed, organic layouts over rigid grids. Aim for a "looser" version
+   of high-end design systems (like Stripe) that feels approachable yet professional.
+3. **Delightful Interaction**: Prioritize animations and micro-interactions that spark joy and
+   curiosity, going beyond simple functional feedback.
+4. **Functional Transparency**: The codebase itself is part of the portfolio. Maintain high
+   standards for Svelte 5 Runes, TypeScript strictness, and modular architecture.
+5. **Accessible Inclusion**: Ensure general accessibility standards (WCAG AA) and provide a
+   first-class experience in both light and dark modes.
 
 ## Build Commands
 
@@ -136,7 +157,9 @@ vp test --project storybook src/stories/Button.stories.svelte
 - Files in `e2e/` directory, named `*.test.ts`
 - Use page-level locators: `page.getByRole()`, `page.getByLabel()`
 - Avoid CSS/XPath selectors - prefer accessibility queries
-- Include screenshot snapshots with `toMatchSnapshot()`
+- Include screenshot snapshots with `expect(page).toHaveScreenshot()`
+- Visual regression tests use platform-specific snapshots (`*-darwin.png`, `*-linux.png`)
+- Configure tolerance with `maxDiffPixelRatio` option
 
 ## Project Documentation
 
@@ -149,6 +172,7 @@ See `.github/docs/` for:
 - [unit-testing.md](./.github/docs/unit-testing.md) - Vitest guidelines
 - [component-testing.md](./.github/docs/component-testing.md) - Storybook testing
 - [e2e-testing.md](./.github/docs/e2e-testing.md) - Playwright guidelines
+- [visual-regression-testing.md](./.github/docs/visual-regression-testing.md) - Screenshot testing
 - [storybook-guidelines.md](./.github/docs/storybook-guidelines.md) - Story structure
 
 ## Review Checklist
