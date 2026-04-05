@@ -5,12 +5,14 @@
   white-space: nowrap;
   border-radius: var(--radius-md);
   font-weight: var(--font-medium);
-  /* transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: var(--ease-in-out);
-  transition-duration: var(--duration-fast); */
   cursor: pointer;
   border: var(--border-width-thin) solid transparent;
   font-family: var(--font-sans);
+}
+
+.ui-button * {
+  cursor: inherit;
+  pointer-events: inherit;
 }
 
 .ui-button:disabled {
@@ -70,7 +72,8 @@
   background-color: var(--action-secondary-active);
 }
 
-.ui-button--ghost {
+.ui-button--ghost,
+.ui-button--ghost:disabled {
   background-color: transparent;
   color: var(--text-primary);
 }

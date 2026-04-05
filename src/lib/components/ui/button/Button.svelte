@@ -6,16 +6,18 @@
   type ButtonVariant = 'primary' | 'secondary' | 'ghost';
   type ButtonSize = 'sm' | 'md' | 'lg';
 
+  export type ButtonProps = {
+    variant?: ButtonVariant;
+    size?: ButtonSize;
+  } & ButtonRootProps;
+
   let {
     variant = 'primary',
     size = 'md',
     class: className = '',
     children,
     ...restProps
-  }: {
-    variant?: ButtonVariant;
-    size?: ButtonSize;
-  } & ButtonRootProps = $props();
+  }: ButtonProps = $props();
 
   let classes = $derived(['ui-button', `ui-button--${variant}`, `ui-button--${size}`, className]);
 </script>
