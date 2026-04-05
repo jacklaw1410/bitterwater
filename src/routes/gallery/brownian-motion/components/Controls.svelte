@@ -1,5 +1,6 @@
 <script lang="ts">
   import PlayPauseToggle from '$lib/components/app/PlayPauseToggle.svelte';
+  import Button from '$lib/components/ui/button/Button.svelte';
 
   type Props = {
     particleCount: number;
@@ -29,7 +30,7 @@
 <div class="controls">
   <div class="layer">
     <PlayPauseToggle bind:playing />
-    <button style="margin-right: 1em;" onclick={onreset}>Reset</button>
+    <Button variant="secondary" size="sm" onclick={onreset}>Reset</Button>
     <label>
       Width:
       <input type="number" bind:value={width} min={100} max={2000} aria-label="Canvas width" />
