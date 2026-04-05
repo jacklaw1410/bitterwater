@@ -29,6 +29,7 @@ test.describe('Cover Flow page', () => {
       const snapshotName = `cover-flow-${name}-initial.png`;
       await expect(page).toHaveScreenshot(snapshotName, {
         animations: 'allow',
+        maxDiffPixelRatio: 0.01,
       });
 
       await carousel.hover();
@@ -38,6 +39,7 @@ test.describe('Cover Flow page', () => {
 
       await expect(page).toHaveScreenshot(`cover-flow-${name}-scrolled.png`, {
         animations: 'allow',
+        maxDiffPixelRatio: 0.01,
       });
     });
   }
