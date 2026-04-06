@@ -14,7 +14,7 @@
     "format": "vp fmt .",
     "test:all": "vp test --run && vp run test:e2e",
     "test:e2e": "playwright test",
-    "test:e2e:ci-snapshot": "docker build -t bitterwater-e2e . && docker run --rm -v $(pwd)/e2e:/app/e2e -v $(pwd)/test-results:/app/test-results bitterwater-e2e",
+    "test:e2e:ci-snapshot": "vp run docker:build && vp run docker:run",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "generate:thumbnails": "ts-node scripts/generate-thumbnails.ts"

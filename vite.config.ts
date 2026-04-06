@@ -10,6 +10,29 @@ const dirname =
   typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  run: {
+    tasks: {
+      'docker:build': {
+        command: 'DOCKER_BUILDKIT=1 docker build -t bitterwater-e2e . --progress=plain',
+        input: [
+          'Dockerfile',
+          'package.json',
+          'bun.lock',
+          'src/lib/**',
+          'src/routes/**',
+          'src/app.d.ts',
+          'src/app.html',
+          'e2e/**',
+          'playwright.config.ts',
+          'vite.config.ts',
+        ],
+      },
+      'docker:run': {
+        command:
+          'docker run --rm -v $(pwd)/e2e:/app/e2e -v $(pwd)/test-results:/app/test-results bitterwater-e2e',
+      },
+    },
+  },
   staged: {
     '*': 'vp check --fix',
   },
