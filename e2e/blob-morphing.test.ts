@@ -1,62 +1,74 @@
 import { expect, test } from '@playwright/test';
+import { pauseSVGAnimations } from './utils';
 
-test('Blob Morphing page', async ({ page }) => {
-  await page.clock.install();
+test.describe('Blob Morphing page', () => {
+  test('Animation sequences', async ({ page }) => {
+    await page.goto('gallery/blob-morphing');
 
-  await page.goto('gallery/blob-morphing');
+    await expect(page).toHaveTitle('Bitter Water - Blob Morphing');
 
-  await expect(page).toHaveTitle('Bitter Water - Blob Morphing');
+    const blob = page.getByRole('img', { name: 'Animated blob morphing' });
+    await pauseSVGAnimations(blob);
+    await expect(blob).toBeVisible();
 
-  await expect(page.getByRole('heading', { name: 'Blob Morphing' })).toBeVisible();
+    const blobList = page.getByRole('list', { name: 'Blobs used in animation' });
+    await expect(blobList).toBeVisible();
+    await expect(blobList.getByRole('listitem')).toHaveCount(5);
 
-  await expect(page.getByRole('img', { name: 'Animated blob morphing' })).toBeVisible();
+    for (let ix = 1; ix <= 6; ix++) {
+      // Begin at 250ms; 5s duration means each blob is visible for 1s
+      await blob.evaluate(
+        (svg, seconds) => {
+          (svg as SVGSVGElement).setCurrentTime(seconds);
+        },
+        0.25 + (ix - 1) * 1,
+      );
 
-  const blobList = page.getByRole('list', { name: 'Blobs used in animation' });
-  await expect(blobList).toBeVisible();
-  await expect(blobList.getByRole('listitem')).toHaveCount(5);
-
-  const pauseButton = page.getByRole('button', { name: 'Pause' });
-  await expect(pauseButton).toBeEnabled();
-  await expect(pauseButton).toBeVisible();
-
-  await pauseButton.click();
-
-  await expect(page).toHaveScreenshot('blob-morphing-page-1.png', {
-    fullPage: true,
-    maxDiffPixelRatio: 0.03,
+      const name = `blob-morphing-page-${ix}.png`;
+      await expect(page).toHaveScreenshot(name, { fullPage: true, maxDiffPixelRatio: 0.01 });
+    }
   });
 
-  const before = await page.screenshot({
-    path: 'test-results/screenshots/blob-morphing-before.png',
-  });
+  test('Playing and pausing animation', async ({ page }) => {
+    await page.goto('gallery/blob-morphing');
+    const blob = page.getByRole('img', { name: 'Animated blob morphing' });
 
-  const playButton = page.getByRole('button', { name: 'Play' });
-  await expect(playButton).toBeVisible();
-  await expect(playButton).toBeEnabled();
+    await expect(blob).toBeVisible();
 
-  await page.clock.fastForward(1000);
-  expect(
-    await page.screenshot({
-      path: 'test-results/screenshots/blob-morphing-after.png',
-    }),
-  ).toEqual(before);
-
-  for (let ix = 2; ix <= 6; ix++) {
-    await playButton.click();
+    const playButton = page.getByRole('button', { name: 'Play' });
+    const pauseButton = page.getByRole('button', { name: 'Pause' });
 
     await expect(playButton).not.toBeVisible();
+    await expect(pauseButton).toBeEnabled();
     await expect(pauseButton).toBeVisible();
-
-    await page.clock.fastForward(1000);
 
     await pauseButton.click();
 
-    await expect(page).toHaveScreenshot(`blob-morphing-page-${ix}.png`, {
-      fullPage: true,
-      maxDiffPixelRatio: 0.018,
+    const before = await blob.screenshot({
+      path: 'test-results/screenshots/blob-morphing-before.png',
     });
 
     await expect(playButton).toBeVisible();
+    await expect(playButton).toBeEnabled();
     await expect(pauseButton).not.toBeVisible();
-  }
+
+    await page.waitForTimeout(500);
+    const afterPause = await blob.screenshot({
+      path: 'test-results/screenshots/blob-morphing-after-pause.png',
+      animations: 'disabled',
+    });
+    expect(afterPause).toEqual(before);
+
+    await playButton.click();
+
+    await expect(playButton).not.toBeVisible();
+    await expect(pauseButton).toBeEnabled();
+    await expect(pauseButton).toBeVisible();
+
+    await page.waitForTimeout(500);
+    const afterResume = await blob.screenshot({
+      path: 'test-results/screenshots/blob-morphing-after-resume.png',
+    });
+    expect(afterResume).not.toEqual(afterPause);
+  });
 });

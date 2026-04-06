@@ -21,15 +21,12 @@
   // oxlint-disable-next-line no-unassigned-vars
   let svgElement: SVGSVGElement;
 
-  let paused = $state(false);
-  const ontoggle = () => {
-    if (paused) {
-      paused = false;
-      svgElement.unpauseAnimations();
-    } else {
-      paused = true;
-      svgElement.pauseAnimations();
-    }
+  let playing = $state(true);
+  const onpause = () => {
+    svgElement.pauseAnimations();
+  };
+  const onplay = () => {
+    svgElement.unpauseAnimations();
   };
 </script>
 
@@ -58,7 +55,7 @@
   to the path of the SVG.
 </p>
 
-<PlayPauseToggle playing={!paused} onclick={ontoggle} />
+<PlayPauseToggle bind:playing {onplay} {onpause} />
 <svg
   id="blob-svg"
   bind:this={svgElement}
@@ -72,8 +69,8 @@
   version="1.1"
   data-thumbnail-target
 >
-  <path fill="#BB004B">
-    <animate attributeName="d" {values} dur="5s" repeatCount="indefinite" />
+  <path fill="#BB004B" d={from}>
+    <animate attributeName="d" {values} dur="5s" begin="250ms" repeatCount="indefinite" />
   </path>
 </svg>
 
