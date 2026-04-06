@@ -161,6 +161,15 @@ vp run test:e2e -- e2e/home.test.ts
 
 ### Update Snapshots
 
+> **Warning**: Updating snapshots should be a **last resort**. Before updating, always investigate
+> the root cause of the mismatch. Only update snapshots after confirming:
+>
+> 1. The visual change is **intentional** (not a bug or unintended side effect)
+> 2. The new behavior is **correct and desired**
+> 3. The change has been **reviewed and approved**
+>
+> Never update snapshots simply to make tests pass without understanding why they failed.
+
 **Local development (macOS):**
 
 ```bash
@@ -207,10 +216,14 @@ If darwin and linux snapshots differ significantly:
 
 ## Snapshot Review Checklist
 
-Before committing snapshots:
+Before updating snapshots:
 
-- [ ] Verify changes are intentional UI updates
+- [ ] **Investigate the root cause** - understand WHY the snapshot no longer matches
+- [ ] Verify changes are intentional UI updates (not bugs or unintended side effects)
 - [ ] Check both darwin and linux variants exist
 - [ ] Review diff output for unexpected changes
 - [ ] Ensure tests pass with new snapshots
 - [ ] Add descriptive commit message explaining visual changes
+
+> **Important**: If a snapshot fails, do not immediately reach for `--update-snapshots`. First
+> determine if the mismatch indicates a legitimate issue that needs fixing in the code itself.
