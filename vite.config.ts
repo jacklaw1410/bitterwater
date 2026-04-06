@@ -1,10 +1,11 @@
-import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
-import { sveltekit } from '@sveltejs/kit/vite';
-import { playwright } from 'vite-plus/test/browser-playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
+import { sveltekit } from '@sveltejs/kit/vite';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import { defineConfig } from 'vite-plus';
+import { playwright } from 'vite-plus/test/browser-playwright';
 
 const dirname =
   typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
@@ -250,6 +251,7 @@ export default defineConfig({
     singleQuote: true,
     trailingComma: 'all',
     printWidth: 100,
+    sortImports: true,
     sortPackageJson: true,
     ignorePatterns: [
       'package-lock.json',
@@ -259,6 +261,7 @@ export default defineConfig({
       'bun.lockb',
       '/static/',
     ],
+    jsdoc: true,
   },
   plugins: [sveltekit(), devtoolsJson()],
   test: {
