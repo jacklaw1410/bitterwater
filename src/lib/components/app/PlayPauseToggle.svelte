@@ -1,22 +1,31 @@
 <script lang="ts">
-  import type { HTMLButtonAttributes } from 'svelte/elements';
+  import Button from '$lib/components/ui/button/Button.svelte';
+
+  import type { HTMLButtonAttributes, MouseEventHandler } from 'svelte/elements';
   type Props = {
     playing?: boolean;
-  } & HTMLButtonAttributes;
+    onplay?: MouseEventHandler<HTMLButtonElement>;
+    onpause?: MouseEventHandler<HTMLButtonElement>;
+  } & Omit<HTMLButtonAttributes, 'onclick'>;
 
   const size = 24;
 
   let { playing = $bindable(false), ...props }: Props = $props();
-  const toggle = () => {
+  const onclick: MouseEventHandler<HTMLButtonElement> = (event) => {
     playing = !playing;
+    if (playing) {
+      props.onplay?.(event);
+    } else {
+      props.onpause?.(event);
+    }
   };
 </script>
 
-<button
-  type="button"
-  onclick={toggle}
+<Button
+  variant="ghost"
+  size="sm"
+  onclick={onclick}
   aria-label={playing ? 'Pause' : 'Play'}
-  style:--icon-size={size}
   {...props}
 >
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -26,29 +35,4 @@
       <path d="M8 5v14l11-7z" />
     {/if}
   </svg>
-</button>
-
-<style>
-  button {
-    background: none;
-    border: none;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--action-primary-bg);
-    transition: color var(--duration-fast) var(--ease-in-out);
-  }
-
-  button:hover:not(:disabled),
-  button:focus:not(:disabled) {
-    color: var(--action-primary-hover);
-
-    outline: none;
-  }
-
-  button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-</style>
+</Button>
