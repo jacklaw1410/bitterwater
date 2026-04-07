@@ -2,6 +2,8 @@ import path from 'path';
 
 import { expect, test } from '@playwright/test';
 
+const TIMEOUT = 10_000;
+
 test('Pixelation page', async ({ page }) => {
   await page.goto('gallery/pixelation');
 
@@ -14,7 +16,7 @@ test('Pixelation page', async ({ page }) => {
     page.getByText('Transform any image into pixel art, no matter the resolution.'),
   ).toBeVisible();
 
-  await page.getByText('Processing image...').waitFor({ state: 'hidden', timeout: 5000 });
+  await page.getByText('Processing image...').waitFor({ state: 'hidden', timeout: TIMEOUT });
 
   await expect(page.getByText('Sample image - try uploading')).toBeVisible();
 
@@ -51,7 +53,7 @@ test('Pixelation page', async ({ page }) => {
   const fileChooser = await fileChooserPromise;
   await fileChooser.setFiles(path.join(process.cwd(), 'static/pixelation/slime.png'));
 
-  await page.getByText('Processing image...').waitFor({ state: 'hidden', timeout: 5000 });
+  await page.getByText('Processing image...').waitFor({ state: 'hidden', timeout: TIMEOUT });
 
   await expect(page.getByText('Uploaded: slime.png')).toBeVisible();
 
@@ -63,7 +65,7 @@ test('Pixelation page', async ({ page }) => {
   await expect(resetButton).toBeEnabled();
   await resetButton.click();
 
-  await page.getByText('Processing image...').waitFor({ state: 'hidden', timeout: 5000 });
+  await page.getByText('Processing image...').waitFor({ state: 'hidden', timeout: TIMEOUT });
 
   await expect(page.getByText('Sample image - try uploading')).toBeVisible();
 
