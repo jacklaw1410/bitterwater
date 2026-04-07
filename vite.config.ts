@@ -242,7 +242,8 @@ export default defineConfig({
     ],
     options: {
       typeAware: true,
-      typeCheck: true,
+      // NOTE: Turned off because oxlint fails to respect node types at the moment
+      // typeCheck: true,
     },
   },
   fmt: {
