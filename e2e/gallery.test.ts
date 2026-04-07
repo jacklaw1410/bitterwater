@@ -1,6 +1,7 @@
-import { expect, test } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
+
+import { expect, test } from '@playwright/test';
 
 test('Gallery home page', async ({ page }) => {
   await page.goto('gallery');

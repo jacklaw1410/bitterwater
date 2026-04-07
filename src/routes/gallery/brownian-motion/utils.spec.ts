@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vite-plus/test';
+
 import { createParticle, moveParticles, updateParticle, type Particle } from './utils.js';
 
 describe('brownian-motion logic', () => {

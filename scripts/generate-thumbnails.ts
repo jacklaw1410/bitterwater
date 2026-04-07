@@ -1,6 +1,7 @@
-import { chromium } from '@playwright/test';
 import { mkdir, readdir } from 'fs/promises';
 import { join } from 'path';
+
+import { chromium } from '@playwright/test';
 
 const THUMBNAIL_DIR = './static/thumbnails';
 const BASE_URL = 'http://localhost:5173';

@@ -1,5 +1,4 @@
 import { expect, test } from '@playwright/test';
-import { fail } from 'assert';
 
 test('Pi Estimation page', async ({ page }) => {
   await page.goto('gallery/pi-estimation');
@@ -28,14 +27,14 @@ test('Pi Estimation page', async ({ page }) => {
     expect(totalDartsNumber).not.toBeNaN();
     expect(totalDartsNumber).toBeGreaterThan(0);
   } else {
-    fail('Darts Inside Circle text not found');
+    throw new Error('Darts Inside Circle text not found');
   }
 
   const piEstimation = await page.getByText(/Estimated π:/).textContent();
   if (piEstimation) {
     expect(parseFloat(piEstimation.split(': ')[1])).toBeGreaterThan(0);
   } else {
-    fail('Pi Estimation text not found');
+    throw new Error('Pi Estimation text not found');
   }
 
   await page.getByRole('button', { name: 'Reset' }).click();

@@ -1,5 +1,6 @@
 import { cleanup, render, screen, within } from '@testing-library/svelte';
 import { afterEach, describe, expect, it } from 'vite-plus/test';
+
 import type { Particle } from '../utils';
 import Statistics from './Statistics.svelte';
 

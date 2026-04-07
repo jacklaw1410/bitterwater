@@ -20,6 +20,7 @@
     "generate:thumbnails": "ts-node scripts/generate-thumbnails.ts"
   },
   "dependencies": {
+    "@techstark/opencv-js": "^4.12.0-release.1",
     "bits-ui": "^2.16.3"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vite-plus/test';
-import { render } from 'vitest-browser-svelte';
 import { page } from 'vite-plus/test/browser';
+import { render } from 'vitest-browser-svelte';
+
 import Page from './+page.svelte';
 
 describe('/+page.svelte', () => {

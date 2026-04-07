@@ -164,6 +164,45 @@ See `.github/docs/` for:
 - [visual-regression-testing.md](./.github/docs/visual-regression-testing.md) - Screenshot testing
 - [storybook-guidelines.md](./.github/docs/storybook-guidelines.md) - Story structure
 
+## Worktree Management
+
+### When to Create a Worktree
+
+When asked to implement changes, always ask:
+
+> "Should I create a new worktree for this work, or work directly in the current branch?"
+
+**Create a worktree when:**
+
+- Making significant changes that may take multiple sessions
+- Experimenting with risky refactors
+- The user explicitly requests isolated work
+
+**Work directly in current branch when:**
+
+- Quick fixes or small changes
+- User wants fast iteration
+- No risk of destabilizing main
+
+### Worktree Lifecycle
+
+1. **Create**: `git worktree add ../<name> -b <branch-name>`
+2. **Work**: Implement changes in the worktree
+3. **Commit**: Commit changes with clear commit message
+4. **Tear down**: After completion or when done, remove the worktree:
+
+   ```bash
+   git worktree remove ../<worktree-name>
+   git branch -d <branch-name>
+   ```
+
+### Git Safety Protocol
+
+- **Never force push** to main
+- **Never update git config** during work
+- **Never skip hooks** (--no-verify) unless explicitly requested
+- **Never run destructive commands** (hard reset, --force) without explicit request
+
 ## Review Checklist
 
 Before submitting changes:

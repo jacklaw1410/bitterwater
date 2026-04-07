@@ -47,3 +47,33 @@ bunx playwright install chromium
 ```
 
 The project uses Chromium by default in E2E tests.
+
+## Worktree Management
+
+When asked to make changes, **always ask**:
+
+> "Should I create a new worktree for this work, or work directly in the current branch?"
+
+**Create a worktree when:**
+
+- Making significant changes that may take multiple sessions
+- Experimenting with risky refactors
+- The user explicitly requests isolated work
+
+**Work directly in current branch when:**
+
+- Quick fixes or small changes
+- User wants fast iteration
+- No risk of destabilizing main
+
+### Lifecycle
+
+1. Create: `git worktree add ../<name> -b <branch-name>`
+2. Work: Implement changes
+3. Commit: Clear commit message
+4. **Tear down**: After completion:
+
+   ```bash
+   git worktree remove ../<worktree-name>
+   git branch -d <branch-name>
+   ```

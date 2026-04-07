@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/svelte';
 import { describe, expect, it } from 'vite-plus/test';
+
 import Statistics from './Statistics.svelte';
 
 describe('Statistics.svelte', () => {

@@ -188,7 +188,7 @@
   --text-secondary: var(--gray-400);
   --text-disabled: var(--gray-600);
 
-  --border-default: var(--gray-700);
+  --border-default: var(--gray-600);
   --border-focus: var(--brand-400);
 
   --action-primary-bg: var(--brand-600);

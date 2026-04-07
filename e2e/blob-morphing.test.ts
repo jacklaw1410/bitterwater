@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+
 import { pauseSVGAnimations } from './utils';
 
 test.describe('Blob Morphing page', () => {
