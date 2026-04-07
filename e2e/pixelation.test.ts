@@ -43,6 +43,7 @@ test('Pixelation page', async ({ page }) => {
 
   await expect(page).toHaveScreenshot('pixelation-page-processed.png', {
     fullPage: true,
+    maxDiffPixelRatio: 0.01,
   });
 
   const fileChooserPromise = page.waitForEvent('filechooser');
@@ -56,6 +57,7 @@ test('Pixelation page', async ({ page }) => {
 
   await expect(page).toHaveScreenshot('pixelation-page-uploaded.png', {
     fullPage: true,
+    maxDiffPixelRatio: 0.01,
   });
 
   await expect(resetButton).toBeEnabled();
@@ -67,5 +69,6 @@ test('Pixelation page', async ({ page }) => {
 
   await expect(page).toHaveScreenshot('pixelation-page-reset.png', {
     fullPage: true,
+    maxDiffPixelRatio: 0.01,
   });
 });

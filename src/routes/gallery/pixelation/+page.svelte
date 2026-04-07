@@ -213,7 +213,7 @@
           <canvas bind:this={canvas4}></canvas>
         </div>
       </div>
-      <div class="phase" aria-label="Homogeneous Mesh Phase">
+      <div class="phase" aria-label="Homogeneous Mesh Phase" data-thumbnail-target>
         <span class="label">Homogeneous Mesh</span>
         <div class="canvas-container">
           <canvas bind:this={canvas5}></canvas>
@@ -260,7 +260,7 @@
     margin-bottom: var(--space-8);
     width: 100%;
   }
-  
+
   .pipeline.loading {
     display: none;
   }
