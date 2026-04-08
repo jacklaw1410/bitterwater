@@ -4,6 +4,18 @@
     description:
       "Transform any image into pixel art, no matter the resolution.",
   } as const;
+</script>
+
+<script lang="ts">
+  import { asset } from "$app/paths";
+  import Button from "$lib/components/ui/button/Button.svelte";
+  import type { Mat } from "@techstark/opencv-js";
+  import FlowArrow from "./FlowArrow.svelte";
+  import LoadingOverlay from "./LoadingOverlay.svelte";
+  import Phase from "./Phase.svelte";
+  import PhaseGroup from "./PhaseGroup.svelte";
+  import Stage from "./Stage.svelte";
+  import { getOpenCv, pixelate } from "./utils";
 
   const loadFileAs = async (
     file: File,
@@ -18,18 +30,6 @@
     });
   };
   const loadFileAsDataURL = (file: File) => loadFileAs(file, "readAsDataURL");
-  // const loadFileAsArrayBuffer = (file: File) => loadFileAs(file, 'readAsArrayBuffer');
-</script>
-
-<script lang="ts">
-  import { asset } from "$app/paths";
-  import Button from "$lib/components/ui/button/Button.svelte";
-  import LoadingOverlay from "./LoadingOverlay.svelte";
-  import {
-    getOpenCv,
-    pixelate,
-  } from "./utils";
-  import type { Mat } from "@techstark/opencv-js";
 
   const accept = ["image/png", "image/jpeg", "image/webp"].join(",");
 
@@ -58,7 +58,6 @@
   );
   const imageSrc = $derived(
     file && file.type.startsWith("image/")
-      // oxlint-disable-next-line
       ? await loadFileAsDataURL(file)
       : undefined,
   );
@@ -134,15 +133,8 @@
 
 <LoadingOverlay message="Processing image..." loading={loading}/>
 
-<div class={["pipeline", loading? "loading" : ""]}>
-  <section class="stage" aria-labelledby="stage-input-heading">
-    <header class="stage-header">
-      <div class="stage-badge" aria-hidden="true">0</div>
-      <div>
-        <h2 id="stage-input-heading">Input Stage</h2>
-        <p class="stage-desc">Original image to be pixelated</p>
-      </div>
-    </header>
+<div class={["pipeline", loading ? "loading" : ""]}>
+  <Stage badge={0} heading="Input Stage" description="Original image to be pixelated">
     <div class="controls-row">
       <div class="controls">
         <Button size="sm" onclick={() => input.click()}>
@@ -155,98 +147,54 @@
       </div>
       <p class="filename">{displayFileName}</p>
     </div>
-    <div class="phase-group single">
-      <div class="phase">
-        <div class="canvas-container">
-          <img bind:this={img} src={imageSrc} alt="Original input" />
-        </div>
-      </div>
-    </div>
-  </section>
+    <PhaseGroup>
+      <Phase>
+        <img bind:this={img} src={imageSrc} alt="Original input" />
+      </Phase>
+    </PhaseGroup>
+  </Stage>
 
-  <div class="flow-arrow">↓</div>
+  <FlowArrow />
 
-  <section class="stage" aria-labelledby="stage-detection-heading">
-    <header class="stage-header">
-      <div class="stage-badge" aria-hidden="true">1</div>
-      <div>
-        <h2 id="stage-detection-heading">Edge Detection Stage</h2>
-        <p class="stage-desc">Preprocessing and edge detection</p>
-      </div>
-    </header>
-    <div class="phase-group">
-      <div class="phase" aria-label="Preprocessed Phase">
-        <span class="label">Preprocessed</span>
-        <div class="canvas-container">
-          <canvas bind:this={canvas1}></canvas>
-        </div>
-      </div>
-      <div class="phase" aria-label="Edges Phase">
-        <span class="label">Edges</span>
-        <div class="canvas-container">
-          <canvas bind:this={canvas2}></canvas>
-        </div>
-      </div>
-      <div class="phase" aria-label="Closed Phase">
-        <span class="label">Closed</span>
-        <div class="canvas-container">
-          <canvas bind:this={canvas3}></canvas>
-        </div>
-      </div>
-    </div>
-  </section>
+  <Stage badge={1} heading="Edge Detection Stage" description="Preprocessing and edge detection">
+    <PhaseGroup>
+      <Phase label="Preprocessed">
+        <canvas bind:this={canvas1}></canvas>
+      </Phase>
+      <Phase label="Edges">
+        <canvas bind:this={canvas2}></canvas>
+      </Phase>
+      <Phase label="Closed">
+        <canvas bind:this={canvas3}></canvas>
+      </Phase>
+    </PhaseGroup>
+  </Stage>
 
-  <div class="flow-arrow">↓</div>
+  <FlowArrow />
 
-  <section class="stage" aria-labelledby="stage-mesh-heading">
-    <header class="stage-header">
-      <div class="stage-badge" aria-hidden="true">2</div>
-      <div>
-        <h2 id="stage-mesh-heading">Mesh Analysis Stage</h2>
-        <p class="stage-desc">Line detection and homogenization</p>
-      </div>
-    </header>
-    <div class="phase-group">
-      <div class="phase" aria-label="Mesh Applied Phase">
-        <span class="label">Mesh Applied</span>
-        <div class="canvas-container">
-          <canvas bind:this={canvas4}></canvas>
-        </div>
-      </div>
-      <div class="phase" aria-label="Homogeneous Mesh Phase" data-thumbnail-target>
-        <span class="label">Homogeneous Mesh</span>
-        <div class="canvas-container">
-          <canvas bind:this={canvas5}></canvas>
-        </div>
-      </div>
-    </div>
-  </section>
+  <Stage badge={2} heading="Mesh Analysis Stage" description="Line detection and homogenization">
+    <PhaseGroup>
+      <Phase label="Mesh Applied">
+        <canvas bind:this={canvas4}></canvas>
+      </Phase>
+      <Phase label="Homogeneous Mesh">
+        <canvas bind:this={canvas5} data-thumbnail-target></canvas>
+      </Phase>
+    </PhaseGroup>
+  </Stage>
 
-  <div class="flow-arrow">↓</div>
+  <FlowArrow />
 
-  <section class="stage final-stage" aria-labelledby="stage-result-heading">
-    <header class="stage-header">
-      <div class="stage-badge" aria-hidden="true">3</div>
-      <div>
-        <h2 id="stage-result-heading">Result Stage</h2>
-        <p class="stage-desc">Downsampling to form the final pixel art</p>
-      </div>
-    </header>
-    <div class="phase-group">
-      <div class="phase" aria-label="Downsampled Phase">
-        <span class="label">Downsampled</span>
-        <div class="canvas-container">
-          <canvas bind:this={canvas6}></canvas>
-        </div>
-      </div>
-      <div class="phase highlight" aria-label="Upscaled Phase">
-        <span class="label">Upscaled for Display</span>
-        <div class="canvas-container">
-          <canvas bind:this={canvas7}></canvas>
-        </div>
-      </div>
-    </div>
-  </section>
+  <Stage badge={3} heading="Result Stage" description="Downsampling to form the final pixel art">
+    <PhaseGroup>
+      <Phase label="Downsampled">
+        <canvas bind:this={canvas6}></canvas>
+      </Phase>
+      <Phase label="Upscaled" highlight>
+        <canvas bind:this={canvas7}></canvas>
+      </Phase>
+    </PhaseGroup>
+  </Stage>
 </div>
 
 <style>
@@ -263,61 +211,6 @@
 
   .pipeline.loading {
     display: none;
-  }
-
-  .stage {
-    background: var(--surface-default);
-    border: 1px solid var(--border-default);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
-    box-shadow: var(--shadow-sm);
-    width: 100%;
-    box-sizing: border-box;
-    display: grid;
-    grid-gap: var(--space-5);
-    transition: var(--duration-normal) var(--ease-in-out), box-shadow var(--duration-normal) var(--ease-in-out);
-  }
-
-  .stage:hover {
-    box-shadow: var(--shadow-md);
-    border-color: var(--border-focus);
-  }
-
-  .stage-header {
-    margin: var(--space-0);
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
-  .stage-badge {
-    background: var(--brand-100);
-    color: var(--brand-700);
-    font-family: var(--font-mono);
-    font-weight: var(--font-bold);
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-full);
-    font-size: var(--text-sm);
-    flex-shrink: 0;
-  }
-
-  .stage h2 {
-    font-family: var(--font-sans);
-    font-size: var(--text-lg);
-    color: var(--text-primary);
-    margin: var(--space-0);
-    line-height: var(--line-height-tight);
-  }
-
-  .stage-desc {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-secondary);
-    margin: var(--space-0);
   }
 
   .controls-row {
@@ -339,96 +232,4 @@
     color: var(--text-secondary);
     margin: 0;
   }
-
-  .phase-group {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--space-3);
-  }
-
-  .phase-group.single {
-    grid-template-columns: minmax(200px, 500px);
-    justify-content: center;
-  }
-
-  .phase {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    background: var(--surface-raised);
-    padding: var(--space-3);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-default);
-  }
-
-  .phase.highlight {
-    border-color: var(--brand-400);
-    background: var(--surface-default);
-    box-shadow: 0 0 0 2px var(--brand-100);
-  }
-
-  .phase .label {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    font-weight: var(--font-medium);
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-  }
-
-  .phase .label::before {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: var(--radius-full);
-    background: var(--brand-400);
-  }
-
-  .phase .dimensions {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-secondary);
-    text-align: center;
-  }
-
-  .canvas-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--surface-overlay);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    border: 1px solid var(--border-default);
-    background-image: linear-gradient(45deg, var(--gray-200) 25%, transparent 25%),
-      linear-gradient(-45deg, var(--gray-200) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, var(--gray-200) 75%),
-      linear-gradient(-45deg, transparent 75%, var(--gray-200) 75%);
-    background-size: 16px 16px;
-    background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
-    min-height: 120px;
-  }
-
-  canvas, img {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
-    display: block;
-  }
-
-  .flow-arrow {
-    color: var(--brand-300);
-    font-size: var(--text-lg);
-    font-weight: var(--font-bold);
-  }
-
-  /* Dark mode adjustments */
-  :global([data-theme='dark']) .canvas-container {
-    background-image: linear-gradient(45deg, var(--gray-800) 25%, transparent 25%),
-      linear-gradient(-45deg, var(--gray-800) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, var(--gray-800) 75%),
-      linear-gradient(-45deg, transparent 75%, var(--gray-800) 75%);
-  }
-  
 </style>

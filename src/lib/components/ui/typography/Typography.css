@@ -20,8 +20,6 @@
   letter-spacing: -0.025em;
   margin-top: var(--space-4);
   margin-bottom: var(--space-2);
-  border-bottom: var(--border-width-thin) solid var(--border-default);
-  padding-bottom: var(--space-2);
 }
 
 .ui-typography--h3 {
