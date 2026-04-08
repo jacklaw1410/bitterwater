@@ -1,5 +1,139 @@
 import cvModule, { type CV, type Mat } from '@techstark/opencv-js';
 
+/** MIME types that require conversion (not natively supported by browsers or OpenCV) */
+export const UNSUPPORTED_IMAGE_TYPES = ['image/heic', 'image/heif', 'image/avif'] as const;
+
+export type UnsupportedImageType = (typeof UNSUPPORTED_IMAGE_TYPES)[number];
+
+/** Check if an image type requires conversion */
+export const requiresConversion = (mimeType: string): boolean => {
+  return UNSUPPORTED_IMAGE_TYPES.includes(mimeType as UnsupportedImageType);
+};
+
+/** Convert unsupported image formats (HEIC, HEIF, AVIF) to PNG blob */
+export const convertToSupportedFormat = async (file: File): Promise<Blob> => {
+  if (!requiresConversion(file.type)) {
+    return file;
+  }
+
+  // Dynamic import to avoid SSR issues (heic-to uses WASM)
+  const { heicTo } = await import('heic-to');
+
+  const convertedBlob = await heicTo({
+    blob: file,
+    type: 'image/jpeg',
+    quality: 1,
+  });
+
+  if (!convertedBlob) {
+    throw new Error(`Failed to convert ${file.type} to PNG`);
+  }
+
+  return convertedBlob;
+};
+
+const MAX_INPUT_DIMENSION = 2048;
+
+const getImageDimensions = (img: HTMLImageElement): { width: number; height: number } => {
+  const width = img.naturalWidth;
+  const height = img.naturalHeight;
+  return { width, height };
+};
+
+const computeTargetDimensions = (
+  width: number,
+  height: number,
+): { width: number; height: number } => {
+  if (width <= MAX_INPUT_DIMENSION && height <= MAX_INPUT_DIMENSION) {
+    return { width, height };
+  }
+  const ratio = Math.min(MAX_INPUT_DIMENSION / width, MAX_INPUT_DIMENSION / height);
+  return {
+    width: Math.round(width * ratio),
+    height: Math.round(height * ratio),
+  };
+};
+
+export const resizeImage = async (
+  blob: Blob,
+): Promise<{ blob: Blob; originalWidth: number; originalHeight: number; resized: boolean }> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const { width: originalWidth, height: originalHeight } = getImageDimensions(img);
+      const { width: targetWidth, height: targetHeight } = computeTargetDimensions(
+        originalWidth,
+        originalHeight,
+      );
+      console.log(
+        `Resizing image from ${originalWidth}x${originalHeight} to ${targetWidth}x${targetHeight}`,
+      );
+      if (targetWidth === originalWidth && targetHeight === originalHeight) {
+        resolve({
+          blob,
+          originalWidth,
+          originalHeight,
+          resized: false,
+        });
+        return;
+      }
+
+      const canvas = new OffscreenCanvas(targetWidth, targetHeight);
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        reject(new Error('Failed to get canvas context'));
+        return;
+      }
+      ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+      canvas
+        .convertToBlob({ type: 'image/jpeg', quality: 0.92 })
+        .then((resizedBlob) => {
+          resolve({
+            blob: resizedBlob,
+            originalWidth,
+            originalHeight,
+            resized: true,
+          });
+        })
+        .catch(reject);
+    };
+    img.onerror = () => reject(new Error('Failed to load image'));
+    img.src = URL.createObjectURL(blob);
+  });
+};
+
+export interface LoadResult {
+  src: string;
+  originalWidth: number;
+  originalHeight: number;
+  resized: boolean;
+}
+
+/** Load a file as a DataURL, converting unsupported formats if necessary */
+export const loadFileAsDataURL = async (file: File): Promise<LoadResult | undefined> => {
+  try {
+    const blob = await convertToSupportedFormat(file);
+    const { blob: processedBlob, originalWidth, originalHeight, resized } = await resizeImage(blob);
+
+    return new Promise<LoadResult>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        resolve({
+          src: reader.result as string,
+          originalWidth,
+          originalHeight,
+          resized,
+        });
+      };
+      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.readAsDataURL(processedBlob);
+    });
+  } catch {
+    return undefined;
+  }
+};
+
 export const getOpenCv = async () => {
   let cv;
   if (cvModule instanceof Promise) {

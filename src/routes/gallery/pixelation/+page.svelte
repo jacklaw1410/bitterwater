@@ -9,29 +9,23 @@
 <script lang="ts">
   import { asset } from "$app/paths";
   import Button from "$lib/components/ui/button/Button.svelte";
+  import Typography from "$lib/components/ui/typography/Typography.svelte";
   import type { Mat } from "@techstark/opencv-js";
   import FlowArrow from "./FlowArrow.svelte";
   import LoadingOverlay from "./LoadingOverlay.svelte";
   import Phase from "./Phase.svelte";
   import PhaseGroup from "./PhaseGroup.svelte";
   import Stage from "./Stage.svelte";
-  import { getOpenCv, pixelate } from "./utils";
+  import { getOpenCv, loadFileAsDataURL, pixelate } from "./utils";
 
-  const loadFileAs = async (
-    file: File,
-    method: "readAsDataURL" | "readAsArrayBuffer",
-  ) => {
-    return new Promise<string | undefined>((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (event: ProgressEvent<FileReader>) => {
-        resolve(event.target?.result as string | undefined);
-      };
-      reader[method](file);
-    });
-  };
-  const loadFileAsDataURL = (file: File) => loadFileAs(file, "readAsDataURL");
-
-  const accept = ["image/png", "image/jpeg", "image/webp"].join(",");
+  const accept = [
+    "image/png",
+    "image/jpeg",
+    "image/webp",
+    "image/heic",
+    "image/heif",
+    "image/avif",
+  ].join(",");
 
   /* oxlint-disable no-unassigned-vars */
   let canvas1: HTMLCanvasElement;
@@ -48,6 +42,7 @@
   const initialFileName = "pikachu.png";
   let files = $state<FileList | undefined>(undefined);
   let loading = $state(true);
+  let error = $state<string | undefined>(undefined);
   const file = $derived(files?.[0]);
   const displayFileName = $derived(
     file
@@ -56,11 +51,30 @@
         : `Uploaded: ${file.name}`
       : "No file selected",
   );
-  const imageSrc = $derived(
-    file && file.type.startsWith("image/")
-      ? await loadFileAsDataURL(file)
-      : undefined,
-  );
+  let imageSrc = $state<string | undefined>(undefined);
+  let resizedInfo = $state<string | undefined>(undefined);
+
+  $effect(() => {
+    if (!file || !file.type.startsWith("image/")) {
+      imageSrc = undefined;
+      error = undefined;
+      resizedInfo = undefined;
+      return;
+    }
+    error = undefined;
+    loadFileAsDataURL(file).then((result) => {
+      if (result) {
+        imageSrc = result.src;
+        error = undefined;
+        resizedInfo = result.resized
+          ? `Auto-resized from ${result.originalWidth}×${result.originalHeight}`
+          : undefined;
+      } else {
+        error = `Could not load ${file.name}. Try a different file.`;
+        resizedInfo = undefined;
+      }
+    });
+  });
 
   const reset = async () => {
     const response = await fetch(asset(`/pixelation/${initialFileName}`));
@@ -145,8 +159,9 @@
           Reset
         </Button>
       </div>
-      <p class="filename">{displayFileName}</p>
+      <p class="filename">{displayFileName} {#if resizedInfo}({resizedInfo}){/if}</p>
     </div>
+    {#if error}<Typography variant="muted">{error}</Typography>{/if}
     <PhaseGroup>
       <Phase>
         <img bind:this={img} src={imageSrc} alt="Original input" />

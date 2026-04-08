@@ -21,7 +21,8 @@
   },
   "dependencies": {
     "@techstark/opencv-js": "^4.12.0-release.1",
-    "bits-ui": "^2.17.2"
+    "bits-ui": "^2.17.2",
+    "heic-to": "^1.4.2"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.1.1",
