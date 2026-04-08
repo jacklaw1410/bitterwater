@@ -31,6 +31,7 @@ export default defineConfig({
       'docker:run': {
         command:
           'docker run --rm -v $(pwd)/e2e:/app/e2e -v $(pwd)/test-results:/app/test-results bitterwater-e2e',
+        cache: false,
       },
     },
   },
