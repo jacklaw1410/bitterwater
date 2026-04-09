@@ -54,6 +54,7 @@ export default defineConfig({
       '$state.raw': 'readonly',
       asset: 'readonly',
       template: 'readonly',
+      registerPaint: 'readonly',
     },
     categories: {
       correctness: 'warn',

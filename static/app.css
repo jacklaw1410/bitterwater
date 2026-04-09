@@ -156,7 +156,7 @@
   --text-disabled: var(--gray-400);
 
   /* C. Border */
-  --border-default: var(--gray-200);
+  --border-default: var(--gray-300);
   --border-focus: var(--brand-500);
 
   /* D. Action / Interactive */
@@ -188,7 +188,7 @@
   --text-secondary: var(--gray-400);
   --text-disabled: var(--gray-600);
 
-  --border-default: var(--gray-600);
+  --border-default: var(--gray-500);
   --border-focus: var(--brand-400);
 
   --action-primary-bg: var(--brand-600);
