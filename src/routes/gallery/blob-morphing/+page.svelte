@@ -18,6 +18,9 @@
   const from = PATHS[0];
   const values = [...PATHS, from].join(';');
 
+  const ANIMATION_BEGIN_DELAY = 0.25; // seconds
+  const ANIMATION_DURATION = 5;
+
   // oxlint-disable-next-line no-unassigned-vars
   let svgElement: SVGSVGElement;
 
@@ -28,19 +31,34 @@
   const onplay = () => {
     svgElement.unpauseAnimations();
   };
+
+  // Jump to specific blob in the animation (0-4) and pause
+  const jumpToBlob = (index: number) => {
+    const time = ANIMATION_BEGIN_DELAY + index;
+    svgElement.setCurrentTime(time);
+    svgElement.pauseAnimations();
+    playing = false;
+  };
 </script>
 
-{#snippet thumbnail(d: string)}
-  <svg
-    viewBox="0 0 900 900"
-    width="100"
-    height="100"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="1.1"
+{#snippet thumbnail(d: string, index: number)}
+  <button
+    type="button"
+    class="blob-snapshot"
+    aria-label={`Jump to blob ${index + 1}`}
+    onclick={() => jumpToBlob(index)}
   >
-    <path fill="#BB004B" {d} />
-  </svg>
+    <svg
+      viewBox="0 0 900 900"
+      width="100"
+      height="100"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="1.1"
+    >
+      <path fill="#BB004B" {d} />
+    </svg>
+  </button>
 {/snippet}
 
 <svelte:head>
@@ -70,7 +88,13 @@
   data-thumbnail-target
 >
   <path fill="#BB004B" d={from}>
-    <animate attributeName="d" {values} dur="5s" begin="250ms" repeatCount="indefinite" />
+    <animate
+      attributeName="d"
+      {values}
+      dur={`${ANIMATION_DURATION}s`}
+      begin={`${ANIMATION_BEGIN_DELAY}s`}
+      repeatCount="indefinite"
+    />
   </path>
 </svg>
 
@@ -79,7 +103,7 @@
 <ol role="list" aria-label="Blobs used in animation">
   {#each PATHS as d, ix (ix)}
     <li role="listitem" aria-label={`Blob thumbnail ${ix + 1}`}>
-      {@render thumbnail(d)}
+      {@render thumbnail(d, ix)}
     </li>
   {/each}
 </ol>
@@ -91,5 +115,21 @@
     gap: 1rem;
     margin: 0;
     padding: 0;
+  }
+
+  button.blob-snapshot {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: var(--space-2);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  button.blob-snapshot:hover,
+  button.blob-snapshot:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--color-brand-400);
+    outline: none;
+    transform: scale(1.05);
   }
 </style>

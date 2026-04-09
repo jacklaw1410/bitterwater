@@ -17,7 +17,6 @@ test.describe('Blob Morphing page', () => {
     await expect(blobList.getByRole('listitem')).toHaveCount(5);
 
     for (let ix = 1; ix <= 6; ix++) {
-      // Begin at 250ms; 5s duration means each blob is visible for 1s
       await blob.evaluate(
         (svg, seconds) => {
           (svg as SVGSVGElement).setCurrentTime(seconds);
@@ -71,5 +70,25 @@ test.describe('Blob Morphing page', () => {
       path: 'test-results/screenshots/blob-morphing-after-resume.png',
     });
     expect(afterResume).not.toEqual(afterPause);
+  });
+
+  test('Clicking snapshot button pauses animation and jumps to time', async ({ page }) => {
+    await page.goto('gallery/blob-morphing');
+
+    const blob = page.getByRole('img', { name: 'Animated blob morphing' });
+
+    for (let ix = 1; ix <= 5; ix++) {
+      const blobButton = page.getByRole('button', { name: `Jump to blob ${ix}` });
+      await expect(blobButton).toBeVisible();
+      await expect(blobButton).toBeEnabled();
+
+      await blobButton.click();
+
+      const currentTime = await blob.evaluate((svg) => {
+        return (svg as SVGSVGElement).getCurrentTime();
+      });
+
+      expect(currentTime).toBeCloseTo(0.25 + (ix - 1) * 1, 1);
+    }
   });
 });
