@@ -1,14 +1,11 @@
 # Bitter Water - Agent Guidelines
 
-This is a Svelte 5 web application using Vite+, SvelteKit, and Bun as the package manager. Review the [project docs](./.github/docs/) for detailed guidelines.
+Svelte 5 web app. Vite+, SvelteKit, Bun package manager. See [.github/docs/](./.github/docs/) for detailed guidelines.
 
 ## First-time Setup
 
 ```bash
-# Install dependencies
 bun install
-
-# Install Playwright browsers (required for E2E tests)
 bunx playwright install --with-deps
 ```
 
@@ -16,59 +13,45 @@ bunx playwright install --with-deps
 
 ### Users
 
-The primary audience is potential collaborators. The goal is to showcase technical expertise through a portfolio of interactive experiments, creative coding, and a modern web stack (Svelte 5).
+Potential collaborators. Showcase technical expertise via portfolio of interactive experiments, creative coding, modern web stack (Svelte 5).
 
 ### Brand Personality
 
-**Playful, Technical, Precise.** The project aims to evoke "Delight in the playfulness" while maintaining the high-quality execution and precision of a technical portfolio.
+**Playful, Technical, Precise.** Evoke "Delight in the playfulness" while maintaining high-quality execution and precision of technical portfolio.
 
 ### Aesthetic Direction
 
-**Stripe, but more relaxed and playful.** The UI should feel organic and less rigid than traditional "Swiss-style" or corporate designs. It avoids being overly serious or dry, using the playful `Itim` typeface to contrast with the technical `Roboto Mono` and a vibrant blue brand palette.
+**Stripe, but more relaxed and playful.** Organic, less rigid than Swiss-style or corporate designs. Avoid overly serious or dry. Use playful `Itim` typeface contrast with technical `Roboto Mono` and vibrant blue brand palette.
 
 ### Design Principles
 
-1. **Playful Precision**: Harmonize handwritten charm with technical accuracy. Use `Itim` for personality and `Roboto Mono` for technical clarity, backed by a rigorous 3-tier CSS token system.
-2. **Organic Quality**: Favor relaxed, organic layouts over rigid grids. Aim for a "looser" version of high-end design systems (like Stripe) that feels approachable yet professional.
+1. **Playful Precision**: Harmonize handwritten charm with technical accuracy. Use `Itim` for personality and `Roboto Mono` for technical clarity, backed by rigorous 3-tier CSS token system.
+2. **Organic Quality**: Favor relaxed, organic layouts over rigid grids. Aim for "looser" version of high-end design systems (like Stripe) that feels approachable yet professional.
 3. **Delightful Interaction**: Prioritize animations and micro-interactions that spark joy and curiosity, going beyond simple functional feedback.
-4. **Functional Transparency**: The codebase itself is part of the portfolio. Maintain high standards for Svelte 5 Runes, TypeScript strictness, and modular architecture.
-5. **Accessible Inclusion**: Ensure general accessibility standards (WCAG AA) and provide a first-class experience in both light and dark modes.
+4. **Functional Transparency**: Codebase is part of portfolio. Maintain high standards for Svelte 5 Runes, TypeScript strictness, modular architecture.
+5. **Accessible Inclusion**: Ensure WCAG AA standards, first-class experience in both light and dark modes.
 
 ## Build Commands
 
 ```bash
-# Development
 vp dev                    # Start dev server
 vp dev --port 3000        # Dev server on specific port
-
-# Build & Preview
 vp build                  # Production build
 vp preview                # Preview production build
-
-# Type checking
-vp check                  # Run format, lint, and type checks
-
-# Linting & Formatting
-vp lint                   # Run linter
+vp check                  # Format, lint, type checks
+vp lint                   # Linter
 vp fmt                    # Auto-format code
-
-# Testing
-vp test                   # Run unit tests (Vitest)
-vp test --run             # Run unit tests once
-vp run test:e2e           # Run E2E tests (Playwright)
-
-# Storybook
-vp run storybook          # Start Storybook on port 6006
+vp test                   # Unit tests (Vitest)
+vp test --run             # Unit tests once
+vp run test:e2e           # E2E tests (Playwright)
+vp run storybook          # Storybook on port 6006
 vp run build-storybook    # Build Storybook static site
 ```
 
-### Running a Single Test
+### Running Single Test
 
 ```bash
-# Single unit test file
 vp test src/routes/gallery/brownian-motion/utils.spec.ts
-
-# Single storybook test
 vp test --project storybook src/stories/Button.stories.svelte
 ```
 
@@ -81,7 +64,7 @@ vp test --project storybook src/stories/Button.stories.svelte
 - Trailing commas: all
 - Print width: 100
 
-> Note: Formatting is now handled by Vite+ (Oxfmt). Configuration is in `vite.config.ts`.
+> Note: Formatting handled by Vite+ (Oxfmt). Config in `vite.config.ts`.
 
 ### TypeScript
 
@@ -123,7 +106,7 @@ vp test --project storybook src/stories/Button.stories.svelte
 
 - Use `$app/state` for page state (SvelteKit 2.1+)
 - Use `$lib/` path alias for lib imports
-- Imports are auto-organized by Oxfmt
+- Imports auto-organized by Oxfmt
 
 ## Testing Strategy
 
@@ -152,7 +135,7 @@ vp test --project storybook src/stories/Button.stories.svelte
 
 ## Project Documentation
 
-See `.github/docs/` for:
+See `.github/docs/`:
 
 - [ARCHITECTURE.md](./.github/docs/ARCHITECTURE.md) - Tech stack & structure
 - [svelte-usages.md](./.github/docs/svelte-usages.md) - Svelte 5 best practices
@@ -166,40 +149,40 @@ See `.github/docs/` for:
 
 ## Worktree Management
 
-### When to Create a Worktree
+### When to Create Worktree
 
-When asked to implement changes, always ask:
+Always ask:
 
-> "Should I create a new worktree for this work, or work directly in the current branch?"
+> "Worktree or current branch?"
 
-**Create a worktree when:**
+**Create worktree when:**
 
-- Making significant changes that may take multiple sessions
-- Experimenting with risky refactors
-- The user explicitly requests isolated work
+- Significant changes, multiple sessions
+- Risky refactors
+- User explicitly requests isolation
 
-**Work directly in current branch when:**
+**Work directly when:**
 
-- Quick fixes or small changes
-- User wants fast iteration
-- No risk of destabilizing main
+- Quick fixes, small changes
+- Fast iteration needed
+- No risk to main
 
 ### Worktree Lifecycle
 
 1. **Create**: `git worktree add ../<name> -b <branch-name>`
-2. **Work**: Implement changes in the worktree
-3. **Commit**: Commit changes with clear commit message
-4. **Tear down**: After completion or when done, remove the worktree:
-
+2. **Work**: Implement changes
+3. **Commit**: Clear commit message
+4. **Tear down**:
    ```bash
    git worktree remove ../<worktree-name>
    git branch -d <branch-name>
+   rm -rf ../<worktree-name>
    ```
 
 ### Git Safety Protocol
 
 - **Never force push** to main
-- **Never update git config** during work
+- **Never update git config**
 - **Never skip hooks** (--no-verify) unless explicitly requested
 - **Never run destructive commands** (hard reset, --force) without explicit request
 
@@ -207,8 +190,8 @@ When asked to implement changes, always ask:
 
 Before submitting changes:
 
-- [ ] Run `vp check` for type errors
-- [ ] Run `vp lint` for linting issues
-- [ ] Run `vp test` for unit tests
-- [ ] Run `vp run test:e2e` for E2E tests
-- [ ] Run `vp build` to verify production build
+- [ ] `vp check` - type errors
+- [ ] `vp lint` - linting issues
+- [ ] `vp test` - unit tests
+- [ ] `vp run test:e2e` - E2E tests
+- [ ] `vp build` - production build
