@@ -1,47 +1,45 @@
 ---
-description: Outlines the best practices and conventions for using TypeScript, focusing on strictness, type safety, immutability, and code documentation using JSDoc.
+description: TypeScript best practices. Strictness, type safety, immutability, JSDoc documentation.
 ---
 
 # TypeScript Project Practices
 
-This document outlines best practices and conventions for using TypeScript within this project to ensure type safety, maintainability, and code quality.
-
 ## General Guidelines
 
-1. **Strictness**: Aim for the strictest possible TypeScript configuration (`tsconfig.json`) to catch errors early. Ensure `strict` mode is enabled.
-2. **Type Inference**: Leverage TypeScript's powerful type inference. Explicitly type when inference is insufficient or when defining public APIs.
-3. **Interfaces vs. Types**: Prefer `interface` for object shapes that can be implemented by classes. Use `type` for aliases, unions, intersections, and complex utility types.
-4. **Immutability**: Favor immutable data structures where possible to prevent unexpected side effects. Use `readonly` properties and array methods that return new arrays.
-5. **Utility Types**: Utilize TypeScript's built-in utility types (e.g., `Partial`, `Pick`, `Omit`, `Exclude`, `Record`) to create robust and flexible types.
+1. **Strictness**: Strictest TypeScript config (`tsconfig.json`). Ensure `strict` mode enabled.
+2. **Type Inference**: Leverage inference. Explicitly type when inference insufficient or for public APIs.
+3. **Interfaces vs Types**: Prefer `interface` for object shapes. Use `type` for aliases, unions, intersections, utility types.
+4. **Immutability**: Favor immutable data structures. Use `readonly` properties, array methods returning new arrays.
+5. **Utility Types**: Use built-in utility types (`Partial`, `Pick`, `Omit`, `Exclude`, `Record`).
 
 ## Module Organization
 
-1. **Export Types Separately**: Export types and interfaces separately from values when possible, especially in shared modules.
-2. **Barrel Files**: Use barrel files (`index.ts`) in directories to consolidate exports, simplifying imports from other modules.
+1. **Export Separately**: Export types, interfaces separately from values.
+2. **Barrel Files**: `index.ts` consolidating exports, simplifying imports.
 
-## Type Safety Best Practices
+## Type Safety
 
-1. **Discriminated Unions**: Use discriminated unions for handling different states or types of data, improving type safety in conditional logic.
-2. **Narrowing**: Employ type narrowing techniques (e.g., `typeof`, `instanceof`, `in`, custom type guards) to safely work with union types.
-3. **Avoid `any`**: Minimize the use of `any`. If a type is unknown, consider `unknown` and narrow it, or provide a specific type assertion with caution.
+1. **Discriminated Unions**: Handle different states/data, improving type safety in conditional logic.
+2. **Narrowing**: `typeof`, `instanceof`, `in`, custom type guards for union types.
+3. **Avoid `any`**: Minimize. Use `unknown` + narrow, or specific type assertion with caution.
 4. **Component Prop Inheritance**:
-   - For components wrapping headless UI primitives, extend the library's root props: `type Props = { custom: string } & ButtonRootProps`.
-   - For native HTML wrappers, extend Svelte's attribute types: `type Props = HTMLAttributes<HTMLDivElement>`.
+   - Headless UI wrappers: `type Props = { custom: string } & ButtonRootProps`
+   - Native HTML wrappers: `type Props = HTMLAttributes<HTMLDivElement>`
 
 ## Code Documentation
 
-- **JSDoc for Exports**: All exported functions, types, interfaces, and variables should be documented with JSDoc. This provides essential inline context for both human developers and AI agents, explaining the purpose and usage of the code.
+- **JSDoc for Exports**: All exported functions, types, interfaces, variables documented with JSDoc.
 
 ## Dependency Management
 
-1. **Evaluation**: Before introducing a new dependency, thoroughly evaluate its benefits against potential costs. Consider factors such as:
-   - Bundle size and performance impact.
-   - Security vulnerabilities and audit history.
-   - Maintenance burden and community support.
-   - Licensing compatibility.
-   - Alternatives (e.g., native browser APIs, simpler custom implementations).
-2. **Permission**: New dependencies should only be added after explicit discussion and permission from the project maintainers or team lead. Document the rationale for its inclusion.
+1. **Evaluation**: Before new dependency, evaluate benefits vs costs:
+   - Bundle size, performance impact
+   - Security vulnerabilities, audit history
+   - Maintenance burden, community support
+   - Licensing compatibility
+   - Alternatives (native browser APIs, simpler implementations)
+2. **Permission**: New dependencies only after explicit discussion, permission from maintainers. Document rationale.
 
 ## Convention
 
-- Prefer concise arrow functions for function declarations.
+- Concise arrow functions preferred.

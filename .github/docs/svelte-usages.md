@@ -1,123 +1,123 @@
 ---
-description: This document is the primary guide for writing Svelte 5 code in this project. It mandates the use of Runes for all reactivity. It also provides conventions for component structure, styling, event handling, and props design, while explicitly forbidding legacy Svelte features.
+description: Svelte 5 code guide. Runes for all reactivity. Component structure, styling, events, props. Legacy features forbidden.
 ---
 
 # Svelte Usages and Best Practices
 
-This document outlines best practices for writing fast, robust Svelte 5 applications, with a focus on Runes.
-
 ## Svelte 5 Runes
 
-- Always use Svelte 5 Runes (`$state`, `$derived`, `$props`, `$effect`) for all reactive declarations. Avoid `let` for reactive variables in most cases.
+Always use Runes (`$state`, `$derived`, `$props`, `$effect`) for reactive declarations. Avoid `let` for reactive variables.
 
 ### $state
 
-- Only use `$state` for variables that should be reactive (cause an `$effect`, `$derived`, or template expression to update).
-- Objects and arrays (`$state({...})` or `$state([...])`) are made deeply reactive. Prefer inline mutations (e.g., `array.push(...)`, `object.property = value`) for these deeply reactive structures.
-- For large objects that are only ever reassigned (not mutated), use `$state.raw` to avoid proxy overhead (e.g., with API responses).
+- Only for reactive variables (trigger `$effect`, `$derived`, template updates).
+- Objects/arrays (`$state({...})` / `$state([...])`) deeply reactive. Prefer inline mutations (`array.push(...)`, `object.prop = value`).
+- Large objects only reassigned (not mutated) — use `$state.raw` to avoid proxy overhead.
 
 ### $props
 
-- Treat props as though they will change. Values that depend on props should usually use `$derived`.
+- Treat props as changeable. Values depending on props usually use `$derived`.
 - Always define prop types.
 
 ### $derived
 
-- Use `$derived` to compute values from state, rather than `$effect`.
-- `$derived` takes an expression. For complex expressions, use `$derived.by`.
-- Deriveds are writable, similar to `$state`, and re-evaluate when their dependencies change.
-- If a derived expression is an object or array, it is not made deeply reactive by default. Use `$state` inside `$derived.by` for deep reactivity if strictly necessary.
+- Compute values from state, not `$effect`.
+- `$derived` takes expression. `$derived.by` for complex expressions.
+- Deriveds writable like `$state`. Re-evaluate on dependency changes.
+- Expression returning object/array not deeply reactive by default. Use `$state` inside `$derived.by` if needed.
 
 ### $effect
 
-- Effects are an escape hatch and should generally be avoided, especially for updating state.
+- Escape hatch. Generally avoid, especially for updating state.
 - Prefer event handlers for user interactions.
 - Use `$inspect` for debugging.
-- Never wrap effect contents in `if (browser) {...}` — effects do not run on the server.
+- Never wrap in `if (browser) {...}` — effects don't run on server.
 
 ### $inspect.trace
 
-- `$inspect.trace(label)` is a debugging tool for reactivity. Use it as the first line of an `$effect` or `$derived.by` (or any function they call) to trace dependencies and identify update triggers.
+- `$inspect.trace(label)` debugging tool for reactivity. Use as first line in `$effect` or `$derived.by` to trace dependencies, identify update triggers.
 
 ## Component Structure
 
-- Prefer small, focused components.
-- Separate `<script lang="ts">`, `<style>`, and HTML sections logically.
-- Use `export let` for props (which becomes `$props` in Svelte 5).
+- Small, focused components.
+- Separate `<script lang="ts">`, `<style>`, HTML logically.
+- Use `export let` for props (becomes `$props` in Svelte 5).
 
 ## Reactivity
 
-- Understand that reactivity is based on assignments. However, for deeply reactive `$state` arrays and objects, **prefer inline mutations** (e.g., `myArray.push(newItem)` or `myObject.newProp = value`) as these will trigger updates automatically. For other reactive variables, ensure you reassign the variable to trigger updates (e.g., `myArray = [...myArray, newItem]` or `myObject = { ...myObject, newProp: value }`).
+Reactivity based on assignments. For deeply reactive `$state` arrays/objects, **prefer inline mutations** (`myArray.push(...)`). For other reactive variables, reassign to trigger updates (`myArray = [...myArray, newItem]`).
 
 ## Events
 
-- Any element attribute starting with `on` is treated as an event listener (e.g., `<button onclick={...}>`).
-- Use `<svelte:window>` and `<svelte:document>` for attaching listeners to `window` or `document`. Avoid `onMount` or `$effect` for this.
+- `on` prefix attributes treated as event listeners (`<button onclick={...}>`).
+- Use `<svelte:window>`, `<svelte:document>` for window/document listeners. Avoid `onMount`, `$effect`.
 
-## Props Design for Custom Components
+## Props Design
 
-Custom components expose two main types of props:
+Two main types:
 
-- **Modifiers**: These are non-callback props that influence the component's behavior, defining its customization boundary.
-- **Event Handlers**: These are callback props designed to hook into higher-level internal component events, exposing specific interaction points.
+- **Modifiers**: Non-callback props influencing behavior, defining customization boundary.
+- **Event Handlers**: Callback props hooking into higher-level internal events.
 
-### Customary Event Naming and Intent
+### Customary Event Naming
 
-- Event handlers should be named using the `on[eventname]` pattern (e.g., `onsubmit`, `onrestartsimulation`).
-- Prefer exposing "customary" (higher-level, intent-based) events rather than low-level mechanical events. For instance, a submit button should expose an `onsubmit` event (representing the user's intention) instead of a generic `onclick` event (representing the mechanism).
+- `on[Eventname]` pattern (e.g., `onsubmit`, `onrestartsimulation`).
+- Prefer "customary" (higher-level, intent-based) events over low-level mechanical events. `onsubmit` over `onclick` for submit button.
 
 ## Code Documentation
 
-- **JSDoc for Props**: All components should use JSDoc comments to document their props. This provides essential context for both human developers and AI agents, explaining the purpose, type, and default value of each prop.
+- **JSDoc for Props**: All components use JSDoc comments documenting props.
 
 ## Snippets
 
-- Use `{#snippet ...}` and `{@render ...}` for reusable chunks of markup.
-- Snippets declared at the top level can be referenced in `<script>`. Those not referencing component state can be exported from `<script module>`.
+- `{#snippet ...}` and `{@render ...}` for reusable markup.
+- Top-level snippets can be referenced in `<script>`. Those not referencing state can export from `<script module>`.
 
 ## Each Blocks
 
-- Prefer keyed each blocks (`{#each items as item (item.id)}`) for better performance when inserting or removing items. The key must uniquely identify the object.
-- Avoid using the index as a key.
-- Avoid destructuring if you need to mutate the item within the block (e.g., with `bind:value={item.count}`).
+- Prefer keyed each blocks (`{#each items as item (item.id)}`). Key uniquely identifies object.
+- Avoid index as key.
+- Avoid destructuring if mutating item within block (`bind:value={item.count}`).
 
 ## Styling
 
-### Using JavaScript variables in CSS
+### JavaScript Variables in CSS
 
-- Set CSS custom properties with the `style:` directive (e.g., `<div style:--columns={columns}>`).
-- Reference `var(--columns)` in the component's `<style>`.
+- Set CSS custom properties with `style:` directive (`<div style:--columns={columns}>`).
+- Reference `var(--columns)` in `<style>`.
 
-### Styling child components
+### Styling Child Components
 
-- Preferred: Use CSS custom properties passed as props (e.g., `<Child --color="red" />`).
-- **External Native Stylesheets**: For UI primitives wrapping headless libraries (like Bits UI), use a sibling `.css` file imported in the `<script>` block. This prevents Svelte from pruning "unused" selectors that are actually applied via props.
-- Avoid `:global(...)` for internal component styling whenever possible.
+- **Preferred**: CSS custom properties as props (`<Child --color="red" />`).
+- **External Native Stylesheets**: For UI primitives wrapping headless libs (Bits UI), use sibling `.css` file imported in `<script>`. Prevents Svelte pruning "unused" selectors.
+- Avoid `:global(...)` for internal component styling.
 
 ### Class Attribute
 
-- Use Svelte 5's native support for **class arrays** instead of manual string joining or external libraries like `clsx`.
-- Example: `class={['ui-button', variantClass, className]}`.
+- Svelte 5 native **class arrays** instead of string joining or `clsx`.
+- Example: `class={['ui-button', variantClass, className]}`
 
 ## Context
 
-- Consider using `createContext` (for type safety) instead of `setContext`/`getContext` for scoping state to specific parts of the app. This helps prevent state leakage during server-side rendering.
+- Consider `createContext` (type-safe) over `setContext`/`getContext`. Prevents state leakage during SSR.
 
 ## Async Svelte
 
-- If using Svelte 5.36+, `await expressions` and `hydratable` can be used directly in components with `experimental.async` enabled in `svelte.config.js`.
+- Svelte 5.36+: `await expressions`, `hydratable` usable in components with `experimental.async` in `svelte.config.js`.
 
 ## Avoid Legacy Features
 
-Always use runes mode for new code, and avoid features that have more modern replacements:
+Always use runes mode for new code. Avoid:
 
-- Use `$state` instead of implicit reactivity (e.g., `let count = 0; count += 1`).
-- Use `$derived` and `$effect` instead of `$:` assignments and statements (use `$effect` sparingly).
-- Use `$props` instead of `export let`, `$$props`, and `$$restProps`.
-- Use `onclick={...}` instead of `on:click={...}`.
-- Use `{#snippet ...}` and `{@render ...}` instead of `<slot>`, `$$slots`, and `<svelte:fragment>`.
-- Use `<DynamicComponent>` instead of `<svelte:component this={DynamicComponent}>`.
-- Use `import Self from './ThisComponent.svelte'` and `<Self>` instead of `<svelte:self>`.
-- Use classes with `$state` fields to share reactivity between components, instead of using stores.
-- Use `{@attach ...}` instead of `use:action`.
-- Use `clsx`-style arrays and objects in `class` attributes, instead of the `class:` directive.
+| Old                                   | Use                            |
+| ------------------------------------- | ------------------------------ |
+| Implicit reactivity (`let count = 0`) | `$state`                       |
+| `$:` assignments                      | `$derived`, `$effect`          |
+| `export let`, `$$props`               | `$props`                       |
+| `on:click={...}`                      | `onclick={...}`                |
+| `<slot>`, `$$slots`                   | `{#snippet}`, `{@render}`      |
+| `<svelte:component>`                  | `<DynamicComponent>`           |
+| `<svelte:self>`                       | `import Self`, `<Self>`        |
+| Stores                                | Classes with `$state` fields   |
+| `use:action`                          | `{@attach ...}`                |
+| `class:` directive                    | `clsx`-style arrays in `class` |

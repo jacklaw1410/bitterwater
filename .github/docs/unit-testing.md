@@ -1,27 +1,27 @@
 ---
-description: Specifies the strategy for writing isolated unit tests for non-component logic (pure functions, utilities) using Vitest, with a focus on high coverage and mocking dependencies.
+description: Unit testing strategy using Vitest for pure functions and utilities. High coverage, mocking.
 ---
 
-# Unit Testing Strategy (Vitest) for Non-Component Logic
+# Unit Testing Strategy (Vitest)
 
-This document outlines the best practices for writing isolated unit tests for pure JavaScript/TypeScript logic, utility functions, and business logic, explicitly excluding Svelte components.
+Test isolated logic — functions, classes, modules — without UI components or DOM interaction.
 
 ## Philosophy
 
-Unit tests focus on the smallest testable parts of our codebase (functions, classes, modules) in isolation, **without any UI components or DOM interaction**. The goal is to verify the correctness of individual logical units.
+Unit tests focus on smallest testable parts in isolation. Verify correctness of individual logical units.
 
 ## Tools
 
-- **Vitest**: Our primary framework for fast unit testing.
+- **Vitest**: Fast unit testing framework.
 
-## Coverage & Thoroughness
+## Coverage
 
-Aim for **high coverage (near 100%)** of all branches, statements, and edge cases within the isolated unit. Focus on functional correctness, not integration or UI.
+Aim for **high coverage (near 100%)** — all branches, statements, edge cases. Focus on functional correctness.
 
 ## Guidelines
 
-1. **Scope**: Unit tests are strictly for non-component JavaScript/TypeScript logic. For Svelte components, refer to `component-testing.md`.
-2. **Isolation**: Test units in complete isolation. Mock any external dependencies (e.g., API calls, modules, global objects) to ensure the test only verifies the unit under test.
-3. **Naming Convention**: Unit test files should typically be named `[module-name].test.ts` or `[function-name].test.ts` and reside alongside the code they test, or in a dedicated `__tests__` directory if preferred for larger modules.
-4. **Assertions**: Use `expect` from Vitest for clear and concise assertions. Focus on input-output correctness and edge cases.
-5. **Pure Functions**: Prioritize unit testing pure functions, as they are easier to test in isolation.
+1. **Scope**: Non-component JS/TS logic only. For Svelte components, see `component-testing.md`.
+2. **Isolation**: Mock external dependencies (API calls, modules, globals). Test only the unit under test.
+3. **Naming**: `[module-name].test.ts` or `[function-name].test.ts` alongside code, or in `__tests__/` for larger modules.
+4. **Assertions**: `expect` from Vitest. Focus on input-output correctness, edge cases.
+5. **Pure Functions**: Prioritize. Easier to test in isolation.

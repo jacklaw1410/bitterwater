@@ -1,6 +1,6 @@
 # Design System - Bitter Water
 
-> Personal portfolio showcasing interactive experiments and creative coding. Built with Svelte 5 + SvelteKit.
+Personal portfolio showcasing interactive experiments, creative coding. Svelte 5 + SvelteKit.
 
 ---
 
@@ -8,13 +8,11 @@
 
 ### Personality
 
-**Playful, Technical, Precise.**
-
-Evokes "Delight in the playfulness" while maintaining high-quality execution and precision.
+**Playful, Technical, Precise.** Delight in playfulness while maintaining high-quality execution.
 
 ### Aesthetic Direction
 
-**Stripe, but more relaxed and playful.** Organic, less rigid than Swiss-style or corporate designs. Avoid overly serious or dry. Use playful `Itim` typeface contrast with technical `Roboto Mono` and vibrant blue brand palette.
+**Stripe, but more relaxed and playful.** Organic, less rigid than Swiss-style or corporate designs. Avoid overly serious or dry. Playful `Itim` typeface contrast with technical `Roboto Mono` and vibrant blue brand palette.
 
 ### Design Principles
 
@@ -28,11 +26,11 @@ Evokes "Delight in the playfulness" while maintaining high-quality execution and
 
 ## Token Architecture
 
-2-tier CSS token system. Tokens defined in `static/app.css`.
+2-tier CSS token system in `static/app.css`.
 
 ### Tier 1: Primitives
 
-Absolute values. Use when building custom components.
+Absolute values for building custom components.
 
 ```css
 --brand-500: #3b82f6;
@@ -42,7 +40,7 @@ Absolute values. Use when building custom components.
 
 ### Tier 2: Semantics
 
-Contextual tokens. Prefer for consistent theming.
+Contextual tokens for consistent theming.
 
 ```css
 --surface-default: #ffffff;
@@ -67,7 +65,7 @@ Semantic overrides via `[data-theme='dark']`.
 
 ### Brand Palette
 
-Blue primary palette for actions and branding.
+Blue primary for actions, branding.
 
 | Token         | Hex       | Usage              |
 | ------------- | --------- | ------------------ |
@@ -84,7 +82,7 @@ Blue primary palette for actions and branding.
 
 ### Gray Scale
 
-Neutral palette for text, surfaces, and borders.
+Neutral palette for text, surfaces, borders.
 
 | Token        | Hex       | Usage                |
 | ------------ | --------- | -------------------- |
@@ -227,7 +225,7 @@ Neutral palette for text, surfaces, and borders.
 | `--radius-lg`   | 0.5rem   | Large cards, modals   |
 | `--radius-full` | 9999px   | Pills, avatars        |
 
-### Usage Guidelines
+### Usage
 
 - **Buttons**: `--radius-sm`
 - **Inputs**: `--radius-sm`
@@ -273,7 +271,7 @@ All shadows cast downward for natural depth perception.
 
 1. **Purposeful** - Every animation serves a function
 2. **Quick** - Most interactions under 300ms
-3. **Playful** - Use bounce easing for delight moments
+3. **Playful** - Bounce easing for delight moments
 4. **Respectful** - Respect `prefers-reduced-motion`
 
 ---
@@ -315,19 +313,14 @@ Toggle via `data-theme` attribute on `<html>`:
 
 ### Composition Strategy
 
-Two patterns in use:
+Two patterns:
 
-1. **bits-ui Wrappers** - For accessible primitives (Button, form controls)
-2. **Custom Components** - For project-specific UI (Typography, FeatureCard)
+1. **bits-ui Wrappers** - Accessible primitives (Button, form controls)
+2. **Custom Components** - Project-specific UI (Typography, FeatureCard)
 
 ### When to Use bits-ui
 
-bits-ui provides:
-
-- WAI-ARIA compliance
-- Keyboard navigation
-- Focus management
-- Tested accessibility
+bits-ui provides WAI-ARIA compliance, keyboard navigation, focus management, tested accessibility.
 
 Use for: `Button`, `Input`, `Select`, `Dropdown`, `Dialog`
 

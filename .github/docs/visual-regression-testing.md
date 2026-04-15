@@ -1,27 +1,20 @@
 ---
-description:
-  Documents the visual regression testing strategy using Playwright, covering snapshot conventions,
-  platform-specific handling, tolerance settings, and best practices.
+description: Visual regression testing strategy using Playwright screenshots. Snapshot conventions, platform handling, tolerance.
 ---
 
 # Visual Regression Testing Strategy
 
-This document describes the visual regression testing practices used in the project for capturing
-and comparing screenshots across different platforms.
-
 ## Overview
 
-The project uses Playwright's built-in screenshot testing capabilities (`toHaveScreenshot()`) for
-visual regression testing. This approach provides:
+Playwright's `toHaveScreenshot()` provides:
 
-- **Automatic platform detection**: Playwright automatically generates platform-specific snapshots
-  (`*-darwin.png`, `*-linux.png`)
-- **Pixel-level comparison**: Configurable tolerance for acceptable visual differences
-- **Integration with existing test suite**: No separate test runner required
+- **Automatic platform detection**: `*-darwin.png`, `*-linux.png`
+- **Pixel-level comparison**: Configurable tolerance
+- **Integrated test suite**: No separate runner
 
-## Snapshot Directory Structure
+## Snapshot Directory
 
-Snapshots are stored alongside their test files:
+Snapshots stored alongside test files:
 
 ```
 e2e/
@@ -33,29 +26,17 @@ e2e/
 ├── cover-flow.test.ts-snapshots/
 │   ├── cover-flow-desktop-initial-darwin.png
 │   ├── cover-flow-desktop-initial-linux.png
-│   ├── cover-flow-desktop-scrolled-darwin.png
 │   └── ...
 ```
 
 ## Naming Conventions
 
-### Snapshot Files
-
 - Format: `{description}-{platform}.png`
-- Platform suffix: `-darwin.png` (macOS), `-linux.png` (Linux)
-- Examples:
-  - `home-page-darwin.png`
-  - `cover-flow-desktop-initial-linux.png`
-  - `blob-morphing-page-1-darwin.png`
-
-### Test Describers
-
-Use descriptive names that convey the test scenario:
+- Suffix: `-darwin.png`, `-linux.png`
 
 ```typescript
 test.describe('Cover Flow page', () => {
   test('desktop viewport', async ({ page }) => {
-    // Snapshot: cover-flow-desktop-initial.png
     await expect(page).toHaveScreenshot('cover-flow-desktop-initial.png');
   });
 });
@@ -63,13 +44,11 @@ test.describe('Cover Flow page', () => {
 
 ## Configuration Options
 
-### Common Options
-
 ```typescript
 await expect(page).toHaveScreenshot('snapshot-name.png', {
-  animations: 'disabled', // Freeze animations for deterministic screenshots
-  fullPage: true, // Capture entire scrollable page
-  maxDiffPixelRatio: 0.01, // Accept 1% pixel difference
+  animations: 'disabled',
+  fullPage: true,
+  maxDiffPixelRatio: 0.01,
 });
 ```
 
@@ -78,14 +57,12 @@ await expect(page).toHaveScreenshot('snapshot-name.png', {
 | Tolerance      | Use Case                          |
 | -------------- | --------------------------------- |
 | `0.01` (1%)    | Static layouts, minimal animation |
-| `0.018` (1.8%) | Slight visual variance expected   |
+| `0.018` (1.8%) | Slight visual variance            |
 | `0.03` (3%)    | Animations, complex rendering     |
 
 ## Best Practices
 
 ### 1. Wait for Fonts
-
-Always wait for fonts to load before taking screenshots:
 
 ```typescript
 await page.goto('/');
@@ -95,17 +72,9 @@ await expect(page).toHaveScreenshot('page.png');
 
 ### 2. Handle Animations
 
-Use `animations: 'disabled'` to freeze animations for deterministic screenshots:
-
-```typescript
-await expect(page).toHaveScreenshot('page.png', {
-  animations: 'disabled',
-});
-```
+`animations: 'disabled'` freezes animations for deterministic screenshots.
 
 ### 3. Test Multiple Viewports
-
-Test critical layouts across different screen sizes:
 
 ```typescript
 const VIEWPORTS = {
@@ -117,14 +86,11 @@ const VIEWPORTS = {
 for (const [name, size] of Object.entries(VIEWPORTS)) {
   test(`${name} viewport`, async ({ page }) => {
     await page.setViewportSize(size);
-    // ...
   });
 }
 ```
 
 ### 4. Test Element State
-
-For component-level screenshots, target specific elements:
 
 ```typescript
 const header = page.locator('header');
@@ -133,97 +99,69 @@ await expect(header).toHaveScreenshot('navigation-header.png');
 
 ### 5. Control Animation Timing
 
-Use Playwright's virtual clock for deterministic animation testing:
-
 ```typescript
 await page.clock.install();
 await page.goto('gallery/cover-flow');
-// Capture initial state
 await expect(page).toHaveScreenshot('initial.png');
-// Fast-forward animations
 await page.clock.fastForward(1000);
 await expect(page).toHaveScreenshot('after-animation.png');
 ```
 
 ## Running Tests
 
-### Run All E2E Tests
-
 ```bash
 vp run test:e2e
-```
-
-### Run Specific Test File
-
-```bash
 vp run test:e2e -- e2e/home.test.ts
 ```
 
 ### Update Snapshots
 
-> **Warning**: Updating snapshots should be a **last resort**. Before updating, always investigate
-> the root cause of the mismatch. Only update snapshots after confirming:
+> **Warning**: Investigate mismatch root cause first. Update only after confirming:
 >
-> 1. The visual change is **intentional** (not a bug or unintended side effect)
-> 2. The new behavior is **correct and desired**
-> 3. The change has been **reviewed and approved**
->
-> Never update snapshots simply to make tests pass without understanding why they failed.
+> 1. Change is **intentional**
+> 2. New behavior is **correct**
+> 3. Change **reviewed and approved**
 
-**Local development (macOS):**
+**Local (macOS):**
 
 ```bash
 vp run test:e2e -- --update-snapshots
 ```
 
-This generates `*-darwin.png` snapshots.
-
-**CI environment (Linux):**
+**CI (Linux):**
 
 ```bash
 vp run test:e2e:ci-snapshot
 ```
 
-This runs tests in a Docker container to generate `*-linux.png` snapshots.
-
-> **Important**: Both darwin and linux snapshots must be committed together to ensure tests pass on
-> all platforms.
+> Both darwin + linux snapshots must be committed together.
 
 ## Common Issues
 
-### Snapshot Mismatch Due to Fonts
+### Font Rendering Differences
 
-If screenshots differ due to font rendering:
+- Await `document.fonts.ready`
+- `animations: 'disabled'` for static screenshots
 
-- Ensure `document.fonts.ready` is awaited
-- Use `animations: 'disabled'` for static screenshots
+### Animated Content
 
-### Animated Content Differences
+- `animations: 'disabled'`
+- `page.clock.fastForward()` for deterministic timing
+- Tolerance ≤ 3%
 
-For pages with animations:
+### Platform Differences
 
-- Use `animations: 'disabled'` to freeze animations for deterministic screenshots
-- Use `page.clock.fastForward()` for deterministic timing
-- Tolerance should follow the guidelines in the table above (never exceed 3%)
-
-### Platform-Specific Rendering Differences
-
-If darwin and linux snapshots differ significantly:
-
-- Keep both versions (Playwright handles this automatically)
-- Set `maxDiffPixelRatio` following the tolerance table above (never exceed 3%)
-- Consider if the difference indicates a real bug
+- Keep both versions (Playwright handles automatically)
+- `maxDiffPixelRatio` ≤ 3%
+- Check if difference indicates real bug
 
 ## Snapshot Review Checklist
 
-Before updating snapshots:
-
-- [ ] **Investigate the root cause** - understand WHY the snapshot no longer matches
-- [ ] Verify changes are intentional UI updates (not bugs or unintended side effects)
-- [ ] Check both darwin and linux variants exist
-- [ ] Review diff output for unexpected changes
+- [ ] Investigate WHY snapshot no longer matches
+- [ ] Verify change is intentional UI update
+- [ ] Check both darwin + linux variants exist
+- [ ] Review diff for unexpected changes
 - [ ] Ensure tests pass with new snapshots
-- [ ] Add descriptive commit message explaining visual changes
+- [ ] Descriptive commit message for visual changes
 
-> **Important**: If a snapshot fails, do not immediately reach for `--update-snapshots`. First
-> determine if the mismatch indicates a legitimate issue that needs fixing in the code itself.
+> If snapshot fails, don't immediately reach for `--update-snapshots`. Determine if mismatch indicates legitimate issue needing fix in code.
