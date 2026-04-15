@@ -16,7 +16,9 @@
   import Phase from "./Phase.svelte";
   import PhaseGroup from "./PhaseGroup.svelte";
   import Stage from "./Stage.svelte";
-  import { getOpenCv, loadFileAsDataURL, pixelate } from "./utils";
+
+  // Lazy load the massive OpenCV module
+  const  { getOpenCv, loadFileAsDataURL, pixelate }  = await import("./utils");
 
   const accept = [
     "image/png",
