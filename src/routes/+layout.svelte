@@ -2,6 +2,7 @@
   import { page } from '$app/state';
   import favicon from '$lib/assets/favicon.svg';
   import Header from '$lib/components/app/layout/Header.svelte';
+  import RouteLoading from '$lib/components/app/RouteLoading.svelte';
   let { children } = $props();
 </script>
 
@@ -9,6 +10,7 @@
   <link rel="icon" href={favicon} />
 </svelte:head>
 
+<RouteLoading />
 <Header />
 <main class="container">
   {#key page.url.pathname}
