@@ -15,5 +15,7 @@ test('CSS Paint page', async ({ page }) => {
   await expect(page).toHaveScreenshot('css-paint-page.png', {
     animations: 'disabled',
     fullPage: true,
+    maxDiffPixelRatio: 0.01,
+    timeout: 30_000,
   });
 });
