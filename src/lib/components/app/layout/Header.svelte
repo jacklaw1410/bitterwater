@@ -35,7 +35,7 @@
   <div class="curve top">
     {@render curve()}
   </div>
-  <div class="nav-container">
+  <div class="nav-container" data-sveltekit-preload-code="viewport">
     <a href={resolve('/')} class="logo" aria-label="Bitter Water">
       <img src={favicon} alt="Logo" width="32" height="32" />
       <span>Bitter Water</span>
