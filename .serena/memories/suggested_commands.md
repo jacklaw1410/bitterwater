@@ -1,52 +1,68 @@
-# Bitter Water Development Commands
+# Bitter Water Commands
+
+All commands prefixed with `bun run` unless noted.
 
 ## Development
 
-- `bun dev` - Start the Vite development server.
-- `bun dev --port 3000` - Dev server on a specific port.
+```bash
+bun run dev              # Start dev server
+bun run dev -- --port 3000  # Dev server on specific port
+```
 
 ## Build & Preview
 
-- `bun run build` - Create a production build.
-- `bun preview` - Preview the production build.
+```bash
+bun run build            # Production build
+bun run preview         # Preview production build
+```
 
-## Type Checking
+## Quality Checks
 
-- `bun check` - Run `svelte-check` and TypeScript checks.
-- `bun check:watch` - Watch mode for type checking.
-
-## Linting & Formatting
-
-- `bun lint` - Run ESLint and Prettier checks.
-- `bun format` - Auto-format code with Prettier.
+```bash
+bun run check           # svelte-check + TypeScript (alias: bun run check)
+bun run lint           # Lint with Oxc + ESLint
+bun run format         # Auto-format with Oxfmt
+```
 
 ## Testing
 
-- `bun test` - Run all tests (unit + e2e).
-- `bun test:unit` - Run unit tests (Vitest).
-- `bun test:e2e` - Run E2E tests (Playwright).
-- `bun test:unit --project storybook` - Run Storybook interaction tests.
+```bash
+bun run test:all        # All tests (unit + e2e)
+bun run test:e2e        # E2E tests (Playwright)
+bun run test:e2e:ci-snapshot  # Docker-based E2E snapshot CI
+```
 
-### Running Specific Tests
+### Single Test (via vp directly)
 
-- `bun test:unit src/path/to/file.spec.ts` - Run a specific unit test.
-- `bun test:e2e e2e/home.test.ts` - Run a specific E2E test.
+```bash
+bunx vp test src/routes/gallery/utils.spec.ts
+bunx vp test src/stories/Button.stories.svelte --project storybook
+```
 
 ## Storybook
 
-- `bun storybook` - Start Storybook on port 6006.
-- `bun build-storybook` - Build Storybook static site.
+```bash
+bun run storybook        # Start Storybook on port 6006
+bun run build-storybook  # Build static Storybook site
+bun run generate:thumbnails  # Generate thumbnails
+```
 
-## System Utils (Darwin)
+## Docker (E2E CI)
 
-- `ls` - List directory contents.
-- `cd` - Change directory.
-- `grep` - Search for patterns in files.
-- `find` - Find files and directories.
-- `git` - Version control.
-- `rm` - Remove files or directories.
-- `cp` - Copy files or directories.
-- `mv` - Move files or directories.
-- `cat` - Concatenate and print files.
-- `mkdir` - Create directories.
-- `touch` - Create empty files.
+```bash
+bunx vp docker:build    # Build Docker image
+bunx vp docker:run     # Run E2E in Docker
+```
+
+## Git (via vp staged)
+
+```bash
+bunx vp staged '*'       # Run check --fix on staged files
+```
+
+## Notes
+
+- Uses `vp` (Vite+ CLI) for linting, formatting, testing
+- Unit tests via `vitest` browser mode (not separate script)
+- Three test projects: `client`, `server`, `storybook`
+- Visual regression uses platform-specific snapshots (`*-darwin.png`, `*-linux.png`)

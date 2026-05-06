@@ -1,22 +1,57 @@
-# Testing
+# Testing Strategy
 
-- **Unit Tests (Vitest)**: Pure functions and utilities in `*.spec.ts` files. Aim for near 100% coverage.
-- **Component Tests (Storybook)**: Storybook interaction tests using the `play` function. Use `getByRole` > `getByLabelText` > `getByText`.
-- **E2E Tests (Playwright)**: Located in `e2e/`, named `*.test.ts`. Use page-level locators (e.g., `page.getByRole()`).
+## Unit Tests (Vitest)
 
-# Quality Check Procedures
+- Test pure functions, utilities in `*.spec.ts` files alongside code
+- Mock external dependencies (APIs, stores)
+- Run via `bunx vp test` or `bun run test:all`
 
-Before completing any task, ensure the following commands are run:
+## Component Tests (Storybook)
 
-1. **Linting**: `bun lint` (ESLint + Prettier).
-2. **Formatting**: `bun format` (Auto-format with Prettier).
-3. **Type Checking**: `bun check` (svelte-check + TypeScript).
-4. **Unit Tests**: `bun test:unit` (Vitest).
-5. **E2E Tests**: `bun test:e2e` (Playwright).
-6. **Build Verification**: `bun run build` (Production build verification).
+- Storybook `play` function for interactions
+- Import from `storybook/test` (NOT `@testing-library`)
+- **Query priority**: `getByRole` > `getByLabelText` > `getByText` > `getByTestId`
 
-# Verification Strategy
+## E2E Tests (Playwright)
 
-- For significant changes, run the full test suite (`bun test`).
-- Always run `bun check` and `bun lint` to maintain code standards.
-- If a production build fails, fix all issues before finalizing.
+- Full user journeys in `e2e/*.test.ts`
+- Use `page.getByRole()`, `page.getByLabel()`
+- Include screenshot snapshots with `expect(page).toHaveScreenshot()`
+
+## Visual Regression
+
+- Platform-specific snapshots: `*-darwin.png`, `*-linux.png`
+- Configure tolerance via `maxDiffPixelRatio`
+
+# Verification Checklist
+
+Run in order until all pass:
+
+1. **Format**: `bun run format` (fix formatting)
+2. **Lint**: `bun run lint` (check linting)
+3. **Type Check**: `bun run check` (svelte-check + TypeScript)
+4. **Unit Tests**: `bunx vp test --project client` or `--project server`
+5. **Storybook Tests**: `bunx vp test --project storybook`
+6. **E2E Tests**: `bun run test:e2e`
+7. **Build**: `bun run build` (production build)
+
+# Git Safety Protocol
+
+- **Never force push** to main
+- **Never update git config**
+- **Never skip hooks** (`--no-verify`)
+- **Never destructive commands** (hard reset) without explicit request
+
+# Worktree Management
+
+For multi-file/multi-session tasks or risky refactors:
+
+```bash
+# Create
+git worktree add ../<name> -b <branch-name>
+
+# Tear down
+git worktree remove ../<worktree-name>
+git branch -d <branch-name>
+rm -rf ../<worktree-name>
+```
