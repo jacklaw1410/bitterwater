@@ -19,9 +19,33 @@ bun run lint                   # Linter
 bun run format                 # Auto-format code
 bun run test:all               # Run all tests (unit + e2e)
 bun run test:e2e               # E2E tests (Playwright)
+bun run verify                 # The CI-equivalent gate: toolchain conformance + check + unit tests + build
 bun run storybook              # Storybook on port 6006
 bun run build-storybook        # Build Storybook static site
 ```
+
+### Verification (the standard gate)
+
+Before opening a PR — and before every dependency change — run the CI-equivalent gate:
+
+```bash
+bun run verify
+```
+
+`bun run verify` runs, in order:
+
+1. **Toolchain conformance** — `scripts/check-toolchain.ts` fails fast if the pinned `vite` / `vitest` / `vite-plus` triad (manifest + overrides), the lockfile resolutions, and the CI workflow's global `vite-plus` pin disagree, or if a floating `latest`/range spec was reintroduced. This is the July-outage guard: the triad must move as one unit, pinned exactly, everywhere.
+2. **`vp check`** (format + lint) with `CI=1`.
+3. **Unit tests** (`vp test --run`) with `CI=1`.
+4. **Production build** (`vp build`) with `CI=1`.
+
+So "verified locally" always means "verified like CI". A drifted toolchain fails at step 1 with a message naming expected vs actual versions and the file to fix.
+
+**Two global `vp` installs — don't mix them up.** The CI-equivalent toolchain is the project-pinned `vite-plus` (see `deploy.yml`); the daily-driver install may be a different version and reports different vitest versions. Always verify via `bun run verify` (or the project's `vp` scripts), never an ad-hoc global `vp` invocation, or your local result may not match CI.
+
+**Pin policy.** Toolchain entries (`vite`, `vitest`, `vite-plus`) must be exact pins in `devDependencies` and `overrides` — no `latest`, no ranges. The conformance check enforces this; CI runs it in every job.
+
+**`build-storybook` is excluded from `verify`.** It is currently broken upstream (svelte2tsx has no TS 7 support) — do not treat it as a regression of your change.
 
 ### Running Single Test
 

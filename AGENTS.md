@@ -64,6 +64,8 @@ When your changes create orphans:
 
 **Define success criteria. Loop until verified.**
 
+Run `bun run verify` (toolchain conformance + CI-equivalent check/test/build) before pushing; see DEVELOPMENT.md → Verification.
+
 Transform tasks into verifiable goals:
 
 - "Add validation" → "Write tests for invalid inputs, then make them pass"

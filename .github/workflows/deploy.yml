@@ -22,6 +22,8 @@ jobs:
         run: bun add -g vite-plus@0.1.20
       - name: Install dependencies
         run: bun install
+      - name: Check toolchain conformance
+        run: bun scripts/check-toolchain.ts
       - name: Build
         run: vp build
       - name: Setup Pages
@@ -42,6 +44,8 @@ jobs:
         run: bun add -g vite-plus@0.1.20
       - name: Install dependencies
         run: bun install
+      - name: Check toolchain conformance
+        run: bun scripts/check-toolchain.ts
       - name: Cache Playwright browsers
         uses: actions/cache@v6
         id: playwright-cache
@@ -67,6 +71,8 @@ jobs:
         run: bun add -g vite-plus@0.1.20
       - name: Install dependencies
         run: bun install
+      - name: Check toolchain conformance
+        run: bun scripts/check-toolchain.ts
       - name: Cache Playwright browsers
         uses: actions/cache@v6
         id: playwright-cache
