@@ -6,6 +6,15 @@ Svelte 5 web app. Vite+, SvelteKit, Bun package manager.
 
 All absolute technical constraints regarding Svelte 5 syntax, TypeScript, UI styling, and Testing are defined in [DEVELOPMENT.md](./DEVELOPMENT.md).
 
+## Issue & Commit Naming
+
+Use Conventional Commits for both GitHub issue titles and commit messages.
+
+- Types: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `build`, `ci`, `perf`, `style`, `revert`.
+- Dependency updates: `chore(deps): <what changes> (<#issue>)` — mirrors Renovate's PR titles.
+- A commit that closes an issue references it: `feat: ... (#42)`.
+- Keep the subject under ~72 chars; add a body for the "why" when it isn't obvious.
+
 ## Coding Principles
 
 Adapted from [Andrej Karpathy's LLM coding guidelines](https://github.com/forrestchang/andrej-karpathy-skills). These reduce common mistakes by biasing toward caution over speed.
