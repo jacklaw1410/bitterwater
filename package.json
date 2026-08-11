@@ -20,9 +20,9 @@
     "generate:thumbnails": "ts-node scripts/generate-thumbnails.ts"
   },
   "dependencies": {
-    "@techstark/opencv-js": "^4.12.0-release.1",
+    "@techstark/opencv-js": "^5.0.0-release.1",
     "bits-ui": "^2.18.1",
-    "heic-to": "^1.4.2"
+    "heic-to": "^1.5.2"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.3.0",
@@ -55,7 +55,7 @@
     "typescript": "^7.0.0",
     "typescript-eslint": "^8.59.2",
     "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-    "vite-plugin-devtools-json": "^1.0.0",
+    "vite-plugin-devtools-json": "^1.1.0",
     "vite-plus": "latest",
     "vitest": "npm:@voidzero-dev/vite-plus-test@latest",
     "vitest-browser-svelte": "^3.0.0"
