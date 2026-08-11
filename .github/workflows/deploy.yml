@@ -19,7 +19,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - name: Install vite-plus
-        run: bun add -g vite-plus
+        run: bun add -g vite-plus@0.1.20
       - name: Install dependencies
         run: bun install
       - name: Build
@@ -39,7 +39,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - name: Install vite-plus
-        run: bun add -g vite-plus
+        run: bun add -g vite-plus@0.1.20
       - name: Install dependencies
         run: bun install
       - name: Cache Playwright browsers
@@ -64,7 +64,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - name: Install vite-plus
-        run: bun add -g vite-plus
+        run: bun add -g vite-plus@0.1.20
       - name: Install dependencies
         run: bun install
       - name: Cache Playwright browsers
