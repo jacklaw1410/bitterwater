@@ -46,7 +46,7 @@ bun run verify
 
 So "verified locally" always means "verified like CI". A drifted toolchain fails at step 1 with a message naming expected vs actual versions and the file to fix.
 
-**Two global `vp` installs — don't mix them up.** The CI-equivalent toolchain is the project-pinned `vite-plus` (see `deploy.yml`); the daily-driver install may be a different version and reports different vitest versions. Always verify via `bun run verify` (or the project's `vp` scripts), never an ad-hoc global `vp` invocation, or your local result may not match CI.
+**Always run the project's `vp` (`bunx vp` / `bun run` scripts), never a bare global `vp`.** Since 0.2.x the toolchain is a single-instance design: a global `vp` invocation runs its runner against a _different_ vitest instance than the one spec files import, which crashes server-project suites with `TypeError: Cannot read properties of undefined (reading 'config')`. CI installs the global pin only as the conformance source of truth and runs every step via `bunx vp`.
 
 **Pin policy.** Toolchain entries (`vite`, `vitest`, `vite-plus`) must be exact pins in `devDependencies` and `overrides` — no `latest`, no ranges. The conformance check enforces this; CI runs it in every job.
 

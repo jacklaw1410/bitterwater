@@ -26,7 +26,7 @@ jobs:
       - name: Check toolchain conformance
         run: bun scripts/check-toolchain.ts
       - name: Build
-        run: vp build
+        run: bunx vp build
       - name: Setup Pages
         if: github.event_name == 'push'
         uses: actions/configure-pages@v6
@@ -61,7 +61,7 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: bunx playwright install --with-deps
       - name: Run unit tests
-        run: vp test
+        run: bunx vp test
 
   test-e2e:
     runs-on: ubuntu-latest
@@ -88,7 +88,7 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: bunx playwright install --with-deps
       - name: Run e2e tests
-        run: vp run test:e2e
+        run: bunx vp run test:e2e
       - name: Upload e2e artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v7
