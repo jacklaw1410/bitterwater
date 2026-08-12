@@ -352,19 +352,23 @@ export const detectMeshLines = (
   const linesX = [0, width - 1];
   const linesY = [0, height - 1];
 
-  if (lines.rows > 0) {
-    for (let i = 0; i < lines.rows; i++) {
-      const [x1, y1, x2, y2] = lines.data32S.subarray(i * 4, i * 4 + 4);
-      const dx = x2 - x1;
-      const dy = y2 - y1;
-      const angle = Math.abs(Math.atan2(dy, dx));
-      const angleThreshold = Math.PI / 12;
+  // OpenCV 5.0 changed the HoughLinesP output layout: 4.x returns one row per
+  // line (N×4 CV_32SC4), 5.x packs all lines into a single row (1×4N). Counting
+  // rows as lines yields 1 on 5.x and collapses the mesh (issue #36); the data
+  // length is layout-agnostic and identical for both (4 × line count).
+  const lineCount = Math.floor(lines.data32S.length / 4);
 
-      if (angle > Math.PI / 2 - angleThreshold) {
-        linesX.push(Math.round((x1 + x2) / 2));
-      } else if (angle < angleThreshold) {
-        linesY.push(Math.round((y1 + y2) / 2));
-      }
+  for (let i = 0; i < lineCount; i++) {
+    const [x1, y1, x2, y2] = lines.data32S.subarray(i * 4, i * 4 + 4);
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const angle = Math.abs(Math.atan2(dy, dx));
+    const angleThreshold = Math.PI / 12;
+
+    if (angle > Math.PI / 2 - angleThreshold) {
+      linesX.push(Math.round((x1 + x2) / 2));
+    } else if (angle < angleThreshold) {
+      linesY.push(Math.round((y1 + y2) / 2));
     }
   }
 

@@ -36,6 +36,11 @@ bun run verify
 
 1. **Toolchain conformance** — `scripts/check-toolchain.ts` fails fast if the pinned `vite` / `vitest` / `vite-plus` triad (manifest + overrides), the lockfile resolutions, and the CI workflow's global `vite-plus` pin disagree, or if a floating `latest`/range spec was reintroduced. This is the July-outage guard: the triad must move as one unit, pinned exactly, everywhere.
 2. **`vp check`** (format + lint) with `CI=1`.
+
+### Dependency notes
+
+- **opencv-js (`@techstark/opencv-js`): 4.x and 5.x are both supported.** OpenCV 5.0 changed the `HoughLinesP` output layout from one row per line (`N×4`) to a single flat row (`1×4N`); the pixelation mesh reader counts lines from the data length, which is layout-agnostic (issue #36). The mesh-sanity canary and the mesh probe (browser test project, real wasm) are the upgrade gates: they must pass with whichever major is installed.
+
 3. **Unit tests** (`vp test --run`) with `CI=1`.
 4. **Production build** (`vp build`) with `CI=1`.
 
