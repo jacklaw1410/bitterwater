@@ -13,7 +13,7 @@
     "lint": "vp fmt --check . && vp lint .",
     "format": "vp fmt .",
     "test:all": "vp test --run && vp run test:e2e",
-    "verify": "bun scripts/check-toolchain.ts && CI=1 vp check && CI=1 vp test --run && CI=1 vp build",
+    "verify": "bun scripts/check-toolchain.ts && CI=1 vp check && CI=1 vp test --run && CI=1 vp build && echo 'verify: PASS - conformance, check, test, build (CI order)'",
     "test:e2e": "playwright test",
     "test:e2e:ci-snapshot": "vp run docker:build && vp run docker:run",
     "storybook": "storybook dev -p 6006",
