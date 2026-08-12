@@ -286,7 +286,10 @@ export default defineConfig({
               },
             ],
           },
-          include: ['src/**/*.svelte.{test,spec}.{js,ts}'],
+          include: [
+            'src/**/*.svelte.{test,spec}.{js,ts}',
+            'src/routes/gallery/pixelation/utils.spec.ts',
+          ],
           exclude: ['src/lib/server/**'],
         },
       },
@@ -296,7 +299,10 @@ export default defineConfig({
           name: 'server',
           environment: 'node',
           include: ['src/**/*.{test,spec}.{js,ts}'],
-          exclude: ['src/**/*.svelte.{test,spec}.{js,ts}'],
+          exclude: [
+            'src/**/*.svelte.{test,spec}.{js,ts}',
+            'src/routes/gallery/pixelation/utils.spec.ts',
+          ],
         },
       },
       {
