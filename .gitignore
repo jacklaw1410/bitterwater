@@ -36,3 +36,7 @@ storybook-static
 .serena/cache/
 .serena/logs/
 .serena/project.local.yml
+
+# vitest browser-mode artifacts
+__screenshots__/
+.vitest-attachments/
