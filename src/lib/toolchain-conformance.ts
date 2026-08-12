@@ -18,7 +18,7 @@ export type ToolchainRole = (typeof TOOLCHAIN_ROLES)[number];
  * The package each role must resolve to. `vite` is an npm: alias to the core package; 0.2.x bundles
  * vitest directly, so the `vitest` role is the plain package (the
  *
- * @voidzero-dev/vite-plus-test wrapper track ended at 0.1.x).
+ * Legacy vite-plus-test wrapper track ended at 0.1.x).
  */
 export const TOOLCHAIN_PACKAGES: Record<ToolchainRole, string> = {
   vite: '@voidzero-dev/vite-plus-core',

@@ -43,7 +43,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^26.0.0",
     "@vitest/browser-playwright": "4.1.10",
-    "@vitest/coverage-v8": "^4.1.10",
+    "@vitest/coverage-v8": "4.1.10",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-storybook": "^10.5.7",
     "eslint-plugin-svelte": "^3.22.0",

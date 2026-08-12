@@ -6,7 +6,7 @@ import { checkToolchain, parseSpec, type ToolchainInput } from './toolchain-conf
  * 0.2.x consumer shape: vite aliases the core package at the vite-plus version; vitest is the plain
  * package at the version vite-plus itself declares (no more
  *
- * @voidzero-dev/vite-plus-test wrapper — that track ended at 0.1.x).
+ * Legacy vite-plus-test wrapper — that track ended at 0.1.x).
  */
 const conformant: ToolchainInput = {
   vitestExpected: '4.1.10',
