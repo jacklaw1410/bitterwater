@@ -50,6 +50,8 @@ So "verified locally" always means "verified like CI". A drifted toolchain fails
 
 **Pin policy.** Toolchain entries (`vite`, `vitest`, `vite-plus`) must be exact pins in `devDependencies` and `overrides` — no `latest`, no ranges. The conformance check enforces this; CI runs it in every job.
 
+**Toolchain shape (0.2.x, since #41).** `vite-plus` pins `@voidzero-dev/vite-plus-core` (the `vite` alias) at the same version and bundles `vitest` directly — so `vitest` is the plain package at the version `vite-plus` itself declares (4.1.10), not an alias to a wrapper (the `@voidzero-dev/vite-plus-test` track ended at 0.1.x). `vite-plus/test/browser-playwright` re-exports `@vitest/browser-playwright`, which must be installed at the same version. The conformance check derives the expected `vitest` version from the installed `vite-plus` manifest, so mixed vitest versions stay a hard error.
+
 **`build-storybook` is excluded from `verify`.** It is currently broken upstream (svelte2tsx has no TS 7 support) — do not treat it as a regression of your change.
 
 ### Running Single Test

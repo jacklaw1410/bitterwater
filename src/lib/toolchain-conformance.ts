@@ -14,10 +14,15 @@ export const TOOLCHAIN_ROLES = ['vite', 'vitest', 'vite-plus'] as const;
 
 export type ToolchainRole = (typeof TOOLCHAIN_ROLES)[number];
 
-/** The package each role must resolve to (via npm: aliases). */
+/**
+ * The package each role must resolve to. `vite` is an npm: alias to the core package; 0.2.x bundles
+ * vitest directly, so the `vitest` role is the plain package (the
+ *
+ * @voidzero-dev/vite-plus-test wrapper track ended at 0.1.x).
+ */
 export const TOOLCHAIN_PACKAGES: Record<ToolchainRole, string> = {
   vite: '@voidzero-dev/vite-plus-core',
-  vitest: '@voidzero-dev/vite-plus-test',
+  vitest: 'vitest',
   'vite-plus': 'vite-plus',
 };
 
@@ -35,6 +40,12 @@ export interface ToolchainInput {
   resolvedByPackage: Partial<Record<string, string[]>>;
   /** Versions from `bun add -g vite-plus@X.Y.Z` lines in the CI workflow. */
   ciPins: string[];
+  /**
+   * The vitest version the installed vite-plus declares (dependencies.vitest). The `vitest` role
+   * must match this rather than the vite-plus anchor: 0.2.x bundles vitest directly, and mixed
+   * vitest versions are the crash class.
+   */
+  vitestExpected: string;
 }
 
 export interface Verdict {
@@ -82,16 +93,38 @@ export function checkToolchain(input: ToolchainInput): Verdict {
   if (anchor.version === null) {
     const declared = input.declared['vite-plus'] ?? '(missing)';
     errors.push(
-      `package.json devDependencies: 'vite-plus' spec '${declared}' is not an exact pin — floating 'latest'/range specs reintroduce the mixed-version hazard; pin an exact version such as 0.1.20`,
+      `package.json devDependencies: 'vite-plus' spec '${declared}' is not an exact pin — floating 'latest'/range specs reintroduce the mixed-version hazard; pin an exact version such as 0.2.9`,
     );
   }
+
+  if (input.vitestExpected === '') {
+    errors.push(
+      "no expected vitest version supplied — vite-plus's own dependency on vitest is the source of truth for the vitest role; run bun install and re-check",
+    );
+  }
+
+  /**
+   * Version each role must pin: vite/vite-plus follow the anchor; vitest follows vite-plus's own
+   * dependency.
+   */
+  const expectedVersion = (role: ToolchainRole): string =>
+    role === 'vitest' ? input.vitestExpected : (anchor.version ?? '');
+
+  const expectedPhrase = (role: ToolchainRole, version: string): string =>
+    role === 'vitest'
+      ? `'vite-plus' ${anchor.version === null ? '(unpinned)' : anchor.version} declares vitest ${version}`
+      : `'vite-plus' pins ${version}`;
 
   for (const role of TOOLCHAIN_ROLES) {
     const spec = input.declared[role];
     const parsed = spec === undefined ? null : parseSpec(spec);
     if (parsed === null || parsed.version === null) {
+      const how =
+        role === 'vitest'
+          ? `pin 'vitest' at the exact version vite-plus declares (${input.vitestExpected || 'unknown'})`
+          : `pin '${TOOLCHAIN_PACKAGES[role]}' (via npm: alias if aliased) at the same exact version as vite-plus`;
       errors.push(
-        `package.json devDependencies: '${role}' spec '${spec ?? '(missing)'}' is not an exact pin — pin '${TOOLCHAIN_PACKAGES[role]}' (via npm: alias if aliased) at the same exact version as vite-plus`,
+        `package.json devDependencies: '${role}' spec '${spec ?? '(missing)'}' is not an exact pin — ${how}`,
       );
       continue;
     }
@@ -100,9 +133,10 @@ export function checkToolchain(input: ToolchainInput): Verdict {
         `package.json devDependencies.${role}: alias 'npm:${parsed.aliasName}@${parsed.version}' points at the wrong package — expected 'npm:${TOOLCHAIN_PACKAGES[role]}@${parsed.version}'`,
       );
     }
-    if (anchor.version !== null && parsed.version !== anchor.version) {
+    const want = expectedVersion(role);
+    if (want !== '' && parsed.version !== want) {
       errors.push(
-        `package.json devDependencies.${role} pins ${parsed.version} but 'vite-plus' pins ${anchor.version} — the triad must move as one unit; update all three together`,
+        `package.json devDependencies.${role} pins ${parsed.version} but ${expectedPhrase(role, want)} — the toolchain must move as one unit; update all roles together`,
       );
     }
   }
@@ -126,9 +160,10 @@ export function checkToolchain(input: ToolchainInput): Verdict {
           `package.json overrides.${role}: alias 'npm:${parsed.aliasName}@${parsed.version}' points at the wrong package — expected 'npm:${TOOLCHAIN_PACKAGES[role]}@${parsed.version}'`,
         );
       }
-      if (anchor.version !== null && parsed.version !== anchor.version) {
+      const want = expectedVersion(role);
+      if (want !== '' && parsed.version !== want) {
         errors.push(
-          `package.json overrides.${role} pins ${parsed.version} but 'vite-plus' pins ${anchor.version} — the overrides must follow the triad`,
+          `package.json overrides.${role} pins ${parsed.version} but ${expectedPhrase(role, want)} — the overrides must follow the toolchain`,
         );
       }
     }
