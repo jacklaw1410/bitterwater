@@ -20,7 +20,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - name: Install vite-plus
-        run: bun add -g vite-plus@0.1.20
+        run: bun add -g vite-plus@0.2.9
       - name: Install dependencies
         run: bun install
       - name: Check toolchain conformance
@@ -44,7 +44,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - name: Install vite-plus
-        run: bun add -g vite-plus@0.1.20
+        run: bun add -g vite-plus@0.2.9
       - name: Install dependencies
         run: bun install
       - name: Check toolchain conformance
@@ -71,7 +71,7 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - name: Install vite-plus
-        run: bun add -g vite-plus@0.1.20
+        run: bun add -g vite-plus@0.2.9
       - name: Install dependencies
         run: bun install
       - name: Check toolchain conformance

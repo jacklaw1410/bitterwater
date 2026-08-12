@@ -2,41 +2,48 @@ import { describe, expect, it } from 'vitest';
 
 import { checkToolchain, parseSpec, type ToolchainInput } from './toolchain-conformance';
 
+/**
+ * 0.2.x consumer shape: vite aliases the core package at the vite-plus version; vitest is the plain
+ * package at the version vite-plus itself declares (no more
+ *
+ * @voidzero-dev/vite-plus-test wrapper — that track ended at 0.1.x).
+ */
 const conformant: ToolchainInput = {
+  vitestExpected: '4.1.10',
   declared: {
-    vite: 'npm:@voidzero-dev/vite-plus-core@0.1.20',
-    vitest: 'npm:@voidzero-dev/vite-plus-test@0.1.20',
-    'vite-plus': '0.1.20',
+    vite: 'npm:@voidzero-dev/vite-plus-core@0.2.9',
+    vitest: '4.1.10',
+    'vite-plus': '0.2.9',
   },
   overrides: {
-    vite: 'npm:@voidzero-dev/vite-plus-core@0.1.20',
-    vitest: 'npm:@voidzero-dev/vite-plus-test@0.1.20',
+    vite: 'npm:@voidzero-dev/vite-plus-core@0.2.9',
+    vitest: '4.1.10',
   },
-  resolvedByRole: { vite: '0.1.20', vitest: '0.1.20', 'vite-plus': '0.1.20' },
+  resolvedByRole: { vite: '0.2.9', vitest: '4.1.10', 'vite-plus': '0.2.9' },
   resolvedByPackage: {
-    '@voidzero-dev/vite-plus-core': ['0.1.20'],
-    '@voidzero-dev/vite-plus-test': ['0.1.20'],
-    'vite-plus': ['0.1.20'],
+    '@voidzero-dev/vite-plus-core': ['0.2.9'],
+    vitest: ['4.1.10'],
+    'vite-plus': ['0.2.9'],
   },
-  ciPins: ['0.1.20', '0.1.20', '0.1.20'],
+  ciPins: ['0.2.9', '0.2.9', '0.2.9'],
 };
 
 describe('parseSpec', () => {
   it('parses a plain exact pin', () => {
-    expect(parseSpec('0.1.20')).toEqual({ aliasName: null, version: '0.1.20' });
+    expect(parseSpec('0.2.9')).toEqual({ aliasName: null, version: '0.2.9' });
   });
 
   it('parses an npm: alias with an exact version', () => {
-    expect(parseSpec('npm:@voidzero-dev/vite-plus-core@0.1.20')).toEqual({
+    expect(parseSpec('npm:@voidzero-dev/vite-plus-core@0.2.9')).toEqual({
       aliasName: '@voidzero-dev/vite-plus-core',
-      version: '0.1.20',
+      version: '0.2.9',
     });
   });
 
   it('rejects latest, ranges, and versionless aliases', () => {
     expect(parseSpec('latest').version).toBeNull();
-    expect(parseSpec('^0.1.20').version).toBeNull();
-    expect(parseSpec('0.1.x').version).toBeNull();
+    expect(parseSpec('^0.2.9').version).toBeNull();
+    expect(parseSpec('0.2.x').version).toBeNull();
     expect(parseSpec('npm:@voidzero-dev/vite-plus-core').version).toBeNull();
     expect(parseSpec('npm:@voidzero-dev/vite-plus-core@').version).toBeNull();
     expect(parseSpec('>=24.19.0').version).toBeNull();
@@ -44,7 +51,7 @@ describe('parseSpec', () => {
 });
 
 describe('checkToolchain', () => {
-  it('passes a fully conformant toolchain', () => {
+  it('passes a fully conformant 0.2.x toolchain', () => {
     const verdict = checkToolchain(conformant);
     expect(verdict.ok).toBe(true);
     expect(verdict.errors).toEqual([]);
@@ -81,52 +88,82 @@ describe('checkToolchain', () => {
     expect(verdict.errors.some((e) => e.includes("devDependencies: 'vite'"))).toBe(true);
   });
 
-  it('rejects a drifted triad member', () => {
+  it('rejects a drifted vite role (not at the vite-plus anchor)', () => {
     const verdict = checkToolchain({
       ...conformant,
-      declared: { ...conformant.declared, vitest: 'npm:@voidzero-dev/vite-plus-test@0.1.19' },
+      declared: { ...conformant.declared, vite: 'npm:@voidzero-dev/vite-plus-core@0.2.8' },
+    });
+    expect(verdict.ok).toBe(false);
+    expect(
+      verdict.errors.some((e) => e.includes('vite') && e.includes('0.2.8') && e.includes('0.2.9')),
+    ).toBe(true);
+  });
+
+  it('rejects a vitest that does not match the version vite-plus declares', () => {
+    const verdict = checkToolchain({
+      ...conformant,
+      declared: { ...conformant.declared, vitest: '4.1.9' },
     });
     expect(verdict.ok).toBe(false);
     expect(
       verdict.errors.some(
-        (e) => e.includes('vitest') && e.includes('0.1.19') && e.includes('0.1.20'),
+        (e) => e.includes('vitest') && e.includes('4.1.9') && e.includes('4.1.10'),
       ),
     ).toBe(true);
+  });
+
+  it('rejects a vitest alias to the dead test-wrapper track', () => {
+    const verdict = checkToolchain({
+      ...conformant,
+      declared: { ...conformant.declared, vitest: 'npm:@voidzero-dev/vite-plus-test@0.1.24' },
+    });
+    expect(verdict.ok).toBe(false);
+    expect(verdict.errors.some((e) => e.includes('vitest') && e.includes('wrong package'))).toBe(
+      true,
+    );
+  });
+
+  it('rejects an override that drifts from its role version', () => {
+    const verdict = checkToolchain({
+      ...conformant,
+      overrides: { ...conformant.overrides, vitest: '4.1.9' },
+    });
+    expect(verdict.ok).toBe(false);
+    expect(verdict.errors.some((e) => e.includes('overrides.vitest') && e.includes('4.1.9'))).toBe(
+      true,
+    );
   });
 
   it('rejects a lockfile that resolves a role to a different version than declared', () => {
     const verdict = checkToolchain({
       ...conformant,
-      resolvedByRole: { ...conformant.resolvedByRole, vite: '0.1.19' },
+      resolvedByRole: { ...conformant.resolvedByRole, vite: '0.2.8' },
     });
     expect(verdict.ok).toBe(false);
-    expect(
-      verdict.errors.some((e) => e.includes('bun.lock resolves') && e.includes('0.1.19')),
-    ).toBe(true);
+    expect(verdict.errors.some((e) => e.includes('bun.lock resolves') && e.includes('0.2.8'))).toBe(
+      true,
+    );
   });
 
   it('rejects mixed versions of a toolchain package in the lockfile', () => {
     const verdict = checkToolchain({
       ...conformant,
-      resolvedByPackage: {
-        ...conformant.resolvedByPackage,
-        '@voidzero-dev/vite-plus-test': ['0.1.19', '0.1.20'],
-      },
+      resolvedByPackage: { ...conformant.resolvedByPackage, vitest: ['4.1.9', '4.1.10'] },
     });
     expect(verdict.ok).toBe(false);
     expect(
       verdict.errors.some(
-        (e) => e.includes('mixed versions') && e.includes('0.1.19') && e.includes('0.1.20'),
+        (e) => e.includes('mixed versions') && e.includes('4.1.9') && e.includes('4.1.10'),
       ),
     ).toBe(true);
   });
 
-  it('rejects a CI pin that disagrees with the declared triad', () => {
-    const verdict = checkToolchain({ ...conformant, ciPins: ['0.1.19'] });
+  it('rejects a CI pin that disagrees with the declared toolchain', () => {
+    const verdict = checkToolchain({ ...conformant, ciPins: ['0.2.8'] });
     expect(verdict.ok).toBe(false);
     expect(
       verdict.errors.some(
-        (e) => e.includes('CI workflow pins vite-plus@0.1.19') && e.includes('0.1.20'),
+        (e) => e.includes('CI workflow pins vite-plus@0.2.8') && e.includes('0.2.9'),
       ),
     ).toBe(true);
   });
@@ -142,7 +179,7 @@ describe('checkToolchain', () => {
   it('rejects an alias pointing at the wrong package', () => {
     const verdict = checkToolchain({
       ...conformant,
-      declared: { ...conformant.declared, vite: 'npm:@wrong/pkg@0.1.20' },
+      declared: { ...conformant.declared, vite: 'npm:@wrong/pkg@0.2.9' },
     });
     expect(verdict.ok).toBe(false);
     expect(

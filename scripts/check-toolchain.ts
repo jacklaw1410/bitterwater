@@ -91,6 +91,21 @@ const readLock = () => {
   return { lock, resolvedByRole, resolvedByPackage };
 };
 
+/**
+ * The vitest version the installed vite-plus declares. 0.2.x bundles vitest directly and the
+ * wrapper track is dead, so vite-plus's own dependency is the single source of truth. Returns null
+ * when vite-plus is not installed (fresh clone before bun install).
+ */
+const readVitePlusVitest = (): string | null => {
+  try {
+    const manifest = readJson('node_modules/vite-plus/package.json');
+    const vitest = (manifest.dependencies as Record<string, string> | undefined)?.vitest;
+    return typeof vitest === 'string' ? vitest : null;
+  } catch {
+    return null;
+  }
+};
+
 const readCiPins = () => {
   const workflow = readFileSync(join(root, '.github', 'workflows', 'deploy.yml'), 'utf8');
   const pins: string[] = [];
@@ -178,12 +193,20 @@ const main = () => {
   const { resolvedByRole, resolvedByPackage } = readLock();
   warnOnEngines(pkg, notes);
 
+  const vitestExpected = readVitePlusVitest();
+  if (vitestExpected === null) {
+    notes.push(
+      'cannot read node_modules/vite-plus/package.json — run bun install so the expected vitest version can be derived from vite-plus itself',
+    );
+  }
+
   const input: ToolchainInput = {
     declared,
     overrides,
     resolvedByRole,
     resolvedByPackage,
     ciPins: readCiPins(),
+    vitestExpected: vitestExpected ?? '',
   };
   const verdict = checkToolchain(input);
   format({ ...verdict, notes: [...notes, ...verdict.notes] }, input);
