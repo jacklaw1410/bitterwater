@@ -40,6 +40,15 @@ The spec MUST contain exactly these sections, in this order:
 5. `## Out of scope` — explicit non-goals.
 6. `## Open questions` — anything that needs the human before implementation (or "none").
 
+## Non-negotiable: you MUST write the file
+
+The pipeline FAILS the run if `thoughts/research/<YYYYMMDD>-<kebab-slug>-spec.md` does not
+exist when you finish. Before your final message:
+
+1. `!ls -t thoughts/research/*-spec.md | head -1` — confirm your file is the newest.
+2. `!head -6 <your-spec-path>` — confirm the six required sections are present.
+3. If either check fails, FIX the file — do not end the turn until both pass.
+
 ## Rules
 
 - Facts only. If you did not verify something in the repo, say so in Open questions.
