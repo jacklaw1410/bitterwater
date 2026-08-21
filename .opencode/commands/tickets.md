@@ -21,6 +21,15 @@ $ARGUMENTS is the spec file path (e.g. `thoughts/research/20260821-foo-spec.md`)
 task prompt. Read the spec FULLY first. If none is given, look for the newest
 `thoughts/research/*-spec.md`.
 
+## Mandatory first line
+
+The FIRST line of the plan file MUST be:
+
+`# Pipeline plan for issue #<N>: <task title>`
+
+(Write the issue number if one is referenced; otherwise `#0`.) The pipeline uses this
+marker to verify the plan was produced for THIS task — never reuse an older plan.
+
 ## Output
 
 Write ONE markdown file: `thoughts/plans/<YYYYMMDD>-<kebab-slug>-plan.md`
