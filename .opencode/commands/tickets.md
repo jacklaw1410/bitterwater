@@ -48,6 +48,16 @@ The plan MUST contain:
 3. `## Verify plan` — the sequence of commands the pipeline will run (always end with
    `bun run check` per phase and `bun run verify` at the end).
 
+## Non-negotiable: you MUST write the file
+
+The pipeline FAILS the run if `thoughts/plans/<YYYYMMDD>-<kebab-slug>-plan.md` does not exist
+with the marker first line when you finish. Before your final message:
+
+1. `!ls -t thoughts/plans/*-plan.md | head -1` — confirm your file is the newest.
+2. `!head -1 <your-plan-path>` — confirm the first line is the marker.
+3. If either check fails, FIX the file (create it / correct the first line) — do not end
+   the turn until both pass.
+
 ## Rules
 
 - The plan is executable: every phase's Changes are concrete enough for a build agent.
