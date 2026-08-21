@@ -1,6 +1,6 @@
 ---
 description: Turn a spec into a phased implementation plan with a ticket breakdown (design agent)
-agent: plan
+agent: build
 permission:
   edit:
     'thoughts/research/*': allow
@@ -20,6 +20,14 @@ the build agent can execute and the pipeline can verify.
 $ARGUMENTS is the spec file path (e.g. `thoughts/research/20260821-foo-spec.md`) and/or the
 task prompt. Read the spec FULLY first. If none is given, look for the newest
 `thoughts/research/*-spec.md`.
+
+## STRICT bounds (the pipeline waits on you)
+
+- Read ONLY: the spec file, `AGENTS.md`, and the few files the spec names. Do NOT explore
+  the whole repo. Do NOT call gh or any network tool. Do NOT run builds.
+- Write the plan file in your FIRST assistant turn. Do not research further after writing.
+- Total tool turns: keep under 8. If you need more, you are over-thinking — write the plan
+  from the spec and finish.
 
 ## Mandatory first line
 
